@@ -1,0 +1,102 @@
+# Group Registers
+Welcome to the registers API. This API provides access to the registers service.
+
+## registers [/registers]
+
+### Create register [POST]
+
+Create a new register
+
++ Request register (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + title: TITLE (string)
+        + text: TEXT (string)
+        + register_type (registertype)
+        + sender_id: 1 (number)
+        + target_id: 1 (number)
+        + student (student)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (register, fixed)
+
+### Get registers [GET]
+
+Returns a register list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (register)
+
+## register details [/registers/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired register.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get register [GET]
+
+Returns a register.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register, fixed)
+
+### Update register [PUT]
+
+Update a register.
+
++ Request register (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + title: TITLE (string)
+        + text: TEXT (string)
+        + register_type (registertype)
+        + sender_id: 1 (number)
+        + target_id: 1 (number)
+        + student (student)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register, fixed)
+
+### Delete register [DELETE]
+
+Delete a register.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## register (object)
+
++ id: *1* (number)
++ title: *TITLE* (string)
++ text: *TEXT* (string)
++ register_type (registertype)
++ sender_id: *1* (number)
++ target_id: *1* (number)
++ student (student)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

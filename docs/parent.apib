@@ -1,0 +1,99 @@
+# Group Parents
+Welcome to the parents API. This API provides access to the parents service.
+
+## parents [/parents]
+
+### Create parent [POST]
+
+Create a new parent
+
++ Request parent (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user_id: 1 (number)
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + phone: PHONE (string)
+        + profile_image_url: PROFILEIMAGEURL (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (parent, fixed)
+
+### Get parents [GET]
+
+Returns a parent list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (parent)
+
+## parent details [/parents/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired parent.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get parent [GET]
+
+Returns a parent.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (parent, fixed)
+
+### Update parent [PUT]
+
+Update a parent.
+
++ Request parent (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user_id: 1 (number)
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + phone: PHONE (string)
+        + profile_image_url: PROFILEIMAGEURL (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (parent, fixed)
+
+### Delete parent [DELETE]
+
+Delete a parent.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## parent (object)
+
++ id: *1* (number)
++ user_id: *1* (number)
++ name: *NAME* (string)
++ email: *EMAIL* (string)
++ phone: *PHONE* (string)
++ profile_image_url: *PROFILEIMAGEURL* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

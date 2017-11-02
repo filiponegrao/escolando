@@ -1,0 +1,87 @@
+# Group SchoolGrades
+Welcome to the school grades API. This API provides access to the school grades service.
+
+## school grades [/school_grades]
+
+### Create school grade [POST]
+
+Create a new school grade
+
++ Request school grade (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (school_grade, fixed)
+
+### Get school grades [GET]
+
+Returns a school grade list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (school_grade)
+
+## school grade details [/school_grades/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired school grade.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get school grade [GET]
+
+Returns a school grade.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (school_grade, fixed)
+
+### Update school grade [PUT]
+
+Update a school grade.
+
++ Request school_grade (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (school_grade, fixed)
+
+### Delete school grade [DELETE]
+
+Delete a school grade.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## school_grade (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

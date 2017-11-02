@@ -1,0 +1,117 @@
+# Group Institutions
+Welcome to the institutions API. This API provides access to the institutions service.
+
+## institutions [/institutions]
+
+### Create institution [POST]
+
+Create a new institution
+
++ Request institution (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + owner (user)
+        + address_postal: ADDRESSPOSTAL (string)
+        + address_street: ADDRESSSTREET (string)
+        + address_number: 1 (number)
+        + address_complement: ADDRESSCOMPLEMENT (string)
+        + cnpj: CNPJ (string)
+        + phone1: PHONE1 (string)
+        + phone2: PHONE2 (string)
+        + extra_info: EXTRAINFO (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (institution, fixed)
+
+### Get institutions [GET]
+
+Returns an institution list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (institution)
+
+## institution details [/institutions/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired institution.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get institution [GET]
+
+Returns an institution.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (institution, fixed)
+
+### Update institution [PUT]
+
+Update an institution.
+
++ Request institution (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + owner (user)
+        + address_postal: ADDRESSPOSTAL (string)
+        + address_street: ADDRESSSTREET (string)
+        + address_number: 1 (number)
+        + address_complement: ADDRESSCOMPLEMENT (string)
+        + cnpj: CNPJ (string)
+        + phone1: PHONE1 (string)
+        + phone2: PHONE2 (string)
+        + extra_info: EXTRAINFO (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (institution, fixed)
+
+### Delete institution [DELETE]
+
+Delete an institution.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## institution (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ email: *EMAIL* (string)
++ owner (user)
++ address_postal: *ADDRESSPOSTAL* (string)
++ address_street: *ADDRESSSTREET* (string)
++ address_number: *1* (number)
++ address_complement: *ADDRESSCOMPLEMENT* (string)
++ cnpj: *CNPJ* (string)
++ phone1: *PHONE1* (string)
++ phone2: *PHONE2* (string)
++ extra_info: *EXTRAINFO* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

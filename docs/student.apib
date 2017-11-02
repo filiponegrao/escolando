@@ -1,0 +1,99 @@
+# Group Students
+Welcome to the students API. This API provides access to the students service.
+
+## students [/students]
+
+### Create student [POST]
+
+Create a new student
+
++ Request student (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + institution (institution)
+        + responsible (parent)
+        + name: NAME (string)
+        + profile_image_url: PROFILEIMAGEURL (string)
+        + extra_info: EXTRAINFO (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (student, fixed)
+
+### Get students [GET]
+
+Returns a student list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (student)
+
+## student details [/students/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired student.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get student [GET]
+
+Returns a student.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (student, fixed)
+
+### Update student [PUT]
+
+Update a student.
+
++ Request student (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + institution (institution)
+        + responsible (parent)
+        + name: NAME (string)
+        + profile_image_url: PROFILEIMAGEURL (string)
+        + extra_info: EXTRAINFO (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (student, fixed)
+
+### Delete student [DELETE]
+
+Delete a student.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## student (object)
+
++ id: *1* (number)
++ institution (institution)
++ responsible (parent)
++ name: *NAME* (string)
++ profile_image_url: *PROFILEIMAGEURL* (string)
++ extra_info: *EXTRAINFO* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

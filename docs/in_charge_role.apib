@@ -1,0 +1,90 @@
+# Group InChargeRoles
+Welcome to the in charge roles API. This API provides access to the in charge roles service.
+
+## in charge roles [/in_charge_roles]
+
+### Create in charge role [POST]
+
+Create a new in charge role
+
++ Request in charge role (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (in_charge_role, fixed)
+
+### Get in charge roles [GET]
+
+Returns an in charge role list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (in_charge_role)
+
+## in charge role details [/in_charge_roles/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired in charge role.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get in charge role [GET]
+
+Returns an in charge role.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (in_charge_role, fixed)
+
+### Update in charge role [PUT]
+
+Update an in charge role.
+
++ Request in_charge_role (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (in_charge_role, fixed)
+
+### Delete in charge role [DELETE]
+
+Delete an in charge role.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## in_charge_role (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ access_content: *ACCESSCONTENT* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

@@ -1,0 +1,93 @@
+# Group UserAccesses
+Welcome to the user accesses API. This API provides access to the user accesses service.
+
+## user accesses [/user_accesses]
+
+### Create user access [POST]
+
+Create a new user access
+
++ Request user access (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user (user)
+        + institution (institution)
+        + user_access_profile (useraccessprofile)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (user_access, fixed)
+
+### Get user accesses [GET]
+
+Returns an user access list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (user_access)
+
+## user access details [/user_accesses/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired user access.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get user access [GET]
+
+Returns an user access.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (user_access, fixed)
+
+### Update user access [PUT]
+
+Update an user access.
+
++ Request user_access (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user (user)
+        + institution (institution)
+        + user_access_profile (useraccessprofile)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (user_access, fixed)
+
+### Delete user access [DELETE]
+
+Delete an user access.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## user_access (object)
+
++ id: *1* (number)
++ user (user)
++ institution (institution)
++ user_access_profile (useraccessprofile)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

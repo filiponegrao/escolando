@@ -1,0 +1,102 @@
+# Group Classes
+Welcome to the classes API. This API provides access to the classes service.
+
+## classes [/classes]
+
+### Create class [POST]
+
+Create a new class
+
++ Request class (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + institution (institution)
+        + in_charge (incharge)
+        + name: NAME (string)
+        + capacity: 1 (number)
+        + enrolled: 1 (number)
+        + school_grade (schoolgrade)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (class, fixed)
+
+### Get classes [GET]
+
+Returns a class list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (class)
+
+## class details [/classes/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired class.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get class [GET]
+
+Returns a class.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (class, fixed)
+
+### Update class [PUT]
+
+Update a class.
+
++ Request class (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + institution (institution)
+        + in_charge (incharge)
+        + name: NAME (string)
+        + capacity: 1 (number)
+        + enrolled: 1 (number)
+        + school_grade (schoolgrade)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (class, fixed)
+
+### Delete class [DELETE]
+
+Delete a class.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## class (object)
+
++ id: *1* (number)
++ institution (institution)
++ in_charge (incharge)
++ name: *NAME* (string)
++ capacity: *1* (number)
++ enrolled: *1* (number)
++ school_grade (schoolgrade)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

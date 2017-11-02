@@ -1,0 +1,90 @@
+# Group UserAccessProfiles
+Welcome to the user access profiles API. This API provides access to the user access profiles service.
+
+## user access profiles [/user_access_profiles]
+
+### Create user access profile [POST]
+
+Create a new user access profile
+
++ Request user access profile (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (user_access_profile, fixed)
+
+### Get user access profiles [GET]
+
+Returns an user access profile list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (user_access_profile)
+
+## user access profile details [/user_access_profiles/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired user access profile.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get user access profile [GET]
+
+Returns an user access profile.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (user_access_profile, fixed)
+
+### Update user access profile [PUT]
+
+Update an user access profile.
+
++ Request user_access_profile (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (user_access_profile, fixed)
+
+### Delete user access profile [DELETE]
+
+Delete an user access profile.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## user_access_profile (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ access_content: *ACCESSCONTENT* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

@@ -1,0 +1,90 @@
+# Group Kinships
+Welcome to the kinships API. This API provides access to the kinships service.
+
+## kinships [/kinships]
+
+### Create kinship [POST]
+
+Create a new kinship
+
++ Request kinship (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (kinship, fixed)
+
+### Get kinships [GET]
+
+Returns a kinship list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (kinship)
+
+## kinship details [/kinships/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired kinship.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get kinship [GET]
+
+Returns a kinship.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (kinship, fixed)
+
+### Update kinship [PUT]
+
+Update a kinship.
+
++ Request kinship (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + access_content: ACCESSCONTENT (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (kinship, fixed)
+
+### Delete kinship [DELETE]
+
+Delete a kinship.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## kinship (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ access_content: *ACCESSCONTENT* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

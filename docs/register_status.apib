@@ -1,0 +1,87 @@
+# Group RegisterStatuses
+Welcome to the register statuses API. This API provides access to the register statuses service.
+
+## register statuses [/register_statuses]
+
+### Create register status [POST]
+
+Create a new register status
+
++ Request register status (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (register_status, fixed)
+
+### Get register statuses [GET]
+
+Returns a register status list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (register_status)
+
+## register status details [/register_statuses/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired register status.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get register status [GET]
+
+Returns a register status.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_status, fixed)
+
+### Update register status [PUT]
+
+Update a register status.
+
++ Request register_status (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_status, fixed)
+
+### Delete register status [DELETE]
+
+Delete a register status.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## register_status (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

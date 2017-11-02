@@ -1,0 +1,87 @@
+# Group RegisterTypes
+Welcome to the register types API. This API provides access to the register types service.
+
+## register types [/register_types]
+
+### Create register type [POST]
+
+Create a new register type
+
++ Request register type (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (register_type, fixed)
+
+### Get register types [GET]
+
+Returns a register type list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (register_type)
+
+## register type details [/register_types/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired register type.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get register type [GET]
+
+Returns a register type.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_type, fixed)
+
+### Update register type [PUT]
+
+Update a register type.
+
++ Request register_type (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_type, fixed)
+
+### Delete register type [DELETE]
+
+Delete a register type.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## register_type (object)
+
++ id: *1* (number)
++ name: *NAME* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

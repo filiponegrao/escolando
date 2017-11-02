@@ -1,0 +1,105 @@
+# Group InCharges
+Welcome to the in charges API. This API provides access to the in charges service.
+
+## in charges [/in_charges]
+
+### Create in charge [POST]
+
+Create a new in charge
+
++ Request in charge (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user_id: 1 (number)
+        + institution (institution)
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + phone: PHONE (string)
+        + role (inchargerole)
+        + profile_image_url: PROFILEIMAGEURL (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (in_charge, fixed)
+
+### Get in charges [GET]
+
+Returns an in charge list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (in_charge)
+
+## in charge details [/in_charges/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired in charge.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get in charge [GET]
+
+Returns an in charge.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (in_charge, fixed)
+
+### Update in charge [PUT]
+
+Update an in charge.
+
++ Request in_charge (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + user_id: 1 (number)
+        + institution (institution)
+        + name: NAME (string)
+        + email: EMAIL (string)
+        + phone: PHONE (string)
+        + role (inchargerole)
+        + profile_image_url: PROFILEIMAGEURL (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (in_charge, fixed)
+
+### Delete in charge [DELETE]
+
+Delete an in charge.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## in_charge (object)
+
++ id: *1* (number)
++ user_id: *1* (number)
++ institution (institution)
++ name: *NAME* (string)
++ email: *EMAIL* (string)
++ phone: *PHONE* (string)
++ role (inchargerole)
++ profile_image_url: *PROFILEIMAGEURL* (string)
++ created_at: `*2000-01-01 00:00:00*` (string)
++ updated_at: `*2000-01-01 00:00:00*` (string)

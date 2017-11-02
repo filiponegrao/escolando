@@ -1,0 +1,89 @@
+# Group RegisterCurrentStatuses
+Welcome to the register current statuses API. This API provides access to the register current statuses service.
+
+## register current statuses [/register_current_statuses]
+
+### Create register current status [POST]
+
+Create a new register current status
+
++ Request register current status (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + register (register)
+        + institution (registerstatus)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (register_current_status, fixed)
+
+### Get register current statuses [GET]
+
+Returns a register current status list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (register_current_status)
+
+## register current status details [/register_current_statuses/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired register current status.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get register current status [GET]
+
+Returns a register current status.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_current_status, fixed)
+
+### Update register current status [PUT]
+
+Update a register current status.
+
++ Request register_current_status (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + register (register)
+        + institution (registerstatus)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_current_status, fixed)
+
+### Delete register current status [DELETE]
+
+Delete a register current status.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## register_current_status (object)
+
++ id: *1* (number)
++ register (register)
++ institution (registerstatus)
++ created_at: `*2000-01-01 00:00:00*` (string)
