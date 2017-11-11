@@ -126,11 +126,5 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/user_access_profiles/:id", controllers.UpdateUserAccessProfile)
 		api.DELETE("/user_access_profiles/:id", controllers.DeleteUserAccessProfile)
 
-		api.GET("/works_fors", controllers.GetWorksFors)
-		api.GET("/works_fors/:id", controllers.GetWorksFor)
-		api.POST("/works_fors", controllers.CreateWorksFor)
-		api.PUT("/works_fors/:id", controllers.UpdateWorksFor)
-		api.DELETE("/works_fors/:id", controllers.DeleteWorksFor)
-
 	}
 }

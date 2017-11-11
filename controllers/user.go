@@ -7,6 +7,7 @@ import (
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
+	"github.com/filiponegrao/escolando/tools"
 	"github.com/filiponegrao/escolando/version"
 
 	"github.com/gin-gonic/gin"
@@ -65,6 +66,8 @@ func GetUsers(c *gin.Context) {
 		c.Status(200)
 
 		for _, user := range users {
+			// Remove a senha por motivos de segurança
+			user.Password = ""
 			fieldMap, err := helper.FieldToMap(user, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -80,6 +83,8 @@ func GetUsers(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, user := range users {
+			// Remove a senha por motivos de segurança
+			user.Password = ""
 			fieldMap, err := helper.FieldToMap(user, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -118,10 +123,13 @@ func GetUser(c *gin.Context) {
 	queryFields := helper.QueryFields(models.User{}, fields)
 
 	if err := db.Select(queryFields).First(&user, id).Error; err != nil {
-		content := gin.H{"error": "user with id#" + id + " not found"}
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
+
+	// Remove a senha por motivos de segurança
+	user.Password = ""
 
 	fieldMap, err := helper.FieldToMap(user, fields)
 	if err != nil {
@@ -156,20 +164,14 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	if user.Email == "" {
-		c.JSON(400, gin.H{"error": "Faltando email do usuario"})
+	missing := CheckUserMissingFields(user)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do usuario."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
-	if user.Name == "" {
-		c.JSON(400, gin.H{"error": "Faltando nome do usuario"})
-		return
-	}
-
-	if user.Password == "" {
-		c.JSON(400, gin.H{"error": "Faltando senha do usuario"})
-		return
-	}
+	user.Password = tools.EncryptTextSHA512(user.Password)
 
 	if err := db.Create(&user).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -196,7 +198,7 @@ func UpdateUser(c *gin.Context) {
 	user := models.User{}
 
 	if db.First(&user, id).Error != nil {
-		content := gin.H{"error": "user with id#" + id + " not found"}
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -231,7 +233,7 @@ func DeleteUser(c *gin.Context) {
 	user := models.User{}
 
 	if db.First(&user, id).Error != nil {
-		content := gin.H{"error": "user with id#" + id + " not found"}
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -247,4 +249,21 @@ func DeleteUser(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckUserMissingFields(user models.User) string {
+
+	if user.Name == "" {
+		return "nome (name)"
+	}
+
+	if user.Email == "" {
+		return "email"
+	}
+
+	if user.Password == "" {
+		return "senha (password)"
+	}
+
+	return ""
 }

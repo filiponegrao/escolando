@@ -48,7 +48,6 @@ func Connect() *gorm.DB {
 			&models.User{},
 			&models.UserAccess{},
 			&models.UserAccessProfile{},
-			&models.WorksFor{},
 		)
 	}
 

@@ -156,25 +156,6 @@ func CreateInstitution(c *gin.Context) {
 		return
 	}
 
-	/** 1. ATRIBUTOS OBRIGATÓRIOS PARA A CRIACAO */
-
-	if institution.Name == "" {
-		c.JSON(400, gin.H{"error": "Faltando nome da instituição"})
-		return
-	}
-
-	if institution.Email == "" {
-		c.JSON(400, gin.H{"error": "Faltando email da instituição"})
-		return
-	}
-
-	if institution.Owner.ID == 0 {
-		c.JSON(400, gin.H{"error": "Faltando dono da instituição"})
-		return
-	}
-
-	/***** 1.END *****/
-
 	if err := db.Create(&institution).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

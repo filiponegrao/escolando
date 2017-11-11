@@ -56,8 +56,6 @@ func APIEndpoints(c *gin.Context) {
 		"user_access_url":               baseURL + "/user_accesses/{id}",
 		"user_access_profiles_url":      baseURL + "/user_access_profiles",
 		"user_access_profile_url":       baseURL + "/user_access_profiles/{id}",
-		"works_fors_url":                baseURL + "/works_fors",
-		"works_for_url":                 baseURL + "/works_fors/{id}",
 	}
 
 	c.IndentedJSON(http.StatusOK, resources)

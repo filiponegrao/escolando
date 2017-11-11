@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type RegisterType struct {
 	ID        int64      `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`

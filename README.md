@@ -194,14 +194,4 @@ PUT    /useraccessprofiles/:id
 DELETE /useraccessprofiles/:id
 ```
 
-### WorksFors Resource
-
-```
-GET    /worksfors
-GET    /worksfors/:id
-POST   /worksfors
-PUT    /worksfors/:id
-DELETE /worksfors/:id
-```
-
 server runs at http://localhost:8080

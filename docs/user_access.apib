@@ -14,8 +14,11 @@ Create a new user access
     + Attributes
 
         + user (user)
+        + UserID: 1 (number)
         + institution (institution)
+        + InstitutionID: 1 (number)
         + user_access_profile (useraccessprofile)
+        + UserAccessProfileID: 1 (number)
 
 + Response 201 (application/json; charset=utf-8)
     + Attributes (user_access, fixed)
@@ -65,8 +68,11 @@ Update an user access.
     + Attributes
 
         + user (user)
+        + UserID: 1 (number)
         + institution (institution)
+        + InstitutionID: 1 (number)
         + user_access_profile (useraccessprofile)
+        + UserAccessProfileID: 1 (number)
 
 + Response 200 (application/json; charset=utf-8)
     + Attributes (user_access, fixed)
@@ -87,7 +93,10 @@ Delete an user access.
 
 + id: *1* (number)
 + user (user)
++ UserID: *1* (number)
 + institution (institution)
++ InstitutionID: *1* (number)
 + user_access_profile (useraccessprofile)
++ UserAccessProfileID: *1* (number)
 + created_at: `*2000-01-01 00:00:00*` (string)
 + updated_at: `*2000-01-01 00:00:00*` (string)
