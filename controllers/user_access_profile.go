@@ -118,7 +118,7 @@ func GetUserAccessProfile(c *gin.Context) {
 	queryFields := helper.QueryFields(models.UserAccessProfile{}, fields)
 
 	if err := db.Select(queryFields).First(&userAccessProfile, id).Error; err != nil {
-		content := gin.H{"error": "user_access_profile with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de acesso de usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -156,6 +156,13 @@ func CreateUserAccessProfile(c *gin.Context) {
 		return
 	}
 
+	missing := CheckMissingProfileAccess(userAccessProfile)
+	if missing == "" {
+		message := "Faltando campo " + missing + "do perfil de acesso"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&userAccessProfile).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -181,13 +188,20 @@ func UpdateUserAccessProfile(c *gin.Context) {
 	userAccessProfile := models.UserAccessProfile{}
 
 	if db.First(&userAccessProfile, id).Error != nil {
-		content := gin.H{"error": "user_access_profile with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de acesso de usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
 
 	if err := c.Bind(&userAccessProfile); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckMissingProfileAccess(userAccessProfile)
+	if missing == "" {
+		message := "Faltando campo " + missing + "do perfil de acesso"
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -216,7 +230,7 @@ func DeleteUserAccessProfile(c *gin.Context) {
 	userAccessProfile := models.UserAccessProfile{}
 
 	if db.First(&userAccessProfile, id).Error != nil {
-		content := gin.H{"error": "user_access_profile with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de acesso de usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -232,4 +246,11 @@ func DeleteUserAccessProfile(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckMissingProfileAccess(profile models.UserAccessProfile) string {
+	if profile.Name == "" {
+		return "nome (name)"
+	}
+	return ""
 }
