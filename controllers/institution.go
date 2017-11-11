@@ -109,6 +109,112 @@ func GetInstitutions(c *gin.Context) {
 	}
 }
 
+func GetUserInstitutions(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.Institution{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, err = parameter.Paginate(db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db = parameter.SetPreloads(db)
+	db = parameter.SortRecords(db)
+	db = parameter.FilterFields(db)
+
+	// Recupera os ids de todas as institiocoes que o usuario possui acesso
+	userId := c.Params.ByName("id")
+	var institutionsId []int64
+	err = db.Table("user_accesses").Select("institution_id").Where("user_id", userId).Find(&institutionsId).Error
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	institutions := []models.Institution{}
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+	queryFields := helper.QueryFields(models.Institution{}, fields)
+
+	if err := db.Select(queryFields).Where(institutionsId).Find(&institutions).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	index := 0
+
+	if len(institutions) > 0 {
+		index = int(institutions[len(institutions)-1].ID)
+	}
+
+	if err := parameter.SetHeaderLink(c, index); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	if _, ok := c.GetQuery("stream"); ok {
+		enc := json.NewEncoder(c.Writer)
+		c.Status(200)
+
+		for _, institution := range institutions {
+
+			// Encontra o dono
+			db.First(&institution.Owner, institution.UserID)
+
+			// Remove a senha do dono da institiocao por motivos de seguranca
+			institution.Owner.Password = ""
+			fieldMap, err := helper.FieldToMap(institution, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			if err := enc.Encode(fieldMap); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	} else {
+		fieldMaps := []map[string]interface{}{}
+
+		for _, institution := range institutions {
+			// Encontra o dono
+			db.First(&institution.Owner, institution.UserID)
+
+			// Remove a senha do dono da institiocao por motivos de seguranca
+			institution.Owner.Password = ""
+			fieldMap, err := helper.FieldToMap(institution, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			fieldMaps = append(fieldMaps, fieldMap)
+		}
+
+		if _, ok := c.GetQuery("pretty"); ok {
+			c.IndentedJSON(200, fieldMaps)
+		} else {
+			c.JSON(200, fieldMaps)
+		}
+	}
+}
+
 func GetInstitution(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
