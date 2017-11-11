@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -65,6 +66,10 @@ func GetUserAccesses(c *gin.Context) {
 		c.Status(200)
 
 		for _, userAccess := range userAccesses {
+			// Removendo senha dos usuarios por motivos de seguranca
+			userAccess.User.Password = ""
+			userAccess.Institution.Owner.Password = ""
+
 			fieldMap, err := helper.FieldToMap(userAccess, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -80,6 +85,10 @@ func GetUserAccesses(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, userAccess := range userAccesses {
+			// Removendo senha dos usuarios por motivos de seguranca
+			userAccess.User.Password = ""
+			userAccess.Institution.Owner.Password = ""
+
 			fieldMap, err := helper.FieldToMap(userAccess, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -123,6 +132,10 @@ func GetUserAccess(c *gin.Context) {
 		return
 	}
 
+	// Removendo senha dos usuarios por motivos de seguranca
+	userAccess.User.Password = ""
+	userAccess.Institution.Owner.Password = ""
+
 	fieldMap, err := helper.FieldToMap(userAccess, fields)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -156,7 +169,36 @@ func CreateUserAccess(c *gin.Context) {
 		return
 	}
 
-	if err := db.Create(&userAccess).Error; err != nil {
+	// AASERT: Verifica campos faltantes
+	missing := CheckUserAccessMissingField(userAccess)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do acesso."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var user models.User
+	var institution models.Institution
+
+	// ASSERT: Verifica se o usuario existe de fato
+	err = db.First(&user, userAccess.User.ID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.User.ID, 10)
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	// ASSERT: Verifica se a instituicao existe de fato
+	err = db.First(&institution, userAccess.Institution.ID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.Institution.ID, 10)
+		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
+		c.JSON(404, content)
+		return
+	}
+
+	if err := db.Set("gorm:save_associations", false).Create(&userAccess).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -190,8 +232,36 @@ func UpdateUserAccess(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	// AASERT: Verifica campos faltantes
+	missing := CheckUserAccessMissingField(userAccess)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do acesso."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
 
-	if err := db.Save(&userAccess).Error; err != nil {
+	var user models.User
+	var institution models.Institution
+
+	// ASSERT: Verifica se o usuario existe de fato
+	err = db.First(&user, userAccess.User.ID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.User.ID, 10)
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	// ASSERT: Verifica se a instituicao existe de fato
+	err = db.First(&institution, userAccess.Institution.ID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.Institution.ID, 10)
+		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
+		c.JSON(404, content)
+		return
+	}
+
+	if err := db.Set("gorm:save_associations", false).Save(&userAccess).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -232,4 +302,20 @@ func DeleteUserAccess(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckUserAccessMissingField(access models.UserAccess) string {
+	if access.User.ID == 0 {
+		return "id do usuario (user.id)"
+	}
+
+	if access.Institution.ID == 0 {
+		return "id da instituicao (institution.id)"
+	}
+
+	if access.UserAccessProfile.ID == 0 {
+		return "id do perfil de acesso (user_access_profile.id)"
+	}
+
+	return ""
 }
