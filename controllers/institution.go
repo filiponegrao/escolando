@@ -66,6 +66,10 @@ func GetInstitutions(c *gin.Context) {
 		c.Status(200)
 
 		for _, institution := range institutions {
+
+			// Encontra o dono
+			db.First(&institution.Owner, institution.UserID)
+
 			// Remove a senha do dono da institiocao por motivos de seguranca
 			institution.Owner.Password = ""
 			fieldMap, err := helper.FieldToMap(institution, fields)
@@ -83,6 +87,9 @@ func GetInstitutions(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, institution := range institutions {
+			// Encontra o dono
+			db.First(&institution.Owner, institution.UserID)
+
 			// Remove a senha do dono da institiocao por motivos de seguranca
 			institution.Owner.Password = ""
 			fieldMap, err := helper.FieldToMap(institution, fields)
@@ -124,6 +131,13 @@ func GetInstitution(c *gin.Context) {
 
 	if err := db.Select(queryFields).First(&institution, id).Error; err != nil {
 		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
+		c.JSON(404, content)
+		return
+	}
+
+	err = db.First(&institution.Owner, institution.UserID).Error
+	if err != nil {
+		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
