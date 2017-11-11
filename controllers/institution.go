@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -65,6 +66,8 @@ func GetInstitutions(c *gin.Context) {
 		c.Status(200)
 
 		for _, institution := range institutions {
+			// Remove a senha do dono da institiocao por motivos de seguranca
+			institution.Owner.Password = ""
 			fieldMap, err := helper.FieldToMap(institution, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -80,6 +83,8 @@ func GetInstitutions(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, institution := range institutions {
+			// Remove a senha do dono da institiocao por motivos de seguranca
+			institution.Owner.Password = ""
 			fieldMap, err := helper.FieldToMap(institution, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -118,10 +123,13 @@ func GetInstitution(c *gin.Context) {
 	queryFields := helper.QueryFields(models.Institution{}, fields)
 
 	if err := db.Select(queryFields).First(&institution, id).Error; err != nil {
-		content := gin.H{"error": "institution with id#" + id + " not found"}
+		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
+
+	// Remove a senha do dono da institiocao por motivos de seguranca
+	institution.Owner.Password = ""
 
 	fieldMap, err := helper.FieldToMap(institution, fields)
 	if err != nil {
@@ -156,7 +164,23 @@ func CreateInstitution(c *gin.Context) {
 		return
 	}
 
-	if err := db.Create(&institution).Error; err != nil {
+	missing := CheckInstitutionMissingField(institution)
+	if missing != "" {
+		message := "Faltando campo " + missing + " da instituicao"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	userId := institution.Owner.ID
+	var user models.User
+	err = db.First(&user, userId).Error
+	if err != nil {
+		content := gin.H{"error": "Usuario com o id" + strconv.FormatInt(userId, 10) + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	if err := db.Set("gorm:save_associations", false).Create(&institution).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -181,7 +205,7 @@ func UpdateInstitution(c *gin.Context) {
 	institution := models.Institution{}
 
 	if db.First(&institution, id).Error != nil {
-		content := gin.H{"error": "institution with id#" + id + " not found"}
+		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
@@ -191,7 +215,23 @@ func UpdateInstitution(c *gin.Context) {
 		return
 	}
 
-	if err := db.Save(&institution).Error; err != nil {
+	missing := CheckInstitutionMissingField(institution)
+	if missing != "" {
+		message := "Faltando campo " + missing + " da instituicao"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	userId := institution.Owner.ID
+	var user models.User
+	err = db.First(&user, userId).Error
+	if err != nil {
+		content := gin.H{"error": "Usuario com o id" + strconv.FormatInt(userId, 10) + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	if err := db.Set("gorm:save_associations", false).Save(&institution).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -216,7 +256,7 @@ func DeleteInstitution(c *gin.Context) {
 	institution := models.Institution{}
 
 	if db.First(&institution, id).Error != nil {
-		content := gin.H{"error": "institution with id#" + id + " not found"}
+		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
@@ -232,4 +272,21 @@ func DeleteInstitution(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckInstitutionMissingField(institution models.Institution) string {
+
+	if institution.Name == "" {
+		return "nome (name)"
+	}
+
+	if institution.Email == "" {
+		return "email"
+	}
+
+	if institution.Owner.ID == 0 {
+		return "id (owner.id) do dono"
+	}
+
+	return ""
 }
