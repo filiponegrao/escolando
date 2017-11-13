@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -135,12 +136,24 @@ func GetUserInstitutions(c *gin.Context) {
 
 	// Recupera os ids de todas as institiocoes que o usuario possui acesso
 	userId := c.Params.ByName("id")
-	var institutionsId []int64
-	err = db.Table("user_accesses").Select("institution_id").Where("user_id", userId).Find(&institutionsId).Error
+	institutionsId := []int64{}
+	rows, err := db.Table("user_accesses").Select("institution_id").Where("user_id", userId).Find(&institutionsId).Rows()
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	for rows.Next() {
+		var id int64
+		if err := rows.Scan(&id); err == nil {
+			institutionsId = append(institutionsId, id)
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	log.Println(institutionsId)
 
 	institutions := []models.Institution{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))

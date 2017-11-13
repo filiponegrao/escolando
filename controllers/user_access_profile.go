@@ -199,7 +199,7 @@ func UpdateUserAccessProfile(c *gin.Context) {
 	}
 
 	missing := CheckMissingProfileAccess(userAccessProfile)
-	if missing == "" {
+	if missing != "" {
 		message := "Faltando campo " + missing + "do perfil de acesso"
 		c.JSON(400, gin.H{"error": message})
 		return
