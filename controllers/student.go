@@ -233,3 +233,20 @@ func DeleteStudent(c *gin.Context) {
 
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
+
+func CheckMissingStudentFields(student models.Student) string {
+
+	if student.Name == "" {
+		return "nome (name)"
+	}
+
+	if student.Responsible.ID == 0 {
+		return "id do responsavel (\"responsible\": \"id\": id)"
+	}
+
+	if student.Institution.ID == 0 {
+		return "id da instituicao (\"instituicao\": \"id\": id)"
+	}
+
+	return ""
+}

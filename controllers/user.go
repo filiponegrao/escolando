@@ -218,6 +218,8 @@ func UpdateUser(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
+	user.Password = ""
+
 	c.JSON(200, user)
 }
 

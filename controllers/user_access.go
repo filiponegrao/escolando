@@ -69,6 +69,7 @@ func GetUserAccesses(c *gin.Context) {
 
 			db.First(&userAccess.User, userAccess.UserID)
 			db.First(&userAccess.Institution, userAccess.InstitutionID)
+			db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
 			db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID)
 
 			// Removendo senha dos usuarios por motivos de seguranca
@@ -136,11 +137,16 @@ func GetUserAccess(c *gin.Context) {
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 	queryFields := helper.QueryFields(models.UserAccess{}, fields)
 
-	if err := db.Select(queryFields).First(&userAccess, id).Error; err != nil {
-		content := gin.H{"error": "user_access with id#" + id + " not found"}
+	if err = db.Select(queryFields).First(&userAccess, id).Error; err != nil {
+		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
+
+	db.First(&userAccess.User, userAccess.UserID)
+	db.First(&userAccess.Institution, userAccess.InstitutionID)
+	db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
+	db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID)
 
 	// Removendo senha dos usuarios por motivos de seguranca
 	userAccess.User.Password = ""
@@ -224,6 +230,9 @@ func CreateUserAccess(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
+	userAccess.User.Password = ""
+	userAccess.Institution.Owner.Password = ""
+
 	c.JSON(201, userAccess)
 }
 
@@ -239,7 +248,7 @@ func UpdateUserAccess(c *gin.Context) {
 	userAccess := models.UserAccess{}
 
 	if db.First(&userAccess, id).Error != nil {
-		content := gin.H{"error": "user_access with id#" + id + " not found"}
+		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -248,7 +257,37 @@ func UpdateUserAccess(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	// AASERT: Verifica campos faltantes
+
+	// ASSERT: Verifica se o usuario existe de fato
+	err = db.First(&userAccess.User, userAccess.UserID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.User.ID, 10)
+		content := gin.H{"error": "Usuario com o id " + id + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	// ASSERT: Verifica se a instituicao existe de fato
+	err = db.First(&userAccess.Institution, userAccess.InstitutionID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.Institution.ID, 10)
+		content := gin.H{"error": "Instituicao com o id " + id + " não encontrada."}
+		c.JSON(404, content)
+		return
+	}
+
+	db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
+
+	// ASSERT: Verifica se o perfil de acesso existe de fato
+	err = db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID).Error
+	if err != nil {
+		id := strconv.FormatInt(userAccess.UserAccessProfile.ID, 10)
+		content := gin.H{"error": "Perfil de acesso com o id " + id + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	// ASSERT: Verifica campos faltantes
 	missing := CheckUserAccessMissingField(userAccess)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do acesso."
@@ -256,34 +295,7 @@ func UpdateUserAccess(c *gin.Context) {
 		return
 	}
 
-	// ASSERT: Verifica se o usuario existe de fato
-	err = db.First(&userAccess.User, userAccess.User.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.User.ID, 10)
-		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica se a instituicao existe de fato
-	err = db.First(&userAccess.Institution, userAccess.Institution.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.Institution.ID, 10)
-		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica se o perfil de acesso existe de fato
-	err = db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfile.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.UserAccessProfile.ID, 10)
-		content := gin.H{"error": "Perfil de acesso com o id" + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	if err := db.Set("gorm:save_associations", false).Save(&userAccess).Error; err != nil {
+	if err := db.Save(&userAccess).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -292,6 +304,9 @@ func UpdateUserAccess(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
+
+	userAccess.User.Password = ""
+	userAccess.Institution.Owner.Password = ""
 
 	c.JSON(200, userAccess)
 }
@@ -308,7 +323,7 @@ func DeleteUserAccess(c *gin.Context) {
 	userAccess := models.UserAccess{}
 
 	if db.First(&userAccess, id).Error != nil {
-		content := gin.H{"error": "user_access with id#" + id + " not found"}
+		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}

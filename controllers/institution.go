@@ -292,7 +292,7 @@ func CreateInstitution(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	institution := models.Institution{}
 
-	if err := c.Bind(&institution); err != nil {
+	if err = c.Bind(&institution); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -305,15 +305,14 @@ func CreateInstitution(c *gin.Context) {
 	}
 
 	userId := institution.Owner.ID
-	var user models.User
-	err = db.First(&user, userId).Error
+	err = db.First(&institution.Owner, userId).Error
 	if err != nil {
-		content := gin.H{"error": "Usuario com o id" + strconv.FormatInt(userId, 10) + " não encontrado."}
+		content := gin.H{"error": "Usuario com o id " + strconv.FormatInt(userId, 10) + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
 
-	if err := db.Set("gorm:save_associations", false).Create(&institution).Error; err != nil {
+	if err := db.Create(&institution).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -322,6 +321,8 @@ func CreateInstitution(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
+
+	institution.Owner.Password = ""
 
 	c.JSON(201, institution)
 }
@@ -338,13 +339,22 @@ func UpdateInstitution(c *gin.Context) {
 	institution := models.Institution{}
 
 	if db.First(&institution, id).Error != nil {
-		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
+		content := gin.H{"error": "Instituicao com o id " + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
 
 	if err := c.Bind(&institution); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	userId := institution.UserID
+
+	err = db.First(&institution.Owner, userId).Error
+	if err != nil {
+		content := gin.H{"error": "Usuario com o id " + strconv.FormatInt(userId, 10) + " não encontrado."}
+		c.JSON(404, content)
 		return
 	}
 
@@ -355,16 +365,7 @@ func UpdateInstitution(c *gin.Context) {
 		return
 	}
 
-	userId := institution.Owner.ID
-	var user models.User
-	err = db.First(&user, userId).Error
-	if err != nil {
-		content := gin.H{"error": "Usuario com o id" + strconv.FormatInt(userId, 10) + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	if err := db.Set("gorm:save_associations", false).Save(&institution).Error; err != nil {
+	if err := db.Save(&institution).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -389,7 +390,7 @@ func DeleteInstitution(c *gin.Context) {
 	institution := models.Institution{}
 
 	if db.First(&institution, id).Error != nil {
-		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
+		content := gin.H{"error": "Instituicao com o id " + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
