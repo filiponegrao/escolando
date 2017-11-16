@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -156,6 +157,20 @@ func CreateParent(c *gin.Context) {
 		return
 	}
 
+	missing := CheckParentMissingFields(parent)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do responsavel."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var user models.User
+	if err = db.First(&user, parent.UserId).Error; err != nil {
+		message := "Usuario com o id " + strconv.FormatInt(parent.UserId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&parent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -188,6 +203,13 @@ func UpdateParent(c *gin.Context) {
 
 	if err := c.Bind(&parent); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckParentMissingFields(parent)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do responsavel."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -232,4 +254,21 @@ func DeleteParent(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckParentMissingFields(parent models.Parent) string {
+
+	if parent.Email == "" {
+		return "email"
+	}
+
+	if parent.Name == "" {
+		return "nome (name)"
+	}
+
+	if parent.UserId == 0 {
+		return "id do responsavel (user_id)"
+	}
+
+	return ""
 }

@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -65,6 +67,12 @@ func GetStudents(c *gin.Context) {
 		c.Status(200)
 
 		for _, student := range students {
+
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+
 			fieldMap, err := helper.FieldToMap(student, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -80,6 +88,12 @@ func GetStudents(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, student := range students {
+
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+
 			fieldMap, err := helper.FieldToMap(student, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -123,6 +137,11 @@ func GetStudent(c *gin.Context) {
 		return
 	}
 
+	db.First(&student.Institution, student.InstitutionID)
+	db.First(&student.Institution.Owner, student.Institution.UserID)
+	db.First(&student.Responsible, student.ParentID)
+	student.Institution.Owner.Password = ""
+
 	fieldMap, err := helper.FieldToMap(student, fields)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -156,8 +175,76 @@ func CreateStudent(c *gin.Context) {
 		return
 	}
 
-	if err := db.Create(&student).Error; err != nil {
+	kinshipParameter := c.Params.ByName("kinship")
+	if kinshipParameter == "" {
+		message := "Faltando parametro de grau de parentesco(kinship.id) do criador do estudante."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	log.Println(kinshipParameter)
+
+	var kinshipId int64
+	if kinshipId, err = strconv.ParseInt(kinshipParameter, 10, 64); err != nil {
+		message := "Valor do id deve ser um inteiro (somente números). "
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var kinship models.Kinship
+	if err = db.First(&kinship, kinshipId).Error; err != nil {
+		message := "Nao foi encontrado um grau de parentesco com o id " + kinshipParameter
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	institutionId := student.Institution.ID
+	if err = db.First(&student.Institution, institutionId).Error; err != nil {
+		message := "Instituicao com o id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	parentId := student.Responsible.ID
+	if err = db.First(&student.Responsible, parentId).Error; err != nil {
+		message := "Responsavel com o id " + strconv.FormatInt(parentId, 10) + " nao encontrado(a)."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	db.First(&student.Institution.Owner, student.Institution.UserID)
+
+	missing := CheckStudentMissingFields(student)
+	if missing != "" {
+		message := "Faltando campo de " + missing + " do estudante."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	// Abre uma nova transacao
+	tx := db.Begin()
+
+	if err = tx.Create(&student).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
+		return
+	}
+
+	// Cria uma relacao entre o parente e o estudante
+	parentStudent := models.ParentStudent{}
+	parentStudent.Kinship = kinship
+	parentStudent.Parent = student.Responsible
+	parentStudent.Student = student
+
+	if err = tx.Create(&parentStudent).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
+		return
+	}
+
+	if err = tx.Commit().Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
 		return
 	}
 
@@ -165,6 +252,8 @@ func CreateStudent(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
+
+	student.Institution.Owner.Password = ""
 
 	c.JSON(201, student)
 }
@@ -191,6 +280,29 @@ func UpdateStudent(c *gin.Context) {
 		return
 	}
 
+	institutionId := student.InstitutionID
+	if err = db.First(&student.Institution, institutionId).Error; err != nil {
+		message := "Instituicao com o id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	parentId := student.ParentID
+	if err = db.First(&student.Responsible, parentId).Error; err != nil {
+		message := "Responsavel com o id " + strconv.FormatInt(parentId, 10) + " nao encontrado(a)."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	db.First(&student.Institution.Owner, student.Institution.UserID)
+
+	missing := CheckStudentMissingFields(student)
+	if missing != "" {
+		message := "Faltando campo de " + missing + " do estudante."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Save(&student).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -200,6 +312,8 @@ func UpdateStudent(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
+
+	student.Institution.Owner.Password = ""
 
 	c.JSON(200, student)
 }
@@ -234,7 +348,7 @@ func DeleteStudent(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
-func CheckMissingStudentFields(student models.Student) string {
+func CheckStudentMissingFields(student models.Student) string {
 
 	if student.Name == "" {
 		return "nome (name)"

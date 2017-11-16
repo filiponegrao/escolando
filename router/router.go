@@ -44,6 +44,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/kinships", controllers.GetKinships)
 		api.GET("/kinships/:id", controllers.GetKinship)
+		api.GET("/kinshipsbyterm/:term", controllers.GetKinshipsByName)
 		api.POST("/kinships", controllers.CreateKinship)
 		api.PUT("/kinships/:id", controllers.UpdateKinship)
 		api.DELETE("/kinships/:id", controllers.DeleteKinship)
@@ -92,7 +93,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/students", controllers.GetStudents)
 		api.GET("/students/:id", controllers.GetStudent)
-		api.POST("/students", controllers.CreateStudent)
+		api.POST("/students/:kinship", controllers.CreateStudent)
 		api.PUT("/students/:id", controllers.UpdateStudent)
 		api.DELETE("/students/:id", controllers.DeleteStudent)
 
