@@ -156,6 +156,12 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
+	if register.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&register).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

@@ -156,6 +156,12 @@ func CreateRegisterCurrentStatus(c *gin.Context) {
 		return
 	}
 
+	if registerCurrentStatus.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&registerCurrentStatus).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

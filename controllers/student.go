@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -175,14 +174,25 @@ func CreateStudent(c *gin.Context) {
 		return
 	}
 
+	if student.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	missing := CheckStudentMissingFields(student)
+	if missing != "" {
+		message := "Faltando campo de " + missing + " do estudante."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	kinshipParameter := c.Params.ByName("kinship")
 	if kinshipParameter == "" {
 		message := "Faltando parametro de grau de parentesco(kinship.id) do criador do estudante."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
-	log.Println(kinshipParameter)
 
 	var kinshipId int64
 	if kinshipId, err = strconv.ParseInt(kinshipParameter, 10, 64); err != nil {
@@ -213,13 +223,6 @@ func CreateStudent(c *gin.Context) {
 	}
 
 	db.First(&student.Institution.Owner, student.Institution.UserID)
-
-	missing := CheckStudentMissingFields(student)
-	if missing != "" {
-		message := "Faltando campo de " + missing + " do estudante."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
 
 	// Abre uma nova transacao
 	tx := db.Begin()
@@ -281,6 +284,9 @@ func UpdateStudent(c *gin.Context) {
 	}
 
 	institutionId := student.InstitutionID
+	if student.Institution.ID != 0 {
+		institutionId = student.Institution.ID
+	}
 	if err = db.First(&student.Institution, institutionId).Error; err != nil {
 		message := "Instituicao com o id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
 		c.JSON(400, gin.H{"error": message})
@@ -288,6 +294,9 @@ func UpdateStudent(c *gin.Context) {
 	}
 
 	parentId := student.ParentID
+	if student.Responsible.ID != 0 {
+		parentId = student.Responsible.ID
+	}
 	if err = db.First(&student.Responsible, parentId).Error; err != nil {
 		message := "Responsavel com o id " + strconv.FormatInt(parentId, 10) + " nao encontrado(a)."
 		c.JSON(400, gin.H{"error": message})
@@ -356,6 +365,19 @@ func CheckStudentMissingFields(student models.Student) string {
 
 	if student.Responsible.ID == 0 {
 		return "id do responsavel (\"responsible\": \"id\": id)"
+	}
+
+	if student.Institution.ID == 0 {
+		return "id da instituicao (\"instituicao\": \"id\": id)"
+	}
+
+	return ""
+}
+
+func CheckStudentWithoutParentMissingFields(student models.Student) string {
+
+	if student.Name == "" {
+		return "nome (name)"
 	}
 
 	if student.Institution.ID == 0 {

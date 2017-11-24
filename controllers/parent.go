@@ -157,6 +157,12 @@ func CreateParent(c *gin.Context) {
 		return
 	}
 
+	if parent.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	missing := CheckParentMissingFields(parent)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do responsavel."
@@ -267,7 +273,20 @@ func CheckParentMissingFields(parent models.Parent) string {
 	}
 
 	if parent.UserId == 0 {
-		return "id do responsavel (user_id)"
+		return "id do usuario (user_id)"
+	}
+
+	return ""
+}
+
+func CheckParentWithoutUserMissingFields(parent models.Parent) string {
+
+	if parent.Email == "" {
+		return "email"
+	}
+
+	if parent.Name == "" {
+		return "nome (name)"
 	}
 
 	return ""

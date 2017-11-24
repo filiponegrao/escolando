@@ -44,7 +44,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/kinships", controllers.GetKinships)
 		api.GET("/kinships/:id", controllers.GetKinship)
-		api.GET("/kinshipsbyterm/:term", controllers.GetKinshipsByName)
+		api.GET("/kinships_by_name/:name", controllers.GetKinshipsByName)
 		api.POST("/kinships", controllers.CreateKinship)
 		api.PUT("/kinships/:id", controllers.UpdateKinship)
 		api.DELETE("/kinships/:id", controllers.DeleteKinship)
@@ -113,6 +113,8 @@ func Initialize(r *gin.Engine) {
 		api.GET("/users/:id", controllers.GetUser)
 		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
+		api.POST("/user_parent", controllers.CreateUserParent)
+		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
 
@@ -124,6 +126,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/user_access_profiles", controllers.GetUserAccessProfiles)
 		api.GET("/user_access_profiles/:id", controllers.GetUserAccessProfile)
+		api.GET("/user_access_profiles_by_name/:name", controllers.GetUserAccessProfilesByName)
 		api.POST("/user_access_profiles", controllers.CreateUserAccessProfile)
 		api.PUT("/user_access_profiles/:id", controllers.UpdateUserAccessProfile)
 		api.DELETE("/user_access_profiles/:id", controllers.DeleteUserAccessProfile)

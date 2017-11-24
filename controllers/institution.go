@@ -137,13 +137,16 @@ func GetUserInstitutions(c *gin.Context) {
 	// Recupera os ids de todas as institiocoes que o usuario possui acesso
 	userId := c.Params.ByName("id")
 	institutionsId := []int64{}
-	rows, err := db.Table("user_accesses").Select("institution_id").Where("user_id", userId).Find(&institutionsId).Rows()
+	rows, err := db.Table("user_accesses").Select("institution_id").Where("user_id = ?", userId).Find(&institutionsId).Rows()
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	for rows.Next() {
+
+		log.Println("passou")
+
 		var id int64
 		if err := rows.Scan(&id); err == nil {
 			institutionsId = append(institutionsId, id)
@@ -297,6 +300,12 @@ func CreateInstitution(c *gin.Context) {
 		return
 	}
 
+	if institution.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	missing := CheckInstitutionMissingField(institution)
 	if missing != "" {
 		message := "Faltando campo " + missing + " da instituicao"
@@ -312,7 +321,49 @@ func CreateInstitution(c *gin.Context) {
 		return
 	}
 
-	if err := db.Create(&institution).Error; err != nil {
+	tx := db.Begin()
+
+	if err = tx.Create(&institution).Error; err != nil {
+		if err.Error() == "UNIQUE constraint failed: institutions.id" {
+			c.JSON(400, gin.H{"error": "Ja existe uma instituicao com o id passado."})
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
+		}
+		return
+	}
+
+	// Define o acesso para o dono da instituicao
+	// Para isso procura por um acesso de dono
+	var profile models.UserAccessProfile
+
+	profileErr := tx.Where("name like ?", "owner").First(&profile).Error
+
+	// Se nao encontrar um perfil de acesso OWNER cria um:
+	if profileErr != nil {
+
+		profile.Name = "OWNER"
+		profile.AccessContent = ""
+
+		if err = tx.Create(&profile).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	ownerAccess := models.UserAccess{}
+	ownerAccess.Institution = institution
+	ownerAccess.InstitutionID = institution.ID
+	ownerAccess.User = institution.Owner
+	ownerAccess.UserID = institution.Owner.ID
+	ownerAccess.UserAccessProfile = profile
+	ownerAccess.UserAccessProfileID = profile.ID
+
+	if err = tx.Create(&ownerAccess).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err = tx.Commit().Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -350,6 +401,9 @@ func UpdateInstitution(c *gin.Context) {
 	}
 
 	userId := institution.UserID
+	if institution.Owner.ID != 0 {
+		userId = institution.Owner.ID
+	}
 
 	err = db.First(&institution.Owner, userId).Error
 	if err != nil {

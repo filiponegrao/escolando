@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
@@ -125,14 +124,12 @@ func GetKinshipsByName(c *gin.Context) {
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 	queryFields := helper.QueryFields(models.Kinship{}, fields)
 
-	term := c.Params.ByName("term")
+	term := c.Params.ByName("name")
 
 	if term == "" {
-		c.JSON(400, gin.H{"error": "Faltando termo a ser procurado no nome (term)"})
+		c.JSON(400, gin.H{"error": "Faltando termo a ser procurado no nome (name)"})
 		return
 	}
-
-	log.Println(term)
 
 	predicate := "%" + term + "%"
 
@@ -250,6 +247,12 @@ func CreateKinship(c *gin.Context) {
 
 	if err := c.Bind(&kinship); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if kinship.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 

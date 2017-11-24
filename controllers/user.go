@@ -171,9 +171,81 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
+	if user.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	user.Password = tools.EncryptTextSHA512(user.Password)
 
 	if err := db.Create(&user).Error; err != nil {
+		if err.Error() == "UNIQUE constraint failed: users.id" {
+			c.JSON(400, gin.H{"error": "Ja existe um usuário com o id passado."})
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
+		}
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	c.JSON(201, user)
+}
+
+func CreateUserParent(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	user := models.User{}
+
+	if err := c.Bind(&user); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if user.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	missing := CheckUserMissingFields(user)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do usuario."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	user.Password = tools.EncryptTextSHA512(user.Password)
+
+	tx := db.Begin()
+
+	if err := tx.Create(&user).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	parent := models.Parent{}
+	parent.Email = user.Email
+	parent.Name = user.Name
+	parent.Phone = user.Phone1
+	parent.ProfileImageUrl = user.ProfileImageUrl
+	parent.UserId = user.ID
+
+	if err = tx.Create(&parent).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err = tx.Commit().Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

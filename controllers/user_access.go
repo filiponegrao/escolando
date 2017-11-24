@@ -185,6 +185,12 @@ func CreateUserAccess(c *gin.Context) {
 		return
 	}
 
+	if userAccess.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	// AASERT: Verifica campos faltantes
 	missing := CheckUserAccessMissingField(userAccess)
 	if missing != "" {
@@ -259,29 +265,42 @@ func UpdateUserAccess(c *gin.Context) {
 	}
 
 	// ASSERT: Verifica se o usuario existe de fato
-	err = db.First(&userAccess.User, userAccess.UserID).Error
+	userId := userAccess.UserID
+	if userAccess.User.ID != 0 {
+		userId = userAccess.User.ID
+	}
+	err = db.First(&userAccess.User, userId).Error
 	if err != nil {
-		id := strconv.FormatInt(userAccess.User.ID, 10)
+		id := strconv.FormatInt(userId, 10)
 		content := gin.H{"error": "Usuario com o id " + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
 
 	// ASSERT: Verifica se a instituicao existe de fato
-	err = db.First(&userAccess.Institution, userAccess.InstitutionID).Error
+	institutionId := userAccess.InstitutionID
+	if userAccess.Institution.ID != 0 {
+		institutionId = userAccess.Institution.ID
+	}
+	err = db.First(&userAccess.Institution, institutionId).Error
 	if err != nil {
-		id := strconv.FormatInt(userAccess.Institution.ID, 10)
+		id := strconv.FormatInt(institutionId, 10)
 		content := gin.H{"error": "Instituicao com o id " + id + " não encontrada."}
 		c.JSON(404, content)
 		return
 	}
 
+	// Recupera o dono da instituicao. Nao ha necessidade de assertivas
 	db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
 
 	// ASSERT: Verifica se o perfil de acesso existe de fato
-	err = db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID).Error
+	profileId := userAccess.UserAccessProfileID
+	if userAccess.UserAccessProfile.ID != 0 {
+		profileId = userAccess.UserAccessProfile.ID
+	}
+	err = db.First(&userAccess.UserAccessProfile, profileId).Error
 	if err != nil {
-		id := strconv.FormatInt(userAccess.UserAccessProfile.ID, 10)
+		id := strconv.FormatInt(profileId, 10)
 		content := gin.H{"error": "Perfil de acesso com o id " + id + " não encontrado."}
 		c.JSON(404, content)
 		return
