@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -118,7 +119,7 @@ func GetInCharge(c *gin.Context) {
 	queryFields := helper.QueryFields(models.InCharge{}, fields)
 
 	if err := db.Select(queryFields).First(&inCharge, id).Error; err != nil {
-		content := gin.H{"error": "in_charge with id#" + id + " not found"}
+		content := gin.H{"error": "Encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -162,6 +163,20 @@ func CreateInCharge(c *gin.Context) {
 		return
 	}
 
+	missing := CheckInChargeMissingFields(inCharge)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do responsável."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var user models.User
+	if err = db.First(&user, inCharge.UserId).Error; err != nil {
+		message := "Usuario com o id " + strconv.FormatInt(inCharge.UserId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&inCharge).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -187,13 +202,20 @@ func UpdateInCharge(c *gin.Context) {
 	inCharge := models.InCharge{}
 
 	if db.First(&inCharge, id).Error != nil {
-		content := gin.H{"error": "in_charge with id#" + id + " not found"}
+		content := gin.H{"error": "Encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
 
 	if err := c.Bind(&inCharge); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckInChargeMissingFields(inCharge)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do encarregado."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -222,7 +244,7 @@ func DeleteInCharge(c *gin.Context) {
 	inCharge := models.InCharge{}
 
 	if db.First(&inCharge, id).Error != nil {
-		content := gin.H{"error": "in_charge with id#" + id + " not found"}
+		content := gin.H{"error": "Encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -238,4 +260,34 @@ func DeleteInCharge(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckInChargeMissingFields(role models.InCharge) string {
+
+	if role.Email == "" {
+		return "email"
+	}
+
+	if role.Name == "" {
+		return "nome (name)"
+	}
+
+	if role.UserId == 0 {
+		return "id do usuario (user_id)"
+	}
+
+	return ""
+}
+
+func CheckInChargeWithoutUserMissingFields(role models.InCharge) string {
+
+	if role.Email == "" {
+		return "email"
+	}
+
+	if role.Name == "" {
+		return "nome (name)"
+	}
+
+	return ""
 }

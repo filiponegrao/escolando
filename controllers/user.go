@@ -258,6 +258,68 @@ func CreateUserParent(c *gin.Context) {
 	c.JSON(201, user)
 }
 
+func CreateUserInCharge(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	user := models.User{}
+
+	if err := c.Bind(&user); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if user.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	missing := CheckUserMissingFields(user)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do usuario."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	user.Password = tools.EncryptTextSHA512(user.Password)
+
+	tx := db.Begin()
+
+	if err := tx.Create(&user).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	incharge := models.InCharge{}
+	incharge.Email = user.Email
+	incharge.Name = user.Name
+	incharge.Phone = user.Phone1
+	incharge.ProfileImageUrl = user.ProfileImageUrl
+	incharge.UserId = user.ID
+
+	if err = tx.Create(&incharge).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err = tx.Commit().Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	c.JSON(201, user)
+}
+
 func UpdateUser(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {

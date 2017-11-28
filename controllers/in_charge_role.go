@@ -97,6 +97,100 @@ func GetInChargeRoles(c *gin.Context) {
 	}
 }
 
+func GetInChargeRolesByName(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.InChargeRole{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, err = parameter.Paginate(db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db = parameter.SetPreloads(db)
+	db = parameter.SortRecords(db)
+	db = parameter.FilterFields(db)
+	inChargeRoles := []models.InChargeRole{}
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+	queryFields := helper.QueryFields(models.InChargeRole{}, fields)
+
+	term := c.Params.ByName("name")
+
+	if term == "" {
+		c.JSON(400, gin.H{"error": "Faltando termo a ser procurado no nome (name)"})
+		return
+	}
+
+	predicate := "%" + term + "%"
+
+	if err := db.Select(queryFields).Where("name LIKE ?", predicate).Find(&inChargeRoles).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	index := 0
+
+	if len(inChargeRoles) > 0 {
+		index = int(inChargeRoles[len(inChargeRoles)-1].ID)
+	}
+
+	if err := parameter.SetHeaderLink(c, index); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	if _, ok := c.GetQuery("stream"); ok {
+		enc := json.NewEncoder(c.Writer)
+		c.Status(200)
+
+		for _, inChargeRole := range inChargeRoles {
+			fieldMap, err := helper.FieldToMap(inChargeRole, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			if err := enc.Encode(fieldMap); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	} else {
+		fieldMaps := []map[string]interface{}{}
+
+		for _, inChargeRole := range inChargeRoles {
+			fieldMap, err := helper.FieldToMap(inChargeRole, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			fieldMaps = append(fieldMaps, fieldMap)
+		}
+
+		if _, ok := c.GetQuery("pretty"); ok {
+			c.IndentedJSON(200, fieldMaps)
+		} else {
+			c.JSON(200, fieldMaps)
+		}
+	}
+}
+
 func GetInChargeRole(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
@@ -118,7 +212,7 @@ func GetInChargeRole(c *gin.Context) {
 	queryFields := helper.QueryFields(models.InChargeRole{}, fields)
 
 	if err := db.Select(queryFields).First(&inChargeRole, id).Error; err != nil {
-		content := gin.H{"error": "in_charge_role with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -162,6 +256,13 @@ func CreateInChargeRole(c *gin.Context) {
 		return
 	}
 
+	missing := CheckInChargeRoleMissingFields(inChargeRole)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do perfil de encarregado"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&inChargeRole).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -187,13 +288,20 @@ func UpdateInChargeRole(c *gin.Context) {
 	inChargeRole := models.InChargeRole{}
 
 	if db.First(&inChargeRole, id).Error != nil {
-		content := gin.H{"error": "in_charge_role with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
 
 	if err := c.Bind(&inChargeRole); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckInChargeRoleMissingFields(inChargeRole)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do perfil de encarregado"
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -222,7 +330,7 @@ func DeleteInChargeRole(c *gin.Context) {
 	inChargeRole := models.InChargeRole{}
 
 	if db.First(&inChargeRole, id).Error != nil {
-		content := gin.H{"error": "in_charge_role with id#" + id + " not found"}
+		content := gin.H{"error": "Perfil de encarregado com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -238,4 +346,11 @@ func DeleteInChargeRole(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckInChargeRoleMissingFields(role models.InChargeRole) string {
+	if role.Name == "" {
+		return "nome (name)"
+	}
+	return ""
 }

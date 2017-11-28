@@ -304,7 +304,7 @@ func CreateParentAndStudent(c *gin.Context) {
 	// Abre uma transacao no banco
 	tx := db.Begin()
 
-	if err := tx.Create(&user).Error; err != nil {
+	if err = tx.Create(&user).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

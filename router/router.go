@@ -114,6 +114,7 @@ func Initialize(r *gin.Engine) {
 		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
 		api.POST("/user_parent", controllers.CreateUserParent)
+		api.POST("/user_incharge", controllers.CreateUserInCharge)
 		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)

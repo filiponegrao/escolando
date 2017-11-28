@@ -256,9 +256,9 @@ func CreateUserAccessProfile(c *gin.Context) {
 		return
 	}
 
-	missing := CheckMissingProfileAccess(userAccessProfile)
+	missing := CheckProfileAccessMissingFields(userAccessProfile)
 	if missing != "" {
-		message := "Faltando campo " + missing + "do perfil de acesso"
+		message := "Faltando campo " + missing + " do perfil de acesso"
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -298,9 +298,9 @@ func UpdateUserAccessProfile(c *gin.Context) {
 		return
 	}
 
-	missing := CheckMissingProfileAccess(userAccessProfile)
+	missing := CheckProfileAccessMissingFields(userAccessProfile)
 	if missing != "" {
-		message := "Faltando campo " + missing + "do perfil de acesso"
+		message := "Faltando campo " + missing + " do perfil de acesso"
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -348,7 +348,7 @@ func DeleteUserAccessProfile(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
-func CheckMissingProfileAccess(profile models.UserAccessProfile) string {
+func CheckProfileAccessMissingFields(profile models.UserAccessProfile) string {
 	if profile.Name == "" {
 		return "nome (name)"
 	}
