@@ -1,0 +1,1158 @@
+{
+	"info": {
+		"name": "Escolando",
+		"_postman_id": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Usuario de Teste\",\n\t\"email\": \"teste@escolando.com\",\n\t\"password\": \"teste\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Institutions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users/3/institutions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"3",
+								"institutions"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cpf\": \"111.111.111.11\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/users/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/users/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create User Parent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Parente de Teste 2\",\n\t\"email\": \"parente2@escolando.com\",\n\t\"password\": \"teste\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_parent",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_parent"
+							]
+						},
+						"description": "Cria um usuário e um perfil de parente.\nO perfil de parente é importante pois será a interface de contato do membro da família com a escola.\nA outra opcao consiste em alguns passos adicionais:\n- Criar um usuario;\n- Criar um parente, passando o id do usuario como parametro;"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Parent User And Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"student\": {\n\t\t\"name\": \"Estudante Filho do Testerson\",\n\t\t\"institution\": {\n\t\t\t\"id\": 1\n\t\t}\n\t},\n\t\"parent\": {\n\t\t\"name\": \"Testerson\",\n\t\t\"email\": \"testerson@gmail.com\"\n\t},\n\t\"kinship\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_parent_and_student",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_parent_and_student"
+							]
+						},
+						"description": "Cria um estudante, um usuario e um perfil de parente, no qual representa o responsável do novo estudante criado.\n\nEm outras palavras cria o responsável legal (e seus devidos acessos) e o estudante ao mesmo tempo."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Institutions",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Institution",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Instituicao de Teste\",\n\t\"email\": \"instituicaodeteste@escolando.com\",\n\t\"owner\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/institutions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"institutions"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Institution",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/institutions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"institutions",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Institutions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/institutions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"institutions"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Institution",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cnpj\": \"222.222.222.22\",\n\t\"address_postal\": \"2222-000\",\n\t\"owner\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/institutions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"institutions",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Institution",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/institutions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"institutions",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Access Profiles",
+			"description": "",
+			"item": [
+				{
+					"name": "Create User Access Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ADMIN\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_access_profiles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Access Profiles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_access_profiles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Access Profiles By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_access_profiles_by_name/teste",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles_by_name",
+								"teste"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Access Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_access_profiles/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Access Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"ADMIN\",\n\t\"access_content\": \"teste\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_access_profiles/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Access Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_access_profiles/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_access_profiles",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Access",
+			"description": "",
+			"item": [
+				{
+					"name": "Create User Access",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": {\n\t\t\"id\": 1\n\t},\n\t\"institution\": {\n\t\t\"id\": 1\n\t},\n\t\"user_access_profile\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_accesses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_accesses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Accesses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_accesses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_accesses"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_accesses/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_accesses",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Access",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/user_accesses/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_accesses",
+								"3"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Access",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\" : {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/user_accesses/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user_accesses",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Estudante de Teste\",\n\t\"responsible\": {\n\t\t\"id\": 1\n\t},\n\t\"institution\": {\n\t\t\"id\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/students/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/students/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"profile_image_url\": \"http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/students/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/students/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"students",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Parents",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Parent",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Responsavel de Teste\",\n\t\"email\": \"responsavel@escolando.com\",\n\t\"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/parents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parents"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parents",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parents"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parent",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parents",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parent",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"phone\": \"99999-9999\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/parents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parents",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Parent",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parents/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parents",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kinship",
+			"description": "",
+			"item": [
+				{
+					"name": "Create Kinship",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"GRAU DE PARENTESCO DE TESTE\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/kinships",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinships"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kinships",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/kinships",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinships"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kinships By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/kinshipsbyterm/teste",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinshipsbyterm",
+								"teste"
+							]
+						},
+						"description": "Retorna todos os graus de parentesco que possuem o termo passado como parametro"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Kinship",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/kinships/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinships",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Kinship",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Grau de Parentesco de Teste\",\n\t\"access_content\": \"100100111\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/kinships/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinships",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Kinship",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/kinships/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"kinships",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ParentStudent",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Parent Student Relations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parent_students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parent_students"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Parent Student Relation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parent_students/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parent_students",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Parent Student Relation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"student\": {\n\t\t\"id\": 1\n\t},\n\t\"parent\": {\n\t\t\"id\": 2\n\t},\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/parent_students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parent_students"
+							]
+						},
+						"description": "Cria a relacao entre um parente e um estudante.\nPara que esse método possa ser executado e concluido com sucesso, é necessário que ja exista um parente criado.\nEssa requisição não cria parentes, estudantes ou graus de parentesco."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parent Student Relation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{url}}/parent_students/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parent_students",
+								"2"
+							]
+						},
+						"description": "Cria a relacao entre um parente e um estudante.\nPara que esse método possa ser executado e concluido com sucesso, é necessário que ja exista um parente criado.\nEssa requisição não cria parentes, estudantes ou graus de parentesco."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Parent Student Relation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/parent_students/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"parent_students",
+								"2"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "InCharge",
+			"description": "",
+			"item": [
+				{
+					"name": "Get InCharges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/in_charge_roles",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"in_charge_roles"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get InCharge",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/in_charges/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"in_charges",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get InCharges",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Encarregado de Teste\",\n\t\"email\": \"encarregado@escolando.com\",\n\t\"user_id\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/in_charges",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"in_charges"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
