@@ -239,3 +239,11 @@ func DeleteRegisterStatus(c *gin.Context) {
 
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
+
+func ChecRegisterStatusMissingField(status models.RegisterStatus) string {
+	if status.Name == "" {
+		return "nome"
+	}
+
+	return ""
+}

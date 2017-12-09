@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -162,6 +163,21 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
+	missing := CheckRegisterMissingFields(register)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do recado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var targetUser models.User
+	targetId := register.TargetId
+	if err = db.First(&targetUser, targetId).Error; err != nil {
+		message := "Usuario com id " + strconv.FormatInt(targetId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := db.Create(&register).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -238,4 +254,18 @@ func DeleteRegister(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
+}
+
+func CheckRegisterMissingFields(register models.Register) string {
+	if register.RegisterType.ID == 0 {
+		return "id do tipo (\"register_type\":{\"id\": id})"
+	}
+	if register.SenderId == 0 {
+		return "id do remetente"
+	}
+	if register.TargetId == 0 {
+		return "id do destinatario"
+	}
+
+	return ""
 }

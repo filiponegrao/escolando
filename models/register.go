@@ -10,10 +10,10 @@ type Register struct {
 	Text           string       `gorm:"type:text;not null" json:"text" form:"text"`
 	RegisterType   RegisterType `gorm:"ForeignKey:RegisterTypeID;not null" json:"register_type"`
 	RegisterTypeID int64
-	SenderId       int64   `gorm:"not null" json:"sender_id" form:"sender_id"`
-	TargetId       int64   `gorm:"not null" json:"target_id" form:"target_id"`
-	Student        Student `gorm:"ForeignKey:StudentID;not null" json:"student" form:"student"`
-	StudentID      int64
+	SenderId       int64          `gorm:"not null" json:"sender_id" form:"sender_id"`
+	TargetId       int64          `gorm:"not null" json:"target_id" form:"target_id"`
+	Status         RegisterStatus `gorm:"ForeignKey:StatusId;not null" json:"status"`
+	StatusId       int64
 	CreatedAt      *time.Time `json:"created_at" form:"created_at"`
 	UpdatedAt      *time.Time `json:"updated_at" form:"updated_at"`
 }

@@ -38,7 +38,6 @@ func Connect() *gorm.DB {
 			&models.Parent{},
 			&models.ParentStudent{},
 			&models.Register{},
-			&models.RegisterCurrentStatus{},
 			&models.RegisterStatus{},
 			&models.RegisterType{},
 			&models.SchoolGrade{},
