@@ -67,12 +67,6 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
 
-		api.GET("/register_current_statuses", controllers.GetRegisterCurrentStatuses)
-		api.GET("/register_current_statuses/:id", controllers.GetRegisterCurrentStatus)
-		api.POST("/register_current_statuses", controllers.CreateRegisterCurrentStatus)
-		api.PUT("/register_current_statuses/:id", controllers.UpdateRegisterCurrentStatus)
-		api.DELETE("/register_current_statuses/:id", controllers.DeleteRegisterCurrentStatus)
-
 		api.GET("/register_statuses", controllers.GetRegisterStatuses)
 		api.GET("/register_statuses/:id", controllers.GetRegisterStatus)
 		api.POST("/register_statuses", controllers.CreateRegisterStatus)
