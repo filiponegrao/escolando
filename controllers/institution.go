@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -145,8 +144,6 @@ func GetUserInstitutions(c *gin.Context) {
 
 	for rows.Next() {
 
-		log.Println("passou")
-
 		var id int64
 		if err := rows.Scan(&id); err == nil {
 			institutionsId = append(institutionsId, id)
@@ -155,8 +152,6 @@ func GetUserInstitutions(c *gin.Context) {
 			return
 		}
 	}
-
-	log.Println(institutionsId)
 
 	institutions := []models.Institution{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))

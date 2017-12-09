@@ -110,6 +110,124 @@ func GetStudents(c *gin.Context) {
 	}
 }
 
+func GetStudentsOfParent(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.Student{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, err = parameter.Paginate(db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db = parameter.SetPreloads(db)
+	db = parameter.SortRecords(db)
+	db = parameter.FilterFields(db)
+
+	// Recupera os ids de todas os estudantes que o parente possui relacao
+	parentId := c.Params.ByName("id")
+	sutdentsId := []int64{}
+	rows, err := db.Table("parent_students").Select("student_id").Where("parent_id = ?", parentId).Find(&sutdentsId).Rows()
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	for rows.Next() {
+
+		var id int64
+		if err := rows.Scan(&id); err == nil {
+			sutdentsId = append(sutdentsId, id)
+		} else {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	students := []models.Student{}
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+	queryFields := helper.QueryFields(models.Student{}, fields)
+
+	if err := db.Select(queryFields).Where(sutdentsId).Find(&students).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	index := 0
+
+	if len(students) > 0 {
+		index = int(students[len(students)-1].ID)
+	}
+
+	if err := parameter.SetHeaderLink(c, index); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	if _, ok := c.GetQuery("stream"); ok {
+		enc := json.NewEncoder(c.Writer)
+		c.Status(200)
+
+		for _, student := range students {
+
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+
+			fieldMap, err := helper.FieldToMap(student, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			if err := enc.Encode(fieldMap); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	} else {
+		fieldMaps := []map[string]interface{}{}
+
+		for _, student := range students {
+
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+
+			fieldMap, err := helper.FieldToMap(student, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			fieldMaps = append(fieldMaps, fieldMap)
+		}
+
+		if _, ok := c.GetQuery("pretty"); ok {
+			c.IndentedJSON(200, fieldMaps)
+		} else {
+			c.JSON(200, fieldMaps)
+		}
+	}
+}
+
 func GetStudent(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
