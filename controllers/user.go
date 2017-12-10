@@ -387,6 +387,46 @@ func DeleteUser(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
+func Login(c *gin.Context) {
+
+	db := dbpkg.DBInstance(c)
+
+	email := c.PostForm("email")
+	password := c.PostForm("password")
+
+	if email == "" {
+		message := "Faltando email"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	if password == "" {
+		message := "Faltando senha (password)"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var user models.User
+
+	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
+		message := "Usuario com email " + email + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	encPassword := tools.EncryptTextSHA512(password)
+
+	if encPassword != user.Password {
+		message := "Senha incorreta"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	user.Password = ""
+
+	c.JSON(200, user)
+}
+
 func CheckUserMissingFields(user models.User) string {
 
 	if user.Name == "" {

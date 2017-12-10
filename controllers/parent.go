@@ -142,6 +142,49 @@ func GetParent(c *gin.Context) {
 	}
 }
 
+func GetUserParent(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.Parent{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db = parameter.SetPreloads(db)
+	parent := models.Parent{}
+	id := c.Params.ByName("id")
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+
+	if err = db.Where("user_id = ?", id).First(&parent).Error; err != nil {
+		content := gin.H{"error": "Parente com o id de usuario " + id + " nao encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	fieldMap, err := helper.FieldToMap(parent, fields)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	if _, ok := c.GetQuery("pretty"); ok {
+		c.IndentedJSON(200, fieldMap)
+	} else {
+		c.JSON(200, fieldMap)
+	}
+}
+
 func CreateParent(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {

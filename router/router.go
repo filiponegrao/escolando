@@ -11,7 +11,6 @@ func Initialize(r *gin.Engine) {
 
 	api := r.Group("")
 	{
-
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
 		api.POST("/classes", controllers.CreateClass)
@@ -51,6 +50,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/parents", controllers.GetParents)
 		api.GET("/parents/:id", controllers.GetParent)
+		api.GET("/parent_user/:id", controllers.GetUserParent)
 		api.POST("/parents", controllers.CreateParent)
 		api.PUT("/parents/:id", controllers.UpdateParent)
 		api.DELETE("/parents/:id", controllers.DeleteParent)
@@ -114,6 +114,7 @@ func Initialize(r *gin.Engine) {
 		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
+		api.POST("/login", controllers.Login)
 
 		api.GET("/user_accesses", controllers.GetUserAccesses)
 		api.GET("/user_accesses/:id", controllers.GetUserAccess)
