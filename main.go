@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	"strconv"
 
@@ -20,5 +21,12 @@ func main() {
 		}
 	}
 
+	// Inicia configuracoes basicas
+	if err := server.InitConfigurations(*database); err != nil {
+		log.Println(err)
+		return
+	}
+
 	s.Run(":" + port)
+
 }

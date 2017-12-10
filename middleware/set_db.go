@@ -8,6 +8,7 @@ import (
 func SetDBtoContext(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Set("DB", db)
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Next()
 	}
 }

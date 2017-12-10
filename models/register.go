@@ -12,6 +12,7 @@ type Register struct {
 	RegisterTypeID int64
 	SenderId       int64          `gorm:"not null" json:"sender_id" form:"sender_id"`
 	TargetId       int64          `gorm:"not null" json:"target_id" form:"target_id"`
+	StudentId      int64          `gorm:"not null" json:"student_id" form:"student_id"`
 	Status         RegisterStatus `gorm:"ForeignKey:StatusId;not null" json:"status"`
 	StatusId       int64
 	CreatedAt      *time.Time `json:"created_at" form:"created_at"`

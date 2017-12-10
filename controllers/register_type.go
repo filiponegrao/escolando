@@ -239,3 +239,11 @@ func DeleteRegisterType(c *gin.Context) {
 
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
+
+func CheckRegisterTypeMissingFields(t models.RegisterType) string {
+	if t.Name == "" {
+		return "nome"
+	}
+
+	return ""
+}

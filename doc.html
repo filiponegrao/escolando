@@ -298,6 +298,10 @@ pre code {
                 </li>
                   
                 <li>
+                    <a href="#request-students-get-students-of-parent">Get Students Of Parent</a>
+                </li>
+                  
+                <li>
                     <a href="#request-students-update-student">Update Student</a>
                 </li>
                   
@@ -1540,6 +1544,43 @@ Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-get-student-example-http">
                                         <pre><code class="hljs http">GET /students/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-students-get-students-of-parent">
+                                Get Students Of Parent
+                                <a href="#request-students-get-students-of-parent"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div><p>Método responsável por recuperar todos os estudantes que um parente possui relacionamento.</p>
+
+<p>O parametro necessário é o parent_id.</p>
+</div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-students-of-parent-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-students-of-parent-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-students-of-parent-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/students_of_parent/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-students-of-parent-example-http">
+                                        <pre><code class="hljs http">GET /students_of_parent/1 HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>

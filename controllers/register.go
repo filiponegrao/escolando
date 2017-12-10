@@ -66,6 +66,7 @@ func GetRegisters(c *gin.Context) {
 		c.Status(200)
 
 		for _, register := range registers {
+
 			fieldMap, err := helper.FieldToMap(register, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -152,7 +153,7 @@ func CreateRegister(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	register := models.Register{}
 
-	if err := c.Bind(&register); err != nil {
+	if err = c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -177,6 +178,17 @@ func CreateRegister(c *gin.Context) {
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
+
+	var student models.Student
+	studentId := register.StudentId
+	if err = db.First(&student, studentId).Error; err != nil {
+		message := "Estudante com id " + strconv.FormatInt(studentId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	register.Status.ID = 1
+	register.StatusId = 1
 
 	if err := db.Create(&register).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -265,6 +277,9 @@ func CheckRegisterMissingFields(register models.Register) string {
 	}
 	if register.TargetId == 0 {
 		return "id do destinatario"
+	}
+	if register.StudentId == 0 {
+		return "id do estudante"
 	}
 
 	return ""
