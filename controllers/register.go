@@ -273,13 +273,13 @@ func CheckRegisterMissingFields(register models.Register) string {
 		return "id do tipo (\"register_type\":{\"id\": id})"
 	}
 	if register.SenderId == 0 {
-		return "id do remetente"
+		return "id do remetente (\"target_id\":id)"
 	}
 	if register.TargetId == 0 {
-		return "id do destinatario"
+		return "id do destinatario (\"sender_id\": id)"
 	}
 	if register.StudentId == 0 {
-		return "id do estudante"
+		return "id do estudante (\"student_id\": id)"
 	}
 
 	return ""
