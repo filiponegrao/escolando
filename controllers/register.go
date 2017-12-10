@@ -277,8 +277,8 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
-	if err = db.First(&register.RegisterType, register.RegisterTypeID).Error; err != nil {
-		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterTypeID, 10) + " nao encontrado."
+	if err = db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
+		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -340,6 +340,28 @@ func UpdateRegister(c *gin.Context) {
 
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	var statusId int64 = register.StatusId
+	if register.Status.ID != 0 {
+		statusId = register.Status.ID
+	}
+
+	if err = db.First(&register.Status, statusId).Error; err != nil {
+		message := "Status de registro com id " + strconv.FormatInt(statusId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var typeId int64 = register.RegisterTypeID
+	if register.RegisterType.ID != 0 {
+		typeId = register.RegisterType.ID
+	}
+
+	if err = db.First(&register.RegisterType, typeId).Error; err != nil {
+		message := "Tipo de registro com id " + strconv.FormatInt(typeId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
