@@ -72,11 +72,56 @@
 				"1a871413-41a5-1a42-dcd1-05084f21ac83",
 				"00724a93-8922-d7c1-0f89-4b549f91522b",
 				"a1b7b2d5-33ec-035a-973f-a28b7a9d4ddd",
-				"0cf773a5-9398-9369-b3a7-af34b80abb37"
+				"0cf773a5-9398-9369-b3a7-af34b80abb37",
+				"3a4c2fc9-1e19-6564-99a8-c5984e30dafc"
 			],
 			"owner": "408272",
 			"folders_order": [],
 			"id": "9f819485-ba34-6fbd-193c-bbcbd0d13214"
+		},
+		{
+			"name": "Register Status",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"order": [
+				"fc2391d5-d514-f70d-4b2b-5ae5b180f232",
+				"30aee54e-4236-8583-b026-57baeaf37bf7",
+				"8708f09e-e8cc-5015-ee3c-0cb747a93e6e"
+			],
+			"owner": "408272",
+			"folders_order": [],
+			"id": "33266ba6-b8dc-7f5b-4a68-a5835e74c94e"
+		},
+		{
+			"name": "Register Types",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"order": [
+				"437117ef-4c1a-0400-e0a7-93680143ff56",
+				"e185e846-b2d4-73e3-55d9-99ab50ac746e",
+				"477aa265-a46e-459f-47b8-dbbbaf88573b",
+				"7022a598-ea02-d324-2b7b-f131eaa65e36",
+				"43f88be0-454c-d8fb-9b7c-9e884021ef2a"
+			],
+			"owner": "408272",
+			"folders_order": [],
+			"id": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
+		},
+		{
+			"name": "Registers",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"order": [
+				"18665741-4ac4-0927-e189-365d269685bd",
+				"26fa63c6-6459-e65f-fdbb-8df38913f441",
+				"e49f3ee6-ec8e-622d-6f80-2af74f2c8083",
+				"1bd60328-7f2e-e66a-e6c9-45778c74a80d",
+				"394d279c-18af-6eea-502d-7f51b3fb75b3",
+				"9db2f641-cd3d-7640-a3eb-f215d1abd79c"
+			],
+			"owner": "408272",
+			"folders_order": [],
+			"id": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
 		},
 		{
 			"name": "Students",
@@ -137,7 +182,8 @@
 				"8a52a136-0018-93f0-ae78-60d799e00fb8",
 				"63d00dcd-de2c-2e6c-ecfa-8d2320358190",
 				"56c46384-4ba7-54be-564f-a5bed3dd6d5b",
-				"1b7aef2b-6e9e-6d9e-cf09-48213f2ce428"
+				"1b7aef2b-6e9e-6d9e-cf09-48213f2ce428",
+				"96f3200a-e633-16df-101b-add7d9c4acb9"
 			],
 			"owner": "408272",
 			"folders_order": [],
@@ -153,7 +199,10 @@
 		"9f819485-ba34-6fbd-193c-bbcbd0d13214",
 		"cf83f85b-4ff0-7771-ac6c-4f9f4723c29d",
 		"da1634b3-f5e4-03ab-ff19-c656012da744",
-		"b1fcd257-723c-0364-0f18-572859c2f80f"
+		"b1fcd257-723c-0364-0f18-572859c2f80f",
+		"33266ba6-b8dc-7f5b-4a68-a5835e74c94e",
+		"e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
+		"97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
 	],
 	"timestamp": 1509650058672,
 	"owner": "408272",
@@ -269,6 +318,30 @@
 			"rawModeData": "{\n\t\"name\": \"ADMIN\",\n\t\"access_content\": \"teste\"\n}"
 		},
 		{
+			"id": "18665741-4ac4-0927-e189-365d269685bd",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/registers",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Registers",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512927088563,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
+		},
+		{
 			"id": "192d319f-7f15-75b3-91cd-4bcf2b520db3",
 			"headers": "",
 			"headerData": [],
@@ -348,6 +421,27 @@
 			"rawModeData": "{\n\t\"student\": {\n\t\t\"name\": \"Estudante Filho do Testerson\",\n\t\t\"institution\": {\n\t\t\t\"id\": 1\n\t\t}\n\t},\n\t\"parent\": {\n\t\t\"name\": \"Testerson\",\n\t\t\"email\": \"testerson@gmail.com\"\n\t},\n\t\"kinship\": {\n\t\t\"id\": 1\n\t}\n}"
 		},
 		{
+			"id": "1bd60328-7f2e-e66a-e6c9-45778c74a80d",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/registers/2",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512938454694,
+			"name": "Delete Register",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": []
+		},
+		{
 			"id": "2025fba0-0a50-a721-c7cd-b2664c919280",
 			"headers": "",
 			"headerData": [],
@@ -403,6 +497,51 @@
 			"rawModeData": "{\n\t\"user\": {\n\t\t\"id\": 1\n\t},\n\t\"institution\": {\n\t\t\"id\": 1\n\t},\n\t\"user_access_profile\": {\n\t\t\"id\": 1\n\t}\n}"
 		},
 		{
+			"id": "26fa63c6-6459-e65f-fdbb-8df38913f441",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/registers/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Register",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512927107909,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
+		},
+		{
+			"id": "30aee54e-4236-8583-b026-57baeaf37bf7",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_statuses/6",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512927069628,
+			"name": "Delete Register Status",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": []
+		},
+		{
 			"id": "34f7c8ae-7d27-aa7e-6aad-8e14dbcc1033",
 			"headers": "",
 			"headerData": [],
@@ -451,6 +590,51 @@
 			"folder": "fe2a2d3c-ceed-02b5-ac59-768e17494804"
 		},
 		{
+			"id": "394d279c-18af-6eea-502d-7f51b3fb75b3",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/user_registers/1/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get User Registeres",
+			"description": "Requisicao responsavel por recuperar todos os recados destinados ao usuario X que possuam relação com o Estudante Y.\n\nParametros: url:/user_registers/:user/:student\n\nLembrando que **user** é o id do usuario.",
+			"descriptionFormat": "html",
+			"time": 1512939300030,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
+		},
+		{
+			"id": "3a4c2fc9-1e19-6564-99a8-c5984e30dafc",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/parent_user/2",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512944544527,
+			"name": "Get Parent User",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": []
+		},
+		{
 			"id": "3a6cfa86-6cf4-9f37-dfce-9b78d70cc55d",
 			"headers": "",
 			"headerData": [],
@@ -497,6 +681,79 @@
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": []
+		},
+		{
+			"id": "437117ef-4c1a-0400-e0a7-93680143ff56",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_types",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Register Types",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512928337060,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
+		},
+		{
+			"id": "43f88be0-454c-d8fb-9b7c-9e884021ef2a",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_types/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Delete Register Type",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512932467307,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
+		},
+		{
+			"id": "477aa265-a46e-459f-47b8-dbbbaf88573b",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_types",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Create Register Type",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512932353026,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
+			"rawModeData": "{\n\t\"name\": \"Tipo de Teste\"\n}"
 		},
 		{
 			"id": "4bcbfd31-c60d-ba40-d41c-13c19f3d9260",
@@ -623,12 +880,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1511035612699,
+			"time": 1512937535161,
 			"name": "Create User Parent",
 			"description": "Cria um usuário e um perfil de parente.\nO perfil de parente é importante pois será a interface de contato do membro da família com a escola.\nA outra opcao consiste em alguns passos adicionais:\n- Criar um usuario;\n- Criar um parente, passando o id do usuario como parametro;",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"Parente de Teste 2\",\n\t\"email\": \"parente2@escolando.com\",\n\t\"password\": \"teste\"\n}"
+			"rawModeData": "{\n\t\"name\": \"Parente de Teste\",\n\t\"email\": \"parente@escolando.com\",\n\t\"password\": \"teste\"\n}"
 		},
 		{
 			"id": "5fe6f14c-d027-1a1b-eda7-1585174981a2",
@@ -762,6 +1019,38 @@
 			"responses": []
 		},
 		{
+			"id": "7022a598-ea02-d324-2b7b-f131eaa65e36",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/register_types/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Update Register Type",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512932432879,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
+			"rawModeData": "{\n\t\"name\": \"None\"\n}"
+		},
+		{
 			"id": "81c7f989-5841-885b-093a-34b50488517d",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -812,6 +1101,38 @@
 			"description": "Método responsável por recuperar todos os estudantes que um parente possui relacionamento.\n\nO parametro necessário é o parent_id.",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": []
+		},
+		{
+			"id": "8708f09e-e8cc-5015-ee3c-0cb747a93e6e",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/register_statuses",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Create REgister Status",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512926813322,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "33266ba6-b8dc-7f5b-4a68-a5835e74c94e",
+			"rawModeData": "{\n\t\"name\": \"Teste\"\n}"
 		},
 		{
 			"id": "8a20fcc1-be50-823a-9fa3-1e194df1de22",
@@ -906,6 +1227,52 @@
 			"rawModeData": "{\n\t\"name\": \"ADMIN\"\n}"
 		},
 		{
+			"id": "96f3200a-e633-16df-101b-add7d9c4acb9",
+			"headers": "Content-Type: application/x-www-form-urlencoded\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/x-www-form-urlencoded",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/login",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [
+				{
+					"key": "email",
+					"value": "teste@escolando.com",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "password",
+					"value": "teste",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"name": "Login",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512944575035,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "e36c0cba-124d-c38e-4c02-68c00a6d93c6"
+		},
+		{
 			"id": "9b5fc26e-dc95-c9b2-e389-33ca09da56b2",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -958,6 +1325,38 @@
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": []
+		},
+		{
+			"id": "9db2f641-cd3d-7640-a3eb-f215d1abd79c",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/registers/3",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Update Register",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512941584181,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
+			"rawModeData": "{\n\t\"status\": {\n\t\t\"id\": 4\n\t}\n}"
 		},
 		{
 			"id": "a15585cf-6e0f-4445-8095-8ccdb4087485",
@@ -1373,6 +1772,59 @@
 			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56"
 		},
 		{
+			"id": "e185e846-b2d4-73e3-55d9-99ab50ac746e",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_types/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Register Type",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512928379978,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
+		},
+		{
+			"id": "e49f3ee6-ec8e-622d-6f80-2af74f2c8083",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/registers",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1512941772196,
+			"name": "Create Register",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [],
+			"rawModeData": "{\n\t\"title\": \"Testando!\",\n\t\"text\": \"Hello World!\",\n\t\"register_type\": {\n\t\t\"id\": 1\n\t},\n\t\"target_id\": 1,\n\t\"sender_id\": 1,\n\t\"student_id\": 1\n}"
+		},
+		{
 			"id": "f40657a7-f2fe-f79a-153d-8e24932ad562",
 			"headers": "",
 			"headerData": [],
@@ -1395,6 +1847,30 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56"
+		},
+		{
+			"id": "fc2391d5-d514-f70d-4b2b-5ae5b180f232",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/register_statuses",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Register Statuses",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1512926354525,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "33266ba6-b8dc-7f5b-4a68-a5835e74c94e"
 		},
 		{
 			"id": "fc372d1f-b037-1f5e-9cc9-700ec0b00501",

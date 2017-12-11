@@ -277,6 +277,87 @@ pre code {
                 <li>
                     <a href="#request-parents-delete-parent">Delete Parent</a>
                 </li>
+                  
+                <li>
+                    <a href="#request-parents-get-parent-user">Get Parent User</a>
+                </li>
+                 
+            </ul>
+        </li>
+          
+        <li>
+            <a href="#folder-register-status">Register Status</a>
+            <ul>
+                 
+                <li>
+                    <a href="#request-register-status-get-register-statuses">Get Register Statuses</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-status-delete-register-status">Delete Register Status</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-status-create-register-status">Create REgister Status</a>
+                </li>
+                 
+            </ul>
+        </li>
+          
+        <li>
+            <a href="#folder-register-types">Register Types</a>
+            <ul>
+                 
+                <li>
+                    <a href="#request-register-types-get-register-types">Get Register Types</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-types-get-register-type">Get Register Type</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-types-create-register-type">Create Register Type</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-types-update-register-type">Update Register Type</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-register-types-delete-register-type">Delete Register Type</a>
+                </li>
+                 
+            </ul>
+        </li>
+          
+        <li>
+            <a href="#folder-registers">Registers</a>
+            <ul>
+                 
+                <li>
+                    <a href="#request-registers-get-registers">Get Registers</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-registers-get-register">Get Register</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-registers-create-register">Create Register</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-registers-delete-register">Delete Register</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-registers-get-user-registeres">Get User Registeres</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-registers-update-register">Update Register</a>
+                </li>
                  
             </ul>
         </li>
@@ -404,6 +485,10 @@ pre code {
                   
                 <li>
                     <a href="#request-users-create-parent-user-and-student">Create Parent User And Student</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-users-login">Login</a>
                 </li>
                  
             </ul>
@@ -1424,6 +1509,609 @@ Host: 54.233.195.52:8080</code></pre>
 
                     
 
+                        
+                        <div class="request">
+
+                            <h4 id="request-parents-get-parent-user">
+                                Get Parent User
+                                <a href="#request-parents-get-parent-user"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-parent-user-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-parent-user-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-parent-user-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/parent_user/2"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-parent-user-example-http">
+                                        <pre><code class="hljs http">GET /parent_user/2 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                </div>
+                  
+                <div class="endpoints-group">
+                    <h3 id="folder-register-status">
+                        Register Status
+                        <a href="#folder-register-status"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-status-get-register-statuses">
+                                Get Register Statuses
+                                <a href="#request-register-status-get-register-statuses"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-register-statuses-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-register-statuses-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-register-statuses-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/register_statuses"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-register-statuses-example-http">
+                                        <pre><code class="hljs http">GET /register_statuses HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-status-delete-register-status">
+                                Delete Register Status
+                                <a href="#request-register-status-delete-register-status"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-delete-register-status-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-delete-register-status-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-delete-register-status-example-curl">
+                                        <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" "http://54.233.195.52:8080/register_statuses/6"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-delete-register-status-example-http">
+                                        <pre><code class="hljs http">DELETE /register_statuses/6 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-status-create-register-status">
+                                Create REgister Status
+                                <a href="#request-register-status-create-register-status"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-register-status-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-register-status-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-register-status-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"name": "Teste"
+}' "http://54.233.195.52:8080/register_statuses"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-create-register-status-example-http">
+                                        <pre><code class="hljs http">POST /register_statuses HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "Teste"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                </div>
+                  
+                <div class="endpoints-group">
+                    <h3 id="folder-register-types">
+                        Register Types
+                        <a href="#folder-register-types"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-types-get-register-types">
+                                Get Register Types
+                                <a href="#request-register-types-get-register-types"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-register-types-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-register-types-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-register-types-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/register_types"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-register-types-example-http">
+                                        <pre><code class="hljs http">GET /register_types HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-types-get-register-type">
+                                Get Register Type
+                                <a href="#request-register-types-get-register-type"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-register-type-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-register-type-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-register-type-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/register_types/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-register-type-example-http">
+                                        <pre><code class="hljs http">GET /register_types/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-types-create-register-type">
+                                Create Register Type
+                                <a href="#request-register-types-create-register-type"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-register-type-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-register-type-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-register-type-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -d '{
+	"name": "Tipo de Teste"
+}' "http://54.233.195.52:8080/register_types"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-create-register-type-example-http">
+                                        <pre><code class="hljs http">POST /register_types HTTP/1.1
+Host: 54.233.195.52:8080
+
+{
+	"name": "Tipo de Teste"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-types-update-register-type">
+                                Update Register Type
+                                <a href="#request-register-types-update-register-type"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-update-register-type-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-update-register-type-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-update-register-type-example-curl">
+                                        <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"name": "None"
+}' "http://54.233.195.52:8080/register_types/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-update-register-type-example-http">
+                                        <pre><code class="hljs http">PUT /register_types/1 HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "None"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-register-types-delete-register-type">
+                                Delete Register Type
+                                <a href="#request-register-types-delete-register-type"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-delete-register-type-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-delete-register-type-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-delete-register-type-example-curl">
+                                        <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" "http://54.233.195.52:8080/register_types/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-delete-register-type-example-http">
+                                        <pre><code class="hljs http">DELETE /register_types/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                </div>
+                  
+                <div class="endpoints-group">
+                    <h3 id="folder-registers">
+                        Registers
+                        <a href="#folder-registers"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-get-registers">
+                                Get Registers
+                                <a href="#request-registers-get-registers"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-registers-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-registers-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-registers-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/registers"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-registers-example-http">
+                                        <pre><code class="hljs http">GET /registers HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-get-register">
+                                Get Register
+                                <a href="#request-registers-get-register"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-register-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-register-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-register-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/registers/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-register-example-http">
+                                        <pre><code class="hljs http">GET /registers/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-create-register">
+                                Create Register
+                                <a href="#request-registers-create-register"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-register-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-register-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-register-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"title": "Testando!",
+	"text": "Hello World!",
+	"register_type": {
+		"id": 1
+	},
+	"target_id": 1,
+	"sender_id": 1,
+	"student_id": 1
+}' "http://54.233.195.52:8080/registers"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-create-register-example-http">
+                                        <pre><code class="hljs http">POST /registers HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"title": "Testando!",
+	"text": "Hello World!",
+	"register_type": {
+		"id": 1
+	},
+	"target_id": 1,
+	"sender_id": 1,
+	"student_id": 1
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-delete-register">
+                                Delete Register
+                                <a href="#request-registers-delete-register"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-delete-register-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-delete-register-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-delete-register-example-curl">
+                                        <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" "http://54.233.195.52:8080/registers/2"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-delete-register-example-http">
+                                        <pre><code class="hljs http">DELETE /registers/2 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-get-user-registeres">
+                                Get User Registeres
+                                <a href="#request-registers-get-user-registeres"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div><p>Requisicao responsavel por recuperar todos os recados destinados ao usuario X que possuam relação com o Estudante Y.</p>
+
+<p>Parametros: url:/user_registers/:user/:student</p>
+
+<p>Lembrando que <strong>user</strong> é o id do usuario.</p>
+</div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-user-registeres-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-user-registeres-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-user-registeres-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/user_registers/1/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-user-registeres-example-http">
+                                        <pre><code class="hljs http">GET /user_registers/1/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-registers-update-register">
+                                Update Register
+                                <a href="#request-registers-update-register"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-update-register-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-update-register-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-update-register-example-curl">
+                                        <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"status": {
+		"id": 4
+	}
+}' "http://54.233.195.52:8080/registers/3"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-update-register-example-http">
+                                        <pre><code class="hljs http">PUT /registers/3 HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"status": {
+		"id": 4
+	}
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
                 </div>
                   
                 <div class="endpoints-group">
@@ -2374,8 +3062,8 @@ A outra opcao consiste em alguns passos adicionais:
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-user-parent-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Parente de Teste 2",
-	"email": "parente2@escolando.com",
+	"name": "Parente de Teste",
+	"email": "parente@escolando.com",
 	"password": "teste"
 }' "http://54.233.195.52:8080/user_parent"</code></pre>
                                     </div>
@@ -2385,8 +3073,8 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Parente de Teste 2",
-	"email": "parente2@escolando.com",
+	"name": "Parente de Teste",
+	"email": "parente@escolando.com",
 	"password": "teste"
 }</code></pre>
                                     </div>
@@ -2457,6 +3145,52 @@ Content-Type: application/json
 		"id": 1
 	}
 }</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-users-login">
+                                Login
+                                <a href="#request-users-login"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-login-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-login-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-login-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" -H "Content-Type: application/x-www-form-urlencoded" -F "email=teste@escolando.com" -F "password=teste" "http://54.233.195.52:8080/login"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-login-example-http">
+                                        <pre><code class="hljs http">POST /login HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/x-www-form-urlencoded
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+teste@escolando.com
+----WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+teste
+----WebKitFormBoundary7MA4YWxkTrZu0gW</code></pre>
                                     </div>
                                 </div>
                             </div>
