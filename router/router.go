@@ -9,10 +9,11 @@ import (
 func Initialize(r *gin.Engine) {
 
 	r.GET("/", controllers.APIEndpoints)
-	r.OPTIONS("/*", controllers.APIEndpoints)
 
 	api := r.Group("")
 	{
+		api.OPTIONS("/user_parent", controllers.OptionsUser)
+
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
 		api.POST("/classes", controllers.CreateClass)
