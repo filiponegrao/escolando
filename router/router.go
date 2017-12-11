@@ -11,6 +11,8 @@ func Initialize(r *gin.Engine) {
 
 	api := r.Group("")
 	{
+		api.OPTIONS("/")
+
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
 		api.POST("/classes", controllers.CreateClass)
