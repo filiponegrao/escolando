@@ -7,14 +7,15 @@ import (
 )
 
 func Initialize(r *gin.Engine) {
+
 	r.GET("/", controllers.APIEndpoints)
+	r.OPTIONS("/", controllers.APIEndpoints)
 
 	api := r.Group("")
 	{
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
 		api.POST("/classes", controllers.CreateClass)
-		api.OPTIONS("/classes", controllers.CreateClass)
 		api.PUT("/classes/:id", controllers.UpdateClass)
 		api.DELETE("/classes/:id", controllers.DeleteClass)
 
@@ -111,7 +112,6 @@ func Initialize(r *gin.Engine) {
 		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
 		api.POST("/user_parent", controllers.CreateUserParent)
-		api.OPTIONS("/user_parent", controllers.CreateUserParent)
 		api.POST("/user_incharge", controllers.CreateUserInCharge)
 		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
