@@ -9,7 +9,7 @@ import (
 func Initialize(r *gin.Engine) {
 
 	r.GET("/", controllers.APIEndpoints)
-	r.OPTIONS("/", controllers.APIEndpoints)
+	r.OPTIONS("/*", controllers.APIEndpoints)
 
 	api := r.Group("")
 	{
