@@ -4,12 +4,18 @@ import (
 	"time"
 )
 
+type RegisterSender struct {
+	Name string `json:"name" form:"name"`
+	Role string `json:"role" form:"role"`
+}
+
 type Register struct {
 	ID             int64        `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`
 	Title          string       `gorm:"type:text;not null" json:"title" form:"title"`
 	Text           string       `gorm:"type:text;not null" json:"text" form:"text"`
 	RegisterType   RegisterType `gorm:"ForeignKey:RegisterTypeID;not null" json:"register_type" form:"register_form"`
 	RegisterTypeID int64
+	Sender         RegisterSender `json:"sender"`
 	SenderId       int64          `gorm:"not null" json:"sender_id" form:"sender_id"`
 	TargetId       int64          `gorm:"not null" json:"target_id" form:"target_id"`
 	StudentId      int64          `gorm:"not null" json:"student_id" form:"student_id"`

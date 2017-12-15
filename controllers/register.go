@@ -9,6 +9,7 @@ import (
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
 	"github.com/filiponegrao/escolando/version"
+	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
@@ -70,6 +71,12 @@ func GetRegisters(c *gin.Context) {
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
+			register, err = GetRegisterSenderInformations(register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
 			fieldMap, err := helper.FieldToMap(register, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -88,6 +95,12 @@ func GetRegisters(c *gin.Context) {
 
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
+
+			register, err = GetRegisterSenderInformations(register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
 
 			fieldMap, err := helper.FieldToMap(register, fields)
 			if err != nil {
@@ -166,6 +179,12 @@ func GetParentRegisters(c *gin.Context) {
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
+			register, err = GetRegisterSenderInformations(register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
 			fieldMap, err := helper.FieldToMap(register, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -184,6 +203,12 @@ func GetParentRegisters(c *gin.Context) {
 
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
+
+			register, err = GetRegisterSenderInformations(register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
 
 			fieldMap, err := helper.FieldToMap(register, fields)
 			if err != nil {
@@ -230,6 +255,12 @@ func GetRegister(c *gin.Context) {
 
 	db.First(&register.RegisterType, register.RegisterTypeID)
 	db.First(&register.Status, register.StatusId)
+
+	register, err = GetRegisterSenderInformations(register, db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
 
 	fieldMap, err := helper.FieldToMap(register, fields)
 	if err != nil {
@@ -426,4 +457,37 @@ func CheckRegisterMissingFields(register models.Register) string {
 	}
 
 	return ""
+}
+
+func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (models.Register, error) {
+
+	register.Sender.Name = "Desconhecido"
+	register.Sender.Role = "Desconhecido"
+
+	var incharge models.InCharge
+	var parent models.Parent
+	var err error
+
+	if err = db.First(&incharge, register.SenderId).Error; err == nil {
+
+		db.First(&incharge.Role, incharge.RoleID)
+
+		register.Sender.Name = incharge.Name
+		register.Sender.Role = incharge.Role.Name
+
+	} else {
+
+		var err2 error
+
+		if err2 = db.First(&parent, register.SenderId).Error; err2 == nil {
+
+			register.Sender.Name = parent.Name
+			register.Sender.Role = "Parente"
+
+		} else {
+			return register, err2
+		}
+	}
+
+	return register, nil
 }
