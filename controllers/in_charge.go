@@ -66,6 +66,11 @@ func GetInCharges(c *gin.Context) {
 		c.Status(200)
 
 		for _, inCharge := range inCharges {
+
+			db.First(&inCharge.Institution, inCharge.InstitutionID)
+			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
+			db.First(&inCharge.Role, inCharge.RoleID)
+
 			fieldMap, err := helper.FieldToMap(inCharge, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -79,8 +84,112 @@ func GetInCharges(c *gin.Context) {
 		}
 	} else {
 		fieldMaps := []map[string]interface{}{}
+		for _, inCharge := range inCharges {
+
+			db.First(&inCharge.Institution, inCharge.InstitutionID)
+			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
+			db.First(&inCharge.Role, inCharge.RoleID)
+
+			fieldMap, err := helper.FieldToMap(inCharge, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			fieldMaps = append(fieldMaps, fieldMap)
+		}
+
+		if _, ok := c.GetQuery("pretty"); ok {
+			c.IndentedJSON(200, fieldMaps)
+		} else {
+			c.JSON(200, fieldMaps)
+		}
+	}
+}
+
+func GetInstitutionInCharges(c *gin.Context) {
+	ver, err := version.New(c)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.InCharge{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db, err = parameter.Paginate(db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	db = parameter.SetPreloads(db)
+	db = parameter.SortRecords(db)
+	db = parameter.FilterFields(db)
+	inCharges := []models.InCharge{}
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+	queryFields := helper.QueryFields(models.InCharge{}, fields)
+
+	institutionId := c.Params.ByName("id")
+	if institutionId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id da instituição."})
+		return
+	}
+
+	if err := db.Select(queryFields).Where("institution_id = ?", institutionId).Find(&inCharges).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	index := 0
+
+	if len(inCharges) > 0 {
+		index = int(inCharges[len(inCharges)-1].ID)
+	}
+
+	if err := parameter.SetHeaderLink(c, index); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
+		// conditional branch by version.
+		// 1.0.0 <= this version < 2.0.0 !!
+	}
+
+	if _, ok := c.GetQuery("stream"); ok {
+		enc := json.NewEncoder(c.Writer)
+		c.Status(200)
 
 		for _, inCharge := range inCharges {
+
+			db.First(&inCharge.Institution, inCharge.InstitutionID)
+			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
+			db.First(&inCharge.Role, inCharge.RoleID)
+
+			fieldMap, err := helper.FieldToMap(inCharge, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			if err := enc.Encode(fieldMap); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	} else {
+		fieldMaps := []map[string]interface{}{}
+		for _, inCharge := range inCharges {
+
+			db.First(&inCharge.Institution, inCharge.InstitutionID)
+			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
+			db.First(&inCharge.Role, inCharge.RoleID)
+
 			fieldMap, err := helper.FieldToMap(inCharge, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -124,6 +233,10 @@ func GetInCharge(c *gin.Context) {
 		return
 	}
 
+	db.First(&inCharge.Institution, inCharge.InstitutionID)
+	db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
+	db.First(&inCharge.Role, inCharge.RoleID)
+
 	fieldMap, err := helper.FieldToMap(inCharge, fields)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -165,7 +278,7 @@ func CreateInCharge(c *gin.Context) {
 
 	missing := CheckInChargeMissingFields(inCharge)
 	if missing != "" {
-		message := "Faltando campo " + missing + " do responsável."
+		message := "Faltando campo " + missing + " do encarregado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -173,6 +286,18 @@ func CreateInCharge(c *gin.Context) {
 	var user models.User
 	if err = db.First(&user, inCharge.UserId).Error; err != nil {
 		message := "Usuario com o id " + strconv.FormatInt(inCharge.UserId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	if err = db.First(&inCharge.Role, inCharge.Role.ID).Error; err != nil {
+		message := "Cargo com id " + strconv.FormatInt(inCharge.Role.ID, 10) + " nao encontrado"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	if err = db.First(&inCharge.Institution, inCharge.Institution.ID).Error; err != nil {
+		message := "Instituição com id " + strconv.FormatInt(inCharge.Institution.ID, 10) + " não encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -212,6 +337,28 @@ func UpdateInCharge(c *gin.Context) {
 		return
 	}
 
+	var institutionId int64 = inCharge.InstitutionID
+	if inCharge.Institution.ID != 0 {
+		institutionId = inCharge.Institution.ID
+	}
+
+	if err = db.First(&inCharge.Institution, institutionId).Error; err != nil {
+		message := "Insttuicao com id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	var roleId int64 = inCharge.RoleID
+	if inCharge.Role.ID != 0 {
+		roleId = inCharge.Role.ID
+	}
+
+	if err = db.First(&inCharge.Role, roleId).Error; err != nil {
+		message := "Cargo com id " + strconv.FormatInt(roleId, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	missing := CheckInChargeMissingFields(inCharge)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do encarregado."
@@ -228,6 +375,8 @@ func UpdateInCharge(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
+
+	db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
 
 	c.JSON(200, inCharge)
 }
@@ -262,31 +411,47 @@ func DeleteInCharge(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
-func CheckInChargeMissingFields(role models.InCharge) string {
+func CheckInChargeMissingFields(incharge models.InCharge) string {
 
-	if role.Email == "" {
+	if incharge.Email == "" {
 		return "email"
 	}
 
-	if role.Name == "" {
+	if incharge.Name == "" {
 		return "nome (name)"
 	}
 
-	if role.UserId == 0 {
+	if incharge.UserId == 0 {
 		return "id do usuario (user_id)"
+	}
+
+	if incharge.Role.ID == 0 {
+		return "id do cargo (\"role\" {\"id\": id})"
+	}
+
+	if incharge.Institution.ID == 0 {
+		return "id da instituição (\"institution\": {\"id\": id})"
 	}
 
 	return ""
 }
 
-func CheckInChargeWithoutUserMissingFields(role models.InCharge) string {
+func CheckInChargeWithoutUserMissingFields(incharge models.InCharge) string {
 
-	if role.Email == "" {
+	if incharge.Email == "" {
 		return "email"
 	}
 
-	if role.Name == "" {
+	if incharge.Name == "" {
 		return "nome (name)"
+	}
+
+	if incharge.Role.ID == 0 {
+		return "id do cargo (\"role\" {\"id\": id})"
+	}
+
+	if incharge.Institution.ID == 0 {
+		return "id da instituição (\"institution\": {\"id\": id})"
 	}
 
 	return ""

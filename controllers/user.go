@@ -268,6 +268,32 @@ func CreateUserInCharge(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	user := models.User{}
 
+	roleId := c.Params.ByName("roleId")
+	if roleId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id do cargo (url/user_incharge/:roleId)"})
+		return
+	}
+
+	var role models.InChargeRole
+	if err = db.First(&role, roleId).Error; err != nil {
+		message := "Cargo com o id " + roleId + " não encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	institutionId := c.Params.ByName("institutionId")
+	if institutionId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id da instituição (url/user_incharge/:roleId/:institutionId)"})
+		return
+	}
+
+	var institution models.Institution
+	if err = db.First(&institution, institutionId).Error; err != nil {
+		message := "Instituicao com o id " + roleId + " não encontrada."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	if err := c.Bind(&user); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -301,6 +327,8 @@ func CreateUserInCharge(c *gin.Context) {
 	incharge.Phone = user.Phone1
 	incharge.ProfileImageUrl = user.ProfileImageUrl
 	incharge.UserId = user.ID
+	incharge.Institution = institution
+	incharge.Role = role
 
 	if err = tx.Create(&incharge).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})

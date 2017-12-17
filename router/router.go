@@ -12,6 +12,8 @@ func Initialize(r *gin.Engine) {
 
 	api := r.Group("")
 	{
+		// Especial para requisicoes Web, que enviam um OPTIONS antes de
+		// fazer a requisicao propriamente dita
 		api.OPTIONS("/classes", controllers.OptionsUser)
 		api.OPTIONS("/disciplines", controllers.OptionsUser)
 		api.OPTIONS("/in_charges", controllers.OptionsUser)
@@ -29,6 +31,7 @@ func Initialize(r *gin.Engine) {
 		api.OPTIONS("/users", controllers.OptionsUser)
 		api.OPTIONS("/user_accesses", controllers.OptionsUser)
 		api.OPTIONS("/user_access_profiles", controllers.OptionsUser)
+		// --------
 
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
@@ -43,6 +46,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/in_charges", controllers.GetInCharges)
 		api.GET("/in_charges/:id", controllers.GetInCharge)
+		api.GET("/institution_in_charges/:id", controllers.GetInstitutionInCharges)
 		api.POST("/in_charges", controllers.CreateInCharge)
 		api.PUT("/in_charges/:id", controllers.UpdateInCharge)
 		api.DELETE("/in_charges/:id", controllers.DeleteInCharge)
@@ -129,8 +133,8 @@ func Initialize(r *gin.Engine) {
 		api.POST("/users", controllers.CreateUser)
 		api.POST("/user_parent", controllers.CreateUserParent)
 		api.OPTIONS("/user_parent", controllers.CreateUserParent)
-		api.POST("/user_incharge", controllers.CreateUserInCharge)
-		api.OPTIONS("/user_incharge", controllers.CreateUserInCharge)
+		api.POST("/user_incharge/:roleId/:institutionId", controllers.CreateUserInCharge)
+		api.OPTIONS("/user_incharge/:roleId/:institutionId", controllers.CreateUserInCharge)
 		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.OPTIONS("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
