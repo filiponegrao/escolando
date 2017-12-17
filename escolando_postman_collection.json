@@ -11,11 +11,29 @@
 			"order": [
 				"dc540e01-85da-011f-1f5e-3c57485a3e54",
 				"a2c5291a-baf1-8233-1275-4060307b5543",
-				"fc372d1f-b037-1f5e-9cc9-700ec0b00501"
+				"3ecff046-e470-2f0d-7ad8-5d1e0e04390a",
+				"fc372d1f-b037-1f5e-9cc9-700ec0b00501",
+				"092974f0-7852-c6e4-f8ef-a3ee485b97f7",
+				"53dfd7a4-4376-7a2b-e03b-51d9738e869c"
 			],
 			"owner": "408272",
 			"folders_order": [],
 			"id": "b1fcd257-723c-0364-0f18-572859c2f80f"
+		},
+		{
+			"name": "InCharge Roles",
+			"description": "Representa o cargo de encarregado",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"order": [
+				"5c801eda-7c0f-51fc-ca4e-7dd92006b3f3",
+				"4d3e4699-8d69-b03e-3f0a-f2db9e57ca1b",
+				"2dd3dcce-e8c0-6815-0aff-9331d3f49f28",
+				"7c5abdef-6533-b9ef-fa21-07c0e554b664",
+				"e0f51fda-5ffb-41d5-d4b0-d5f6a170687c"
+			],
+			"owner": "408272",
+			"folders_order": [],
+			"id": "a4d9d243-302e-805d-35de-e406b29202b1"
 		},
 		{
 			"name": "Institutions",
@@ -25,6 +43,7 @@
 				"b5184ea1-dd6f-f3e1-6ee4-8617ebf7f930",
 				"411ac0d4-f7d9-439d-59df-cd7dd4166c24",
 				"373b9aa8-2309-bc1a-91a9-941a8219afd5",
+				"68f3cc62-b24b-3fb6-011b-2585a37e2638",
 				"9b5fc26e-dc95-c9b2-e389-33ca09da56b2",
 				"b63cb765-a4fa-3011-f545-57eaf91c92fb"
 			],
@@ -108,20 +127,25 @@
 			"id": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
 		},
 		{
+			"id": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
 			"name": "Registers",
 			"description": "",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"variables": null,
+			"auth": null,
+			"events": null,
 			"order": [
 				"18665741-4ac4-0927-e189-365d269685bd",
 				"26fa63c6-6459-e65f-fdbb-8df38913f441",
+				"394d279c-18af-6eea-502d-7f51b3fb75b3",
 				"e49f3ee6-ec8e-622d-6f80-2af74f2c8083",
 				"1bd60328-7f2e-e66a-e6c9-45778c74a80d",
-				"394d279c-18af-6eea-502d-7f51b3fb75b3",
 				"9db2f641-cd3d-7640-a3eb-f215d1abd79c"
 			],
-			"owner": "408272",
 			"folders_order": [],
-			"id": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
+			"owner": "408272",
+			"lastUpdatedBy": "408272",
+			"lastRevision": 2774598974,
+			"folder": null
 		},
 		{
 			"name": "Students",
@@ -178,10 +202,10 @@
 				"6302ff7e-ab49-1ee4-a7e8-b09f584cb2b9",
 				"a979d5b4-af12-f778-af07-666700cf539f",
 				"192d319f-7f15-75b3-91cd-4bcf2b520db3",
-				"68f3cc62-b24b-3fb6-011b-2585a37e2638",
 				"8a52a136-0018-93f0-ae78-60d799e00fb8",
 				"63d00dcd-de2c-2e6c-ecfa-8d2320358190",
 				"56c46384-4ba7-54be-564f-a5bed3dd6d5b",
+				"f8d22e90-deb2-a784-d895-85719e69f806",
 				"1b7aef2b-6e9e-6d9e-cf09-48213f2ce428",
 				"96f3200a-e633-16df-101b-add7d9c4acb9"
 			],
@@ -202,7 +226,8 @@
 		"b1fcd257-723c-0364-0f18-572859c2f80f",
 		"33266ba6-b8dc-7f5b-4a68-a5835e74c94e",
 		"e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
-		"97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49"
+		"97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
+		"a4d9d243-302e-805d-35de-e406b29202b1"
 	],
 	"timestamp": 1509650058672,
 	"owner": "408272",
@@ -261,6 +286,39 @@
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": [],
 			"rawModeData": "{\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}"
+		},
+		{
+			"id": "092974f0-7852-c6e4-f8ef-a3ee485b97f7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/in_charges/5",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "PUT",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Update InCharge",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1513543908073,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folderId": "b1fcd257-723c-0364-0f18-572859c2f80f",
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f",
+			"rawModeData": "{\n\t\"name\": \"Diretor Johnsons\"\n}"
 		},
 		{
 			"id": "0cf773a5-9398-9369-b3a7-af34b80abb37",
@@ -521,6 +579,30 @@
 			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
 		},
 		{
+			"id": "2dd3dcce-e8c0-6815-0aff-9331d3f49f28",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/in_charge_roles/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get InCharge Role",
+			"description": "Recupera um cargo com id específico",
+			"descriptionFormat": "html",
+			"time": 1513538244830,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "a4d9d243-302e-805d-35de-e406b29202b1"
+		},
+		{
 			"id": "30aee54e-4236-8583-b026-57baeaf37bf7",
 			"headers": "",
 			"headerData": [],
@@ -593,7 +675,7 @@
 			"id": "394d279c-18af-6eea-502d-7f51b3fb75b3",
 			"headers": "",
 			"headerData": [],
-			"url": "{{url}}/user_registers/1/1",
+			"url": "{{url}}/user_registers/1/3",
 			"queryParams": [],
 			"pathVariables": {},
 			"pathVariableData": [],
@@ -609,15 +691,20 @@
 			"version": 2,
 			"responses": [],
 			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b"
+			"currentHelper": null,
+			"helperAttributes": null,
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
+			"auth": null,
+			"events": null,
+			"rawModeData": null,
+			"variables": null
 		},
 		{
 			"id": "3a4c2fc9-1e19-6564-99a8-c5984e30dafc",
 			"headers": "",
 			"headerData": [],
-			"url": "{{url}}/parent_user/2",
+			"url": "{{url}}/parent_user/1",
+			"folder": "9f819485-ba34-6fbd-193c-bbcbd0d13214",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -626,13 +713,18 @@
 			"data": null,
 			"dataMode": "params",
 			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
+			"currentHelper": null,
+			"helperAttributes": null,
 			"time": 1512944544527,
 			"name": "Get Parent User",
-			"description": "",
+			"description": null,
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": []
+			"responses": [],
+			"auth": null,
+			"events": null,
+			"rawModeData": null,
+			"descriptionFormat": "html",
+			"variables": null
 		},
 		{
 			"id": "3a6cfa86-6cf4-9f37-dfce-9b78d70cc55d",
@@ -658,6 +750,30 @@
 			"helperAttributes": {},
 			"folderId": "cfa84f09-75b1-3228-b1ee-1d325f517285",
 			"folder": "cfa84f09-75b1-3228-b1ee-1d325f517285"
+		},
+		{
+			"id": "3ecff046-e470-2f0d-7ad8-5d1e0e04390a",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/institution_in_charges/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Institution InCharges",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1513536894510,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f"
 		},
 		{
 			"id": "411ac0d4-f7d9-439d-59df-cd7dd4166c24",
@@ -780,6 +896,30 @@
 			"folder": "cf83f85b-4ff0-7771-ac6c-4f9f4723c29d"
 		},
 		{
+			"id": "4d3e4699-8d69-b03e-3f0a-f2db9e57ca1b",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/in_charge_roles",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get InCharge Roles",
+			"description": "Recupera todos os cargos disponíveis.",
+			"descriptionFormat": "html",
+			"time": 1513538146012,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "a4d9d243-302e-805d-35de-e406b29202b1"
+		},
+		{
 			"id": "4de102a1-5cf2-e9b6-3129-dede9c82e78a",
 			"headers": "",
 			"headerData": [],
@@ -827,12 +967,273 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1512831148246,
+			"time": 1513547996810,
 			"name": "Create Student",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"Estudante de Teste\",\n\t\"responsible\": {\n\t\t\"id\": 1\n\t},\n\t\"institution\": {\n\t\t\"id\": 1\n\t}\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 30,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1074",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:58:38 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T19:58:38.831549-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T19:58:38.83196-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T19:58:38.832381-02:00\"},\"ParentID\":1,\"name\":\"Roanito\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:58:38.829965-02:00\",\"updated_at\":\"2017-12-17T19:58:38.832619-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1074,
+						"header": 347,
+						"total": 1421
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwiaW5zdGl0dXRpb24iOnsiaWQiOjEsIm5hbWUiOiJQSUMtUmlvIiwiZW1haWwiOiJwaWNyaW9AZXNjb2xhbmRvLmNvbSIsIm93bmVyIjp7ImlkIjozLCJuYW1lIjoiRG9ubyBkYSBlc2NvbGEiLCJlbWFpbCI6ImRvbm9AZXNjb2xhbmRvLmNvbSIsInBhc3N3b3JkIjoiIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTg6MzguODMxNTQ5LTAyOjAwIn0sIlVzZXJJRCI6MywiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjbnBqIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ4OjU3LjQ0MjUwOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU4OjM4LjgzMTk2LTAyOjAwIn0sIkluc3RpdHV0aW9uSUQiOjEsInJlc3BvbnNpYmxlIjp7ImlkIjoxLCJ1c2VyX2lkIjoxLCJuYW1lIjoiQW3DqWxpYSIsImVtYWlsIjoiYW1lbGlhQGVzY29sYW5kby5jb20iLCJwaG9uZSI6IiIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDc6MTkuMjAxNjIyLTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTg6MzguODMyMzgxLTAyOjAwIn0sIlBhcmVudElEIjoxLCJuYW1lIjoiUm9hbml0byIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU4OjM4LjgyOTk2NS0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU4OjM4LjgzMjYxOS0wMjowMCJ9",
+					"name": "Create Ronaito Student",
+					"id": "011fcdca-e8bb-0405-2deb-bc083343aec1",
+					"request": {
+						"url": "{{url}}/students/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n  \"name\": \"Roanito\",\n  \"responsible\": {\n    \"id\": 1\n  },\n  \"institution\": {\n    \"id\": 1\n  }\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 37,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1076",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:59:14 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":2,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T19:59:14.881196-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T19:59:14.881399-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T19:59:14.881633-02:00\"},\"ParentID\":1,\"name\":\"Romarito\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:59:14.880671-02:00\",\"updated_at\":\"2017-12-17T19:59:14.881883-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1076,
+						"header": 347,
+						"total": 1423
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MiwiaW5zdGl0dXRpb24iOnsiaWQiOjEsIm5hbWUiOiJQSUMtUmlvIiwiZW1haWwiOiJwaWNyaW9AZXNjb2xhbmRvLmNvbSIsIm93bmVyIjp7ImlkIjozLCJuYW1lIjoiRG9ubyBkYSBlc2NvbGEiLCJlbWFpbCI6ImRvbm9AZXNjb2xhbmRvLmNvbSIsInBhc3N3b3JkIjoiIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTk6MTQuODgxMTk2LTAyOjAwIn0sIlVzZXJJRCI6MywiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjbnBqIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ4OjU3LjQ0MjUwOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU5OjE0Ljg4MTM5OS0wMjowMCJ9LCJJbnN0aXR1dGlvbklEIjoxLCJyZXNwb25zaWJsZSI6eyJpZCI6MSwidXNlcl9pZCI6MSwibmFtZSI6IkFtw6lsaWEiLCJlbWFpbCI6ImFtZWxpYUBlc2NvbGFuZG8uY29tIiwicGhvbmUiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMTYyMi0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU5OjE0Ljg4MTYzMy0wMjowMCJ9LCJQYXJlbnRJRCI6MSwibmFtZSI6IlJvbWFyaXRvIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTk6MTQuODgwNjcxLTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTk6MTQuODgxODgzLTAyOjAwIn0=",
+					"name": "Create Romarito Student",
+					"id": "6a44afb0-7bb1-4439-4eec-bd866b7fe19b",
+					"request": {
+						"url": "{{url}}/students/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n  \"name\": \"Romarito\",\n  \"responsible\": {\n    \"id\": 1\n  },\n  \"institution\": {\n    \"id\": 1\n  }\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 28,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1075",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:59:40 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":3,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T19:59:40.030058-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T19:59:40.030302-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T19:59:40.030566-02:00\"},\"ParentID\":1,\"name\":\"Fernita\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:59:40.029552-02:00\",\"updated_at\":\"2017-12-17T19:59:40.030777-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1075,
+						"header": 347,
+						"total": 1422
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MywiaW5zdGl0dXRpb24iOnsiaWQiOjEsIm5hbWUiOiJQSUMtUmlvIiwiZW1haWwiOiJwaWNyaW9AZXNjb2xhbmRvLmNvbSIsIm93bmVyIjp7ImlkIjozLCJuYW1lIjoiRG9ubyBkYSBlc2NvbGEiLCJlbWFpbCI6ImRvbm9AZXNjb2xhbmRvLmNvbSIsInBhc3N3b3JkIjoiIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTk6NDAuMDMwMDU4LTAyOjAwIn0sIlVzZXJJRCI6MywiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjbnBqIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ4OjU3LjQ0MjUwOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU5OjQwLjAzMDMwMi0wMjowMCJ9LCJJbnN0aXR1dGlvbklEIjoxLCJyZXNwb25zaWJsZSI6eyJpZCI6MSwidXNlcl9pZCI6MSwibmFtZSI6IkFtw6lsaWEiLCJlbWFpbCI6ImFtZWxpYUBlc2NvbGFuZG8uY29tIiwicGhvbmUiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMTYyMi0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU5OjQwLjAzMDU2Ni0wMjowMCJ9LCJQYXJlbnRJRCI6MSwibmFtZSI6IkZlcm5pdGEiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImV4dHJhX2luZm8iOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1OTo0MC4wMjk1NTItMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1OTo0MC4wMzA3NzctMDI6MDAifQ==",
+					"name": "Create Fernita Student",
+					"id": "61e18933-eeea-23c6-ea0a-88b1d3c2c9af",
+					"request": {
+						"url": "{{url}}/students/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n  \"name\": \"Fernita\",\n  \"responsible\": {\n    \"id\": 1\n  },\n  \"institution\": {\n    \"id\": 1\n  }\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n  \"name\": \"Romarito Jr.\",\n  \"responsible\": {\n    \"id\": 1\n  },\n  \"institution\": {\n    \"id\": 1\n  }\n}"
 		},
 		{
 			"id": "518ed08b-887a-aa8e-8ce0-acc8d4681f80",
@@ -858,6 +1259,30 @@
 			"responses": []
 		},
 		{
+			"id": "53dfd7a4-4376-7a2b-e03b-51d9738e869c",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/in_charges/4",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Delete InCharge",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1513540448300,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f"
+		},
+		{
 			"id": "56c46384-4ba7-54be-564f-a5bed3dd6d5b",
 			"headers": "Content-Type: application/json\n",
 			"headerData": [
@@ -880,12 +1305,481 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1512937535161,
+			"time": 1513546274067,
 			"name": "Create User Parent",
 			"description": "Cria um usuário e um perfil de parente.\nO perfil de parente é importante pois será a interface de contato do membro da família com a escola.\nA outra opcao consiste em alguns passos adicionais:\n- Criar um usuario;\n- Criar um parente, passando o id do usuario como parametro;",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"Parente de Teste\",\n\t\"email\": \"parente@escolando.com\",\n\t\"password\": \"teste\"\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 42,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "474",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:47:19 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:47:19.200863-02:00\",\"updated_at\":\"2017-12-17T19:47:19.200863-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 474,
+						"header": 346,
+						"total": 820
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwibmFtZSI6IkFtw6lsaWEiLCJlbWFpbCI6ImFtZWxpYUBlc2NvbGFuZG8uY29tIiwicGFzc3dvcmQiOiJiMTIzZTllMTlkMjE3MTY5Yjk4MWE2MTE4ODkyMGY5ZDI4NjM4NzA5YTUxMzIyMDE2ODRkNzkyYjkyNjQyNzFiN2YwOTE1N2VkNDMyMWIxYzA5N2Y3YTRhYmVjZmMwOTc3ZDQwYTdlZTU5OWM4NDU4ODNiZDEwNzRjYTIzYzRhZiIsImZhY2Vib29rX2lkIjoiIiwiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjcGYiOiIiLCJyZyI6IiIsInBob25lMSI6IiIsInBob25lMiI6IiIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMDg2My0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMDg2My0wMjowMCJ9",
+					"name": "Create Amelia",
+					"id": "edbb1440-77bf-c6a1-7749-3251f5c2e6f0",
+					"request": {
+						"url": "{{url}}/user_parent",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Amélia\",\n\t\"email\": \"amelia@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 25,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "467",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:47:43 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":2,\"name\":\"Bob\",\"email\":\"bob@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:47:43.089503-02:00\",\"updated_at\":\"2017-12-17T19:47:43.089503-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 467,
+						"header": 346,
+						"total": 813
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MiwibmFtZSI6IkJvYiIsImVtYWlsIjoiYm9iQGVzY29sYW5kby5jb20iLCJwYXNzd29yZCI6ImIxMjNlOWUxOWQyMTcxNjliOTgxYTYxMTg4OTIwZjlkMjg2Mzg3MDlhNTEzMjIwMTY4NGQ3OTJiOTI2NDI3MWI3ZjA5MTU3ZWQ0MzIxYjFjMDk3ZjdhNGFiZWNmYzA5NzdkNDBhN2VlNTk5Yzg0NTg4M2JkMTA3NGNhMjNjNGFmIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDc6NDMuMDg5NTAzLTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDc6NDMuMDg5NTAzLTAyOjAwIn0=",
+					"name": "Create Bob",
+					"id": "606f4e4b-65d5-ab9f-5f26-ad3bffc41374",
+					"request": {
+						"url": "{{url}}/user_parent",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Bob\",\n\t\"email\": \"bob@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"Bob\",\n\t\"email\": \"bob@escolando.com\",\n\t\"password\": \"teste\"\n}"
+		},
+		{
+			"id": "5c801eda-7c0f-51fc-ca4e-7dd92006b3f3",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/in_charge_roles",
+			"folder": "a4d9d243-302e-805d-35de-e406b29202b1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1513545433013,
+			"name": "Create InCharge Role",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created"
+					},
+					"time": 24,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "141",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:49:28 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"name\":\"Diretor\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:49:28.752361-02:00\",\"updated_at\":\"2017-12-17T19:49:28.752361-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 141,
+						"header": 346,
+						"total": 487
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MiwibmFtZSI6IlByb2Zlc3NvcihhKSIsImFjY2Vzc19jb250ZW50IjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTE6MTMuODY3OTMtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1MToxMy44Njc5My0wMjowMCJ9",
+					"name": "Create Director Role",
+					"id": "5bb6fc07-9e16-72bc-2bc3-fdc297d7e7da",
+					"isSample": true,
+					"scrollToResult": false,
+					"runTests": false,
+					"request": {
+						"url": "{{url}}/in_charge_roles",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Diretor\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 30,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "144",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:51:13 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":2,\"name\":\"Professor(a)\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:51:13.86793-02:00\",\"updated_at\":\"2017-12-17T19:51:13.86793-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 144,
+						"header": 346,
+						"total": 490
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MiwibmFtZSI6IlByb2Zlc3NvcihhKSIsImFjY2Vzc19jb250ZW50IjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTE6MTMuODY3OTMtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1MToxMy44Njc5My0wMjowMCJ9",
+					"name": "Create Teacher Role",
+					"id": "f6cfd243-0393-232c-7ff8-84a4ed5e9770",
+					"request": {
+						"url": "{{url}}/in_charge_roles",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Professor(a)\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 26,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "147",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:51:59 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":3,\"name\":\"Coordenador(a\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:51:59.808875-02:00\",\"updated_at\":\"2017-12-17T19:51:59.808875-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 147,
+						"header": 346,
+						"total": 493
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MywibmFtZSI6IkNvb3JkZW5hZG9yKGEiLCJhY2Nlc3NfY29udGVudCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjUxOjU5LjgwODg3NS0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjUxOjU5LjgwODg3NS0wMjowMCJ9",
+					"name": "Create Coordinator Role",
+					"id": "a35c013a-2236-014d-8515-6df8f494e177",
+					"request": {
+						"url": "{{url}}/in_charge_roles",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Coordenador(a\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"Diretor\"\n}"
 		},
 		{
 			"id": "5fe6f14c-d027-1a1b-eda7-1585174981a2",
@@ -918,8 +1812,8 @@
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"description": "",
-					"enabled": true
+					"enabled": true,
+					"description": ""
 				}
 			],
 			"url": "{{url}}/parents",
@@ -938,10 +1832,15 @@
 			"version": 2,
 			"responses": [],
 			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
+			"currentHelper": null,
+			"helperAttributes": null,
 			"folder": "9f819485-ba34-6fbd-193c-bbcbd0d13214",
-			"rawModeData": "{\n\t\"name\": \"Responsavel de Teste\",\n\t\"email\": \"responsavel@escolando.com\",\n\t\"user_id\": 1\n}"
+			"isFromCollection": true,
+			"collectionRequestId": "61d01edf-adc4-a423-1670-7c1907d52657",
+			"auth": null,
+			"events": null,
+			"variables": null,
+			"rawModeData": "{\n  \"name\": \"Usuario de Teste\",\n  \"email\": \"teste@escolando.com\",\n  \"user_id\": 1\n}"
 		},
 		{
 			"id": "6302ff7e-ab49-1ee4-a7e8-b09f584cb2b9",
@@ -966,12 +1865,99 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1511302952815,
+			"time": 1513546153293,
 			"name": "Create User",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"Usuario de Teste\",\n\t\"email\": \"teste@escolando.com\",\n\t\"password\": \"teste\"\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 26,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "479",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:48:07 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T19:48:07.833835-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 479,
+						"header": 346,
+						"total": 825
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MywibmFtZSI6IkRvbm8gZGEgZXNjb2xhIiwiZW1haWwiOiJkb25vQGVzY29sYW5kby5jb20iLCJwYXNzd29yZCI6ImIxMjNlOWUxOWQyMTcxNjliOTgxYTYxMTg4OTIwZjlkMjg2Mzg3MDlhNTEzMjIwMTY4NGQ3OTJiOTI2NDI3MWI3ZjA5MTU3ZWQ0MzIxYjFjMDk3ZjdhNGFiZWNmYzA5NzdkNDBhN2VlNTk5Yzg0NTg4M2JkMTA3NGNhMjNjNGFmIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIn0=",
+					"name": "Create School Owner",
+					"id": "abef675c-6409-d41f-1b22-53064c7c53c4",
+					"request": {
+						"url": "{{url}}/users",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Dono da escola\",\n\t\"email\": \"dono@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"Dono da escola\",\n\t\"email\": \"dono@escolando.com\",\n\t\"password\": \"teste\"\n}"
 		},
 		{
 			"id": "63d00dcd-de2c-2e6c-ecfa-8d2320358190",
@@ -1000,7 +1986,7 @@
 			"headers": "",
 			"headerData": [],
 			"url": "{{url}}/users/3/institutions",
-			"folder": "e36c0cba-124d-c38e-4c02-68c00a6d93c6",
+			"folder": "fe2a2d3c-ceed-02b5-ac59-768e17494804",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -1016,7 +2002,10 @@
 			"name": "Get User Institutions",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": []
+			"responses": [],
+			"isFromCollection": true,
+			"collectionRequestId": "68f3cc62-b24b-3fb6-011b-2585a37e2638",
+			"folderId": "fe2a2d3c-ceed-02b5-ac59-768e17494804"
 		},
 		{
 			"id": "7022a598-ea02-d324-2b7b-f131eaa65e36",
@@ -1049,6 +2038,37 @@
 			"helperAttributes": {},
 			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
 			"rawModeData": "{\n\t\"name\": \"None\"\n}"
+		},
+		{
+			"id": "7c5abdef-6533-b9ef-fa21-07c0e554b664",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/in_charge_roles/3",
+			"folder": "a4d9d243-302e-805d-35de-e406b29202b1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1513547564033,
+			"name": "Update InCharge Role",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\": \"Coordenador(a)\",\n\t\"access_content\": \"111001011010101\"\n}"
 		},
 		{
 			"id": "81c7f989-5841-885b-093a-34b50488517d",
@@ -1086,6 +2106,7 @@
 			"headers": "",
 			"headerData": [],
 			"url": "{{url}}/students_of_parent/1",
+			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -1096,7 +2117,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1512835007670,
+			"time": 1513532470498,
 			"name": "Get Students Of Parent",
 			"description": "Método responsável por recuperar todos os estudantes que um parente possui relacionamento.\n\nO parametro necessário é o parent_id.",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
@@ -1157,12 +2178,186 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1510788854544,
+			"time": 1513547857287,
 			"name": "Create Kinship",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"GRAU DE PARENTESCO DE TESTE\"\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 28,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "138",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:57:12 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"name\":\"Mãe\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:57:12.002718-02:00\",\"updated_at\":\"2017-12-17T19:57:12.002718-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 138,
+						"header": 346,
+						"total": 484
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwibmFtZSI6Ik3Do2UiLCJhY2Nlc3NfY29udGVudCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU3OjEyLjAwMjcxOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU3OjEyLjAwMjcxOC0wMjowMCJ9",
+					"name": "Create Mother Relationship",
+					"id": "067ddcc0-a6f8-de32-4bde-a5e2734a21e2",
+					"request": {
+						"url": "{{url}}/kinships",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Mãe\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 30,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "137",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:57:41 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":2,\"name\":\"Pai\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:57:41.639554-02:00\",\"updated_at\":\"2017-12-17T19:57:41.639554-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 137,
+						"header": 346,
+						"total": 483
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MiwibmFtZSI6IlBhaSIsImFjY2Vzc19jb250ZW50IjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTc6NDEuNjM5NTU0LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTc6NDEuNjM5NTU0LTAyOjAwIn0=",
+					"name": "Create Father Relationship",
+					"id": "9d901a3d-d616-5486-8401-3c9b2791135d",
+					"request": {
+						"url": "{{url}}/kinships",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Pai\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"Mãe\"\n}"
 		},
 		{
 			"id": "8a52a136-0018-93f0-ae78-60d799e00fb8",
@@ -1296,12 +2491,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1511301429818,
+			"time": 1513541591060,
 			"name": "Update Institution",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": [],
-			"rawModeData": "{\n\t\"cnpj\": \"222.222.222.22\",\n\t\"address_postal\": \"2222-000\",\n\t\"owner\": {\n\t\t\"id\": 1\n\t}\n}"
+			"rawModeData": "{\n\t\"name\": \"Escolinha para joven mutanteens\",\n\t\"email\": \"escolinha@escolando.com\",\n\t\"cnpj\": \"222.222.222.22\",\n\t\"address_postal\": \"2222-000\",\n\t\"owner\": {\n\t\t\"id\": 1\n\t}\n}"
 		},
 		{
 			"id": "9b829f4d-0420-f5f2-8ad1-b38ec0ef8ad2",
@@ -1385,7 +2580,268 @@
 			"name": "Create Parent Student Relation",
 			"description": "Cria a relacao entre um parente e um estudante.\nPara que esse método possa ser executado e concluido com sucesso, é necessário que ja exista um parente criado.\nEssa requisição não cria parentes, estudantes ou graus de parentesco.",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 28,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1706",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:00:33 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":4,\"parent\":{\"id\":2,\"user_id\":2,\"name\":\"Bob\",\"email\":\"bob@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:43.090966-02:00\",\"updated_at\":\"2017-12-17T20:00:33.593846-02:00\"},\"ParentID\":2,\"student\":{\"id\":1,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T20:00:33.59444-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T20:00:33.594825-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T20:00:33.595123-02:00\"},\"ParentID\":1,\"name\":\"Roanito\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:58:38.829965-02:00\",\"updated_at\":\"2017-12-17T20:00:33.595321-02:00\"},\"StudentID\":1,\"kinship\":{\"id\":2,\"name\":\"Pai\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:57:41.639554-02:00\",\"updated_at\":\"2017-12-17T20:00:33.59558-02:00\"},\"KinshipID\":2,\"created_at\":\"2017-12-17T20:00:33.595858-02:00\",\"updated_at\":\"2017-12-17T20:00:33.595858-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1706,
+						"header": 347,
+						"total": 2053
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NCwicGFyZW50Ijp7ImlkIjoyLCJ1c2VyX2lkIjoyLCJuYW1lIjoiQm9iIiwiZW1haWwiOiJib2JAZXNjb2xhbmRvLmNvbSIsInBob25lIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0Nzo0My4wOTA5NjYtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMDozMy41OTM4NDYtMDI6MDAifSwiUGFyZW50SUQiOjIsInN0dWRlbnQiOnsiaWQiOjEsImluc3RpdHV0aW9uIjp7ImlkIjoxLCJuYW1lIjoiUElDLVJpbyIsImVtYWlsIjoicGljcmlvQGVzY29sYW5kby5jb20iLCJvd25lciI6eyJpZCI6MywibmFtZSI6IkRvbm8gZGEgZXNjb2xhIiwiZW1haWwiOiJkb25vQGVzY29sYW5kby5jb20iLCJwYXNzd29yZCI6ImIxMjNlOWUxOWQyMTcxNjliOTgxYTYxMTg4OTIwZjlkMjg2Mzg3MDlhNTEzMjIwMTY4NGQ3OTJiOTI2NDI3MWI3ZjA5MTU3ZWQ0MzIxYjFjMDk3ZjdhNGFiZWNmYzA5NzdkNDBhN2VlNTk5Yzg0NTg4M2JkMTA3NGNhMjNjNGFmIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDA6MzMuNTk0NDQtMDI6MDAifSwiVXNlcklEIjozLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNucGoiOiIiLCJwaG9uZTEiOiIiLCJwaG9uZTIiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6NTcuNDQyNTA4LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDA6MzMuNTk0ODI1LTAyOjAwIn0sIkluc3RpdHV0aW9uSUQiOjEsInJlc3BvbnNpYmxlIjp7ImlkIjoxLCJ1c2VyX2lkIjoxLCJuYW1lIjoiQW3DqWxpYSIsImVtYWlsIjoiYW1lbGlhQGVzY29sYW5kby5jb20iLCJwaG9uZSI6IiIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDc6MTkuMjAxNjIyLTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDA6MzMuNTk1MTIzLTAyOjAwIn0sIlBhcmVudElEIjoxLCJuYW1lIjoiUm9hbml0byIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU4OjM4LjgyOTk2NS0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAwOjMzLjU5NTMyMS0wMjowMCJ9LCJTdHVkZW50SUQiOjEsImtpbnNoaXAiOnsiaWQiOjIsIm5hbWUiOiJQYWkiLCJhY2Nlc3NfY29udGVudCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU3OjQxLjYzOTU1NC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAwOjMzLjU5NTU4LTAyOjAwIn0sIktpbnNoaXBJRCI6MiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDA6MzMuNTk1ODU4LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDA6MzMuNTk1ODU4LTAyOjAwIn0=",
+					"name": "Create Father Relation Between Bob e Roanito",
+					"id": "d0eca340-24c6-430c-62c9-86461e44138b",
+					"request": {
+						"url": "{{url}}/parent_students",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"student\": {\n\t\t\"id\": 1\n\t},\n\t\"parent\": {\n\t\t\"id\": 2\n\t},\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 35,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1709",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:01:19 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":5,\"parent\":{\"id\":2,\"user_id\":2,\"name\":\"Bob\",\"email\":\"bob@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:43.090966-02:00\",\"updated_at\":\"2017-12-17T20:01:19.590584-02:00\"},\"ParentID\":2,\"student\":{\"id\":2,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T20:01:19.591099-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T20:01:19.591369-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T20:01:19.591644-02:00\"},\"ParentID\":1,\"name\":\"Romarito\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:59:14.880671-02:00\",\"updated_at\":\"2017-12-17T20:01:19.591838-02:00\"},\"StudentID\":2,\"kinship\":{\"id\":2,\"name\":\"Pai\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:57:41.639554-02:00\",\"updated_at\":\"2017-12-17T20:01:19.592099-02:00\"},\"KinshipID\":2,\"created_at\":\"2017-12-17T20:01:19.592335-02:00\",\"updated_at\":\"2017-12-17T20:01:19.592335-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1709,
+						"header": 347,
+						"total": 2056
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NSwicGFyZW50Ijp7ImlkIjoyLCJ1c2VyX2lkIjoyLCJuYW1lIjoiQm9iIiwiZW1haWwiOiJib2JAZXNjb2xhbmRvLmNvbSIsInBob25lIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0Nzo0My4wOTA5NjYtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMToxOS41OTA1ODQtMDI6MDAifSwiUGFyZW50SUQiOjIsInN0dWRlbnQiOnsiaWQiOjIsImluc3RpdHV0aW9uIjp7ImlkIjoxLCJuYW1lIjoiUElDLVJpbyIsImVtYWlsIjoicGljcmlvQGVzY29sYW5kby5jb20iLCJvd25lciI6eyJpZCI6MywibmFtZSI6IkRvbm8gZGEgZXNjb2xhIiwiZW1haWwiOiJkb25vQGVzY29sYW5kby5jb20iLCJwYXNzd29yZCI6ImIxMjNlOWUxOWQyMTcxNjliOTgxYTYxMTg4OTIwZjlkMjg2Mzg3MDlhNTEzMjIwMTY4NGQ3OTJiOTI2NDI3MWI3ZjA5MTU3ZWQ0MzIxYjFjMDk3ZjdhNGFiZWNmYzA5NzdkNDBhN2VlNTk5Yzg0NTg4M2JkMTA3NGNhMjNjNGFmIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6MTkuNTkxMDk5LTAyOjAwIn0sIlVzZXJJRCI6MywiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjbnBqIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ4OjU3LjQ0MjUwOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAxOjE5LjU5MTM2OS0wMjowMCJ9LCJJbnN0aXR1dGlvbklEIjoxLCJyZXNwb25zaWJsZSI6eyJpZCI6MSwidXNlcl9pZCI6MSwibmFtZSI6IkFtw6lsaWEiLCJlbWFpbCI6ImFtZWxpYUBlc2NvbGFuZG8uY29tIiwicGhvbmUiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMTYyMi0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAxOjE5LjU5MTY0NC0wMjowMCJ9LCJQYXJlbnRJRCI6MSwibmFtZSI6IlJvbWFyaXRvIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTk6MTQuODgwNjcxLTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6MTkuNTkxODM4LTAyOjAwIn0sIlN0dWRlbnRJRCI6Miwia2luc2hpcCI6eyJpZCI6MiwibmFtZSI6IlBhaSIsImFjY2Vzc19jb250ZW50IjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NTc6NDEuNjM5NTU0LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6MTkuNTkyMDk5LTAyOjAwIn0sIktpbnNoaXBJRCI6MiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6MTkuNTkyMzM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6MTkuNTkyMzM1LTAyOjAwIn0=",
+					"name": "Create Father Relation between Bob and Romarito",
+					"id": "d9f071d7-5423-79bb-79f1-5c85507bc348",
+					"request": {
+						"url": "{{url}}/parent_students",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"student\": {\n\t\t\"id\": 2\n\t},\n\t\"parent\": {\n\t\t\"id\": 2\n\t},\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 33,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1708",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:01:40 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":6,\"parent\":{\"id\":2,\"user_id\":2,\"name\":\"Bob\",\"email\":\"bob@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:43.090966-02:00\",\"updated_at\":\"2017-12-17T20:01:40.054575-02:00\"},\"ParentID\":2,\"student\":{\"id\":3,\"institution\":{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T20:01:40.055339-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T20:01:40.056069-02:00\"},\"InstitutionID\":1,\"responsible\":{\"id\":1,\"user_id\":1,\"name\":\"Amélia\",\"email\":\"amelia@escolando.com\",\"phone\":\"\",\"profile_image_url\":\"\",\"created_at\":\"2017-12-17T19:47:19.201622-02:00\",\"updated_at\":\"2017-12-17T20:01:40.056738-02:00\"},\"ParentID\":1,\"name\":\"Fernita\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:59:40.029552-02:00\",\"updated_at\":\"2017-12-17T20:01:40.057067-02:00\"},\"StudentID\":3,\"kinship\":{\"id\":2,\"name\":\"Pai\",\"access_content\":\"\",\"created_at\":\"2017-12-17T19:57:41.639554-02:00\",\"updated_at\":\"2017-12-17T20:01:40.057519-02:00\"},\"KinshipID\":2,\"created_at\":\"2017-12-17T20:01:40.058422-02:00\",\"updated_at\":\"2017-12-17T20:01:40.058422-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 1708,
+						"header": 347,
+						"total": 2055
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NiwicGFyZW50Ijp7ImlkIjoyLCJ1c2VyX2lkIjoyLCJuYW1lIjoiQm9iIiwiZW1haWwiOiJib2JAZXNjb2xhbmRvLmNvbSIsInBob25lIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0Nzo0My4wOTA5NjYtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMTo0MC4wNTQ1NzUtMDI6MDAifSwiUGFyZW50SUQiOjIsInN0dWRlbnQiOnsiaWQiOjMsImluc3RpdHV0aW9uIjp7ImlkIjoxLCJuYW1lIjoiUElDLVJpbyIsImVtYWlsIjoicGljcmlvQGVzY29sYW5kby5jb20iLCJvd25lciI6eyJpZCI6MywibmFtZSI6IkRvbm8gZGEgZXNjb2xhIiwiZW1haWwiOiJkb25vQGVzY29sYW5kby5jb20iLCJwYXNzd29yZCI6ImIxMjNlOWUxOWQyMTcxNjliOTgxYTYxMTg4OTIwZjlkMjg2Mzg3MDlhNTEzMjIwMTY4NGQ3OTJiOTI2NDI3MWI3ZjA5MTU3ZWQ0MzIxYjFjMDk3ZjdhNGFiZWNmYzA5NzdkNDBhN2VlNTk5Yzg0NTg4M2JkMTA3NGNhMjNjNGFmIiwiZmFjZWJvb2tfaWQiOiIiLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNwZiI6IiIsInJnIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwicHJvZmlsZV9pbWFnZV91cmwiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6MDcuODMzODM1LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MDE6NDAuMDU1MzM5LTAyOjAwIn0sIlVzZXJJRCI6MywiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjbnBqIjoiIiwicGhvbmUxIjoiIiwicGhvbmUyIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ4OjU3LjQ0MjUwOC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAxOjQwLjA1NjA2OS0wMjowMCJ9LCJJbnN0aXR1dGlvbklEIjoxLCJyZXNwb25zaWJsZSI6eyJpZCI6MSwidXNlcl9pZCI6MSwibmFtZSI6IkFtw6lsaWEiLCJlbWFpbCI6ImFtZWxpYUBlc2NvbGFuZG8uY29tIiwicGhvbmUiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ3OjE5LjIwMTYyMi0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjAxOjQwLjA1NjczOC0wMjowMCJ9LCJQYXJlbnRJRCI6MSwibmFtZSI6IkZlcm5pdGEiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImV4dHJhX2luZm8iOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1OTo0MC4wMjk1NTItMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMTo0MC4wNTcwNjctMDI6MDAifSwiU3R1ZGVudElEIjozLCJraW5zaGlwIjp7ImlkIjoyLCJuYW1lIjoiUGFpIiwiYWNjZXNzX2NvbnRlbnQiOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1Nzo0MS42Mzk1NTQtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMTo0MC4wNTc1MTktMDI6MDAifSwiS2luc2hpcElEIjoyLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMTo0MC4wNTg0MjItMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDowMTo0MC4wNTg0MjItMDI6MDAifQ==",
+					"name": "Create Father Relation between Bob and Fernita",
+					"id": "ac53b494-d15b-121c-46e8-5ee689397549",
+					"request": {
+						"url": "{{url}}/parent_students",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"student\": {\n\t\t\"id\": 3\n\t},\n\t\"parent\": {\n\t\t\"id\": 2\n\t},\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
 			"rawModeData": "{\n\t\"student\": {\n\t\t\"id\": 1\n\t},\n\t\"parent\": {\n\t\t\"id\": 2\n\t},\n\t\"kinship\": {\n\t\t\"id\": 2\n\t}\n}"
 		},
 		{
@@ -1424,25 +2880,24 @@
 			"id": "a2c5291a-baf1-8233-1275-4060307b5543",
 			"headers": "",
 			"headerData": [],
-			"url": "{{url}}/in_charges/1",
+			"url": "{{url}}/in_charges/5",
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "GET",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": null,
 			"dataMode": "params",
-			"name": "Get InCharge",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1511573743072,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f"
+			"time": 1513543809521,
+			"name": "Get InCharge",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": []
 		},
 		{
 			"id": "a34f6dbf-0981-ec57-ab11-9e0e41be51d8",
@@ -1584,12 +3039,99 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1511302988773,
+			"time": 1513546315912,
 			"name": "Create Institution",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"rawModeData": "{\n\t\"name\": \"Instituicao de Teste\",\n\t\"email\": \"instituicaodeteste@escolando.com\",\n\t\"owner\": {\n\t\t\"id\": 1\n\t}\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 31,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "656",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:48:57 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"name\":\"PIC-Rio\",\"email\":\"picrio@escolando.com\",\"owner\":{\"id\":3,\"name\":\"Dono da escola\",\"email\":\"dono@escolando.com\",\"password\":\"\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:07.833835-02:00\",\"updated_at\":\"2017-12-17T19:48:57.443948-02:00\"},\"UserID\":3,\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cnpj\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:48:57.442508-02:00\",\"updated_at\":\"2017-12-17T19:48:57.444177-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 656,
+						"header": 346,
+						"total": 1002
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwibmFtZSI6IlBJQy1SaW8iLCJlbWFpbCI6InBpY3Jpb0Blc2NvbGFuZG8uY29tIiwib3duZXIiOnsiaWQiOjMsIm5hbWUiOiJEb25vIGRhIGVzY29sYSIsImVtYWlsIjoiZG9ub0Blc2NvbGFuZG8uY29tIiwicGFzc3dvcmQiOiIiLCJmYWNlYm9va19pZCI6IiIsImFkZHJlc3NfcG9zdGFsIjoiIiwiYWRkcmVzc19zdHJlZXQiOiIiLCJhZGRyZXNzX251bWJlciI6MCwiYWRkcmVzc19jb21wbGVtZW50IjoiIiwiY3BmIjoiIiwicmciOiIiLCJwaG9uZTEiOiIiLCJwaG9uZTIiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImV4dHJhX2luZm8iOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0ODowNy44MzM4MzUtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0ODo1Ny40NDM5NDgtMDI6MDAifSwiVXNlcklEIjozLCJhZGRyZXNzX3Bvc3RhbCI6IiIsImFkZHJlc3Nfc3RyZWV0IjoiIiwiYWRkcmVzc19udW1iZXIiOjAsImFkZHJlc3NfY29tcGxlbWVudCI6IiIsImNucGoiOiIiLCJwaG9uZTEiOiIiLCJwaG9uZTIiOiIiLCJleHRyYV9pbmZvIjoiIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6NTcuNDQyNTA4LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDg6NTcuNDQ0MTc3LTAyOjAwIn0=",
+					"name": "Create PIC-Rio School",
+					"id": "6ff1c312-c499-7714-6330-b425b6ba98bb",
+					"request": {
+						"url": "{{url}}/institutions",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"PIC-Rio\",\n\t\"email\": \"picrio@escolando.com\",\n\t\"owner\": {\n\t\t\"id\": 3\n\t}\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"PIC-Rio\",\n\t\"email\": \"picrio@escolando.com\",\n\t\"owner\": {\n\t\t\"id\": 3\n\t}\n}"
 		},
 		{
 			"id": "b63cb765-a4fa-3011-f545-57eaf91c92fb",
@@ -1625,26 +3167,25 @@
 					"enabled": true
 				}
 			],
-			"url": "{{url}}/students/2",
+			"url": "{{url}}/students/1",
+			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "PUT",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": [],
 			"dataMode": "raw",
-			"name": "Update Student",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1510796329757,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56",
-			"rawModeData": "{\n\t\"profile_image_url\": \"http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg\"\n}"
+			"time": 1513532473300,
+			"name": "Update Student",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [],
+			"rawModeData": "{\n\t\"profile_image_url\": \"http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg\",\n\t\"name\": \"Roanito Jr.\"\n}"
 		},
 		{
 			"id": "ba6514ff-8606-14d8-b7c9-1c22b0ba30bf",
@@ -1727,25 +3268,24 @@
 			"id": "dc540e01-85da-011f-1f5e-3c57485a3e54",
 			"headers": "",
 			"headerData": [],
-			"url": "{{url}}/in_charge_roles",
+			"url": "{{url}}/in_charges",
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "GET",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": null,
 			"dataMode": "params",
-			"name": "Get InCharges",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1511573685443,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f"
+			"time": 1513538867063,
+			"name": "Get InCharges",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": []
 		},
 		{
 			"id": "dea1cc6e-f06a-264f-d09b-87ac08832b08",
@@ -1770,6 +3310,30 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56"
+		},
+		{
+			"id": "e0f51fda-5ffb-41d5-d4b0-d5f6a170687c",
+			"headers": "",
+			"headerData": [],
+			"url": "{{url}}/in_charge_roles/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"data": null,
+			"dataMode": "params",
+			"name": "Delete InCharge Role",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1513538345917,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"folder": "a4d9d243-302e-805d-35de-e406b29202b1"
 		},
 		{
 			"id": "e185e846-b2d4-73e3-55d9-99ab50ac746e",
@@ -1802,11 +3366,12 @@
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"description": "",
-					"enabled": true
+					"enabled": true,
+					"description": ""
 				}
 			],
 			"url": "{{url}}/registers",
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -1815,14 +3380,18 @@
 			"data": [],
 			"dataMode": "raw",
 			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
+			"currentHelper": null,
+			"helperAttributes": null,
 			"time": 1512941772196,
 			"name": "Create Register",
-			"description": "",
+			"description": null,
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"responses": [],
-			"rawModeData": "{\n\t\"title\": \"Testando!\",\n\t\"text\": \"Hello World!\",\n\t\"register_type\": {\n\t\t\"id\": 1\n\t},\n\t\"target_id\": 1,\n\t\"sender_id\": 1,\n\t\"student_id\": 1\n}"
+			"auth": null,
+			"events": null,
+			"descriptionFormat": "html",
+			"variables": null,
+			"rawModeData": "{\n  \"title\": \"Cuidado com piolho!\",\n  \"text\": \"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\n  \"register_type\": {\n    \"id\": 1\n  },\n  \"target_id\": 1,\n  \"sender_id\": 1,\n  \"student_id\": 3\n}"
 		},
 		{
 			"id": "f40657a7-f2fe-f79a-153d-8e24932ad562",
@@ -1847,6 +3416,296 @@
 			"currentHelper": "normal",
 			"helperAttributes": {},
 			"folder": "7ada739b-d58c-23bd-0cbd-12524d016c56"
+		},
+		{
+			"id": "f8d22e90-deb2-a784-d895-85719e69f806",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "{{url}}/user_incharge/3/1",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1513548127492,
+			"name": "Create User InCharge",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 39,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "489",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:53:10 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":4,\"name\":\"Diretor Johnson\",\"email\":\"diretorjohson@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:53:10.264885-02:00\",\"updated_at\":\"2017-12-17T19:53:10.264885-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 489,
+						"header": 346,
+						"total": 835
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NCwibmFtZSI6IkRpcmV0b3IgSm9obnNvbiIsImVtYWlsIjoiZGlyZXRvcmpvaHNvbkBlc2NvbGFuZG8uY29tIiwicGFzc3dvcmQiOiJiMTIzZTllMTlkMjE3MTY5Yjk4MWE2MTE4ODkyMGY5ZDI4NjM4NzA5YTUxMzIyMDE2ODRkNzkyYjkyNjQyNzFiN2YwOTE1N2VkNDMyMWIxYzA5N2Y3YTRhYmVjZmMwOTc3ZDQwYTdlZTU5OWM4NDU4ODNiZDEwNzRjYTIzYzRhZiIsImZhY2Vib29rX2lkIjoiIiwiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjcGYiOiIiLCJyZyI6IiIsInBob25lMSI6IiIsInBob25lMiI6IiIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjUzOjEwLjI2NDg4NS0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjUzOjEwLjI2NDg4NS0wMjowMCJ9",
+					"name": "Create Director Johnson User",
+					"id": "74b1836a-e823-b475-204d-396eae4193f8",
+					"request": {
+						"url": "{{url}}/user_incharge/1/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Diretor Johnson\",\n\t\"email\": \"diretorjohson@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 22,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "496",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:55:09 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":5,\"name\":\"Professora Ivana Ban Ana\",\"email\":\"ivanabanana@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:55:09.277157-02:00\",\"updated_at\":\"2017-12-17T19:55:09.277157-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 496,
+						"header": 346,
+						"total": 842
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NSwibmFtZSI6IlByb2Zlc3NvcmEgSXZhbmEgQmFuIEFuYSIsImVtYWlsIjoiaXZhbmFiYW5hbmFAZXNjb2xhbmRvLmNvbSIsInBhc3N3b3JkIjoiYjEyM2U5ZTE5ZDIxNzE2OWI5ODFhNjExODg5MjBmOWQyODYzODcwOWE1MTMyMjAxNjg0ZDc5MmI5MjY0MjcxYjdmMDkxNTdlZDQzMjFiMWMwOTdmN2E0YWJlY2ZjMDk3N2Q0MGE3ZWU1OTljODQ1ODgzYmQxMDc0Y2EyM2M0YWYiLCJmYWNlYm9va19pZCI6IiIsImFkZHJlc3NfcG9zdGFsIjoiIiwiYWRkcmVzc19zdHJlZXQiOiIiLCJhZGRyZXNzX251bWJlciI6MCwiYWRkcmVzc19jb21wbGVtZW50IjoiIiwiY3BmIjoiIiwicmciOiIiLCJwaG9uZTEiOiIiLCJwaG9uZTIiOiIiLCJwcm9maWxlX2ltYWdlX3VybCI6IiIsImV4dHJhX2luZm8iOiIiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1NTowOS4yNzcxNTctMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo1NTowOS4yNzcxNTctMDI6MDAifQ==",
+					"name": "Create Ivana Teacher User",
+					"id": "7b1b2b93-31e1-e5b0-7642-0bdbd35c1fc0",
+					"request": {
+						"url": "{{url}}/user_incharge/2/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Professora Ivana Ban Ana\",\n\t\"email\": \"ivanabanana@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 26,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "474",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 21:56:30 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":6,\"name\":\"Selminha\",\"email\":\"selma@escolando.com\",\"password\":\"b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af\",\"facebook_id\":\"\",\"address_postal\":\"\",\"address_street\":\"\",\"address_number\":0,\"address_complement\":\"\",\"cpf\":\"\",\"rg\":\"\",\"phone1\":\"\",\"phone2\":\"\",\"profile_image_url\":\"\",\"extra_info\":\"\",\"created_at\":\"2017-12-17T19:56:30.227035-02:00\",\"updated_at\":\"2017-12-17T19:56:30.227035-02:00\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 474,
+						"header": 346,
+						"total": 820
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NiwibmFtZSI6IlNlbG1pbmhhIiwiZW1haWwiOiJzZWxtYUBlc2NvbGFuZG8uY29tIiwicGFzc3dvcmQiOiJiMTIzZTllMTlkMjE3MTY5Yjk4MWE2MTE4ODkyMGY5ZDI4NjM4NzA5YTUxMzIyMDE2ODRkNzkyYjkyNjQyNzFiN2YwOTE1N2VkNDMyMWIxYzA5N2Y3YTRhYmVjZmMwOTc3ZDQwYTdlZTU5OWM4NDU4ODNiZDEwNzRjYTIzYzRhZiIsImZhY2Vib29rX2lkIjoiIiwiYWRkcmVzc19wb3N0YWwiOiIiLCJhZGRyZXNzX3N0cmVldCI6IiIsImFkZHJlc3NfbnVtYmVyIjowLCJhZGRyZXNzX2NvbXBsZW1lbnQiOiIiLCJjcGYiOiIiLCJyZyI6IiIsInBob25lMSI6IiIsInBob25lMiI6IiIsInByb2ZpbGVfaW1hZ2VfdXJsIjoiIiwiZXh0cmFfaW5mbyI6IiIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU2OjMwLjIyNzAzNS0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjU2OjMwLjIyNzAzNS0wMjowMCJ9",
+					"name": "Create Selma Coord. User",
+					"id": "e679627f-6598-1c31-6d18-16ecd78fb8bd",
+					"request": {
+						"url": "{{url}}/user_incharge/3/1",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Selminha\",\n\t\"email\": \"selma@escolando.com\",\n\t\"password\": \"teste\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n\t\"name\": \"Diretor Johnson\",\n\t\"email\": \"diretorjohson@escolando.com\",\n\t\"password\": \"teste\"\n}"
 		},
 		{
 			"id": "fc2391d5-d514-f70d-4b2b-5ae5b180f232",
@@ -1884,25 +3743,24 @@
 				}
 			],
 			"url": "{{url}}/in_charges",
+			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "POST",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": [],
 			"dataMode": "raw",
-			"name": "Get InCharges",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1511917052049,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "b1fcd257-723c-0364-0f18-572859c2f80f",
-			"rawModeData": "{\n\t\"name\": \"Encarregado de Teste\",\n\t\"email\": \"encarregado@escolando.com\",\n\t\"user_id\": 1\n}"
+			"time": 1513541571897,
+			"name": "Create InCharge",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\": \"Encarregado de Teste\",\n\t\"email\": \"encarregado@escolando.com\",\n\t\"user_id\": 1,\n\t\"role\": {\n\t\t\"id\": 1\n\t},\n\t\"institution\": {\n\t\t\"id\": 1\n\t}\n}"
 		},
 		{
 			"id": "fef04d0d-2640-4df9-a6f9-a98a3f622165",

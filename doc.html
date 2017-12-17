@@ -163,7 +163,46 @@ pre code {
                 </li>
                   
                 <li>
-                    <a href="#request-incharge-get-incharges">Get InCharges</a>
+                    <a href="#request-incharge-get-institution-incharges">Get Institution InCharges</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-create-incharge">Create InCharge</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-update-incharge">Update InCharge</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-delete-incharge">Delete InCharge</a>
+                </li>
+                 
+            </ul>
+        </li>
+          
+        <li>
+            <a href="#folder-incharge-roles">InCharge Roles</a>
+            <ul>
+                 
+                <li>
+                    <a href="#request-incharge-roles-create-incharge-role">Create InCharge Role</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-roles-get-incharge-roles">Get InCharge Roles</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-roles-get-incharge-role">Get InCharge Role</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-roles-update-incharge-role">Update InCharge Role</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-incharge-roles-delete-incharge-role">Delete InCharge Role</a>
                 </li>
                  
             </ul>
@@ -183,6 +222,10 @@ pre code {
                   
                 <li>
                     <a href="#request-institutions-get-institutions">Get Institutions</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-institutions-get-user-institutions">Get User Institutions</a>
                 </li>
                   
                 <li>
@@ -344,15 +387,15 @@ pre code {
                 </li>
                   
                 <li>
+                    <a href="#request-registers-get-user-registeres">Get User Registeres</a>
+                </li>
+                  
+                <li>
                     <a href="#request-registers-create-register">Create Register</a>
                 </li>
                   
                 <li>
                     <a href="#request-registers-delete-register">Delete Register</a>
-                </li>
-                  
-                <li>
-                    <a href="#request-registers-get-user-registeres">Get User Registeres</a>
                 </li>
                   
                 <li>
@@ -468,10 +511,6 @@ pre code {
                 </li>
                   
                 <li>
-                    <a href="#request-users-get-user-institutions">Get User Institutions</a>
-                </li>
-                  
-                <li>
                     <a href="#request-users-update-user">Update User</a>
                 </li>
                   
@@ -481,6 +520,10 @@ pre code {
                   
                 <li>
                     <a href="#request-users-create-user-parent">Create User Parent</a>
+                </li>
+                  
+                <li>
+                    <a href="#request-users-create-user-incharge">Create User InCharge</a>
                 </li>
                   
                 <li>
@@ -546,10 +589,10 @@ pre code {
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-get-incharges-example-curl">
-                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charge_roles"</code></pre>
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charges"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-get-incharges-example-http">
-                                        <pre><code class="hljs http">GET /in_charge_roles HTTP/1.1
+                                        <pre><code class="hljs http">GET /in_charges HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
@@ -580,10 +623,10 @@ Host: 54.233.195.52:8080</code></pre>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-get-incharge-example-curl">
-                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charges/1"</code></pre>
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charges/5"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-get-incharge-example-http">
-                                        <pre><code class="hljs http">GET /in_charges/1 HTTP/1.1
+                                        <pre><code class="hljs http">GET /in_charges/5 HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
@@ -600,27 +643,67 @@ Host: 54.233.195.52:8080</code></pre>
                         
                         <div class="request">
 
-                            <h4 id="request-incharge-get-incharges">
-                                Get InCharges
-                                <a href="#request-incharge-get-incharges"><i class="glyphicon glyphicon-link"></i></a>
+                            <h4 id="request-incharge-get-institution-incharges">
+                                Get Institution InCharges
+                                <a href="#request-incharge-get-institution-incharges"><i class="glyphicon glyphicon-link"></i></a>
                             </h4>
 
                             <div></div>
 
                             <div>
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#request-get-incharges-example-curl" data-toggle="tab">Curl</a></li>
-                                    <li role="presentation"><a href="#request-get-incharges-example-http" data-toggle="tab">HTTP</a></li>
+                                    <li role="presentation" class="active"><a href="#request-get-institution-incharges-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-institution-incharges-example-http" data-toggle="tab">HTTP</a></li>
                                 </ul>
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="request-get-incharges-example-curl">
+                                    <div class="tab-pane active" id="request-get-institution-incharges-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/institution_in_charges/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-institution-incharges-example-http">
+                                        <pre><code class="hljs http">GET /institution_in_charges/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-create-incharge">
+                                Create InCharge
+                                <a href="#request-incharge-create-incharge"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-incharge-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-incharge-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-incharge-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
 	"name": "Encarregado de Teste",
 	"email": "encarregado@escolando.com",
-	"user_id": 1
+	"user_id": 1,
+	"role": {
+		"id": 1
+	},
+	"institution": {
+		"id": 1
+	}
 }' "http://54.233.195.52:8080/in_charges"</code></pre>
                                     </div>
-                                    <div class="tab-pane" id="request-get-incharges-example-http">
+                                    <div class="tab-pane" id="request-create-incharge-example-http">
                                         <pre><code class="hljs http">POST /in_charges HTTP/1.1
 Host: 54.233.195.52:8080
 Content-Type: application/json
@@ -628,8 +711,419 @@ Content-Type: application/json
 {
 	"name": "Encarregado de Teste",
 	"email": "encarregado@escolando.com",
-	"user_id": 1
+	"user_id": 1,
+	"role": {
+		"id": 1
+	},
+	"institution": {
+		"id": 1
+	}
 }</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-update-incharge">
+                                Update InCharge
+                                <a href="#request-incharge-update-incharge"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-update-incharge-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-update-incharge-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-update-incharge-example-curl">
+                                        <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"name": "Diretor Johnsons"
+}' "http://54.233.195.52:8080/in_charges/5"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-update-incharge-example-http">
+                                        <pre><code class="hljs http">PUT /in_charges/5 HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "Diretor Johnsons"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-delete-incharge">
+                                Delete InCharge
+                                <a href="#request-incharge-delete-incharge"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-delete-incharge-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-delete-incharge-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-delete-incharge-example-curl">
+                                        <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" "http://54.233.195.52:8080/in_charges/4"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-delete-incharge-example-http">
+                                        <pre><code class="hljs http">DELETE /in_charges/4 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                </div>
+                  
+                <div class="endpoints-group">
+                    <h3 id="folder-incharge-roles">
+                        InCharge Roles
+                        <a href="#folder-incharge-roles"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>Representa o cargo de encarregado</p>
+</div>
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-roles-create-incharge-role">
+                                Create InCharge Role
+                                <a href="#request-incharge-roles-create-incharge-role"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-incharge-role-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-incharge-role-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-incharge-role-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"name": "Diretor"
+}' "http://54.233.195.52:8080/in_charge_roles"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-create-incharge-role-example-http">
+                                        <pre><code class="hljs http">POST /in_charge_roles HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "Diretor"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-incharge-role-responses-5bb6fc07-9e16-72bc-2bc3-fdc297d7e7da" data-toggle="tab">
+                                            
+                                                Create Director Role
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-incharge-role-responses-f6cfd243-0393-232c-7ff8-84a4ed5e9770" data-toggle="tab">
+                                            
+                                                Create Teacher Role
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-incharge-role-responses-a35c013a-2236-014d-8515-6df8f494e177" data-toggle="tab">
+                                            
+                                                Create Coordinator Role
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-incharge-role-responses-5bb6fc07-9e16-72bc-2bc3-fdc297d7e7da">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>141</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:49:28 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 1,
+    "name": "Diretor",
+    "access_content": "",
+    "created_at": "2017-12-17T19:49:28.752361-02:00",
+    "updated_at": "2017-12-17T19:49:28.752361-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-incharge-role-responses-f6cfd243-0393-232c-7ff8-84a4ed5e9770">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>144</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:51:13 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 2,
+    "name": "Professor(a)",
+    "access_content": "",
+    "created_at": "2017-12-17T19:51:13.86793-02:00",
+    "updated_at": "2017-12-17T19:51:13.86793-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-incharge-role-responses-a35c013a-2236-014d-8515-6df8f494e177">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>147</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:51:59 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 3,
+    "name": "Coordenador(a",
+    "access_content": "",
+    "created_at": "2017-12-17T19:51:59.808875-02:00",
+    "updated_at": "2017-12-17T19:51:59.808875-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-roles-get-incharge-roles">
+                                Get InCharge Roles
+                                <a href="#request-incharge-roles-get-incharge-roles"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div><p>Recupera todos os cargos disponíveis.</p>
+</div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-incharge-roles-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-incharge-roles-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-incharge-roles-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charge_roles"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-incharge-roles-example-http">
+                                        <pre><code class="hljs http">GET /in_charge_roles HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-roles-get-incharge-role">
+                                Get InCharge Role
+                                <a href="#request-incharge-roles-get-incharge-role"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div><p>Recupera um cargo com id específico</p>
+</div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-incharge-role-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-incharge-role-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-incharge-role-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/in_charge_roles/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-incharge-role-example-http">
+                                        <pre><code class="hljs http">GET /in_charge_roles/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-roles-update-incharge-role">
+                                Update InCharge Role
+                                <a href="#request-incharge-roles-update-incharge-role"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-update-incharge-role-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-update-incharge-role-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-update-incharge-role-example-curl">
+                                        <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"name": "Coordenador(a)",
+	"access_content": "111001011010101"
+}' "http://54.233.195.52:8080/in_charge_roles/3"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-update-incharge-role-example-http">
+                                        <pre><code class="hljs http">PUT /in_charge_roles/3 HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "Coordenador(a)",
+	"access_content": "111001011010101"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-incharge-roles-delete-incharge-role">
+                                Delete InCharge Role
+                                <a href="#request-incharge-roles-delete-incharge-role"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-delete-incharge-role-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-delete-incharge-role-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-delete-incharge-role-example-curl">
+                                        <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" "http://54.233.195.52:8080/in_charge_roles/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-delete-incharge-role-example-http">
+                                        <pre><code class="hljs http">DELETE /in_charge_roles/1 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
                             </div>
@@ -672,10 +1166,10 @@ Content-Type: application/json
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-institution-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Instituicao de Teste",
-	"email": "instituicaodeteste@escolando.com",
+	"name": "PIC-Rio",
+	"email": "picrio@escolando.com",
 	"owner": {
-		"id": 1
+		"id": 3
 	}
 }' "http://54.233.195.52:8080/institutions"</code></pre>
                                     </div>
@@ -685,16 +1179,93 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Instituicao de Teste",
-	"email": "instituicaodeteste@escolando.com",
+	"name": "PIC-Rio",
+	"email": "picrio@escolando.com",
 	"owner": {
-		"id": 1
+		"id": 3
 	}
 }</code></pre>
                                     </div>
                                 </div>
                             </div>
 
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-institution-responses-6ff1c312-c499-7714-6330-b425b6ba98bb" data-toggle="tab">
+                                            
+                                                Response
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-institution-responses-6ff1c312-c499-7714-6330-b425b6ba98bb">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>656</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:48:57 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 1,
+    "name": "PIC-Rio",
+    "email": "picrio@escolando.com",
+    "owner": {
+        "id": 3,
+        "name": "Dono da escola",
+        "email": "dono@escolando.com",
+        "password": "",
+        "facebook_id": "",
+        "address_postal": "",
+        "address_street": "",
+        "address_number": 0,
+        "address_complement": "",
+        "cpf": "",
+        "rg": "",
+        "phone1": "",
+        "phone2": "",
+        "profile_image_url": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:48:07.833835-02:00",
+        "updated_at": "2017-12-17T19:48:57.443948-02:00"
+    },
+    "UserID": 3,
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cnpj": "",
+    "phone1": "",
+    "phone2": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:48:57.442508-02:00",
+    "updated_at": "2017-12-17T19:48:57.444177-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             
 
                             <hr>
@@ -774,6 +1345,40 @@ Host: 54.233.195.52:8080</code></pre>
                         
                         <div class="request">
 
+                            <h4 id="request-institutions-get-user-institutions">
+                                Get User Institutions
+                                <a href="#request-institutions-get-user-institutions"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-user-institutions-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-user-institutions-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-user-institutions-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/users/3/institutions"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-user-institutions-example-http">
+                                        <pre><code class="hljs http">GET /users/3/institutions HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
                             <h4 id="request-institutions-update-institution">
                                 Update Institution
                                 <a href="#request-institutions-update-institution"><i class="glyphicon glyphicon-link"></i></a>
@@ -789,6 +1394,8 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-update-institution-example-curl">
                                         <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
+	"name": "Escolinha para joven mutanteens",
+	"email": "escolinha@escolando.com",
 	"cnpj": "222.222.222.22",
 	"address_postal": "2222-000",
 	"owner": {
@@ -802,6 +1409,8 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
+	"name": "Escolinha para joven mutanteens",
+	"email": "escolinha@escolando.com",
 	"cnpj": "222.222.222.22",
 	"address_postal": "2222-000",
 	"owner": {
@@ -884,7 +1493,7 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-kinship-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "GRAU DE PARENTESCO DE TESTE"
+	"name": "Mãe"
 }' "http://54.233.195.52:8080/kinships"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-create-kinship-example-http">
@@ -893,12 +1502,101 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "GRAU DE PARENTESCO DE TESTE"
+	"name": "Mãe"
 }</code></pre>
                                     </div>
                                 </div>
                             </div>
 
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-kinship-responses-067ddcc0-a6f8-de32-4bde-a5e2734a21e2" data-toggle="tab">
+                                            
+                                                Create Mother Relationship
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-kinship-responses-9d901a3d-d616-5486-8401-3c9b2791135d" data-toggle="tab">
+                                            
+                                                Create Father Relationship
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-kinship-responses-067ddcc0-a6f8-de32-4bde-a5e2734a21e2">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>138</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:57:12 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 1,
+    "name": "Mãe",
+    "access_content": "",
+    "created_at": "2017-12-17T19:57:12.002718-02:00",
+    "updated_at": "2017-12-17T19:57:12.002718-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-kinship-responses-9d901a3d-d616-5486-8401-3c9b2791135d">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>137</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:57:41 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 2,
+    "name": "Pai",
+    "access_content": "",
+    "created_at": "2017-12-17T19:57:41.639554-02:00",
+    "updated_at": "2017-12-17T19:57:41.639554-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             
 
                             <hr>
@@ -1220,6 +1918,354 @@ Content-Type: application/json
                             </div>
 
                             
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-parent-student-relation-responses-d0eca340-24c6-430c-62c9-86461e44138b" data-toggle="tab">
+                                            
+                                                Create Father Relation Between Bob e Roanito
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-parent-student-relation-responses-d9f071d7-5423-79bb-79f1-5c85507bc348" data-toggle="tab">
+                                            
+                                                Create Father Relation between Bob and Romarito
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-parent-student-relation-responses-ac53b494-d15b-121c-46e8-5ee689397549" data-toggle="tab">
+                                            
+                                                Create Father Relation between Bob and Fernita
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-parent-student-relation-responses-d0eca340-24c6-430c-62c9-86461e44138b">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1706</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 22:00:33 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 4,
+    "parent": {
+        "id": 2,
+        "user_id": 2,
+        "name": "Bob",
+        "email": "bob@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:43.090966-02:00",
+        "updated_at": "2017-12-17T20:00:33.593846-02:00"
+    },
+    "ParentID": 2,
+    "student": {
+        "id": 1,
+        "institution": {
+            "id": 1,
+            "name": "PIC-Rio",
+            "email": "picrio@escolando.com",
+            "owner": {
+                "id": 3,
+                "name": "Dono da escola",
+                "email": "dono@escolando.com",
+                "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+                "facebook_id": "",
+                "address_postal": "",
+                "address_street": "",
+                "address_number": 0,
+                "address_complement": "",
+                "cpf": "",
+                "rg": "",
+                "phone1": "",
+                "phone2": "",
+                "profile_image_url": "",
+                "extra_info": "",
+                "created_at": "2017-12-17T19:48:07.833835-02:00",
+                "updated_at": "2017-12-17T20:00:33.59444-02:00"
+            },
+            "UserID": 3,
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cnpj": "",
+            "phone1": "",
+            "phone2": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:57.442508-02:00",
+            "updated_at": "2017-12-17T20:00:33.594825-02:00"
+        },
+        "InstitutionID": 1,
+        "responsible": {
+            "id": 1,
+            "user_id": 1,
+            "name": "Amélia",
+            "email": "amelia@escolando.com",
+            "phone": "",
+            "profile_image_url": "",
+            "created_at": "2017-12-17T19:47:19.201622-02:00",
+            "updated_at": "2017-12-17T20:00:33.595123-02:00"
+        },
+        "ParentID": 1,
+        "name": "Roanito",
+        "profile_image_url": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:58:38.829965-02:00",
+        "updated_at": "2017-12-17T20:00:33.595321-02:00"
+    },
+    "StudentID": 1,
+    "kinship": {
+        "id": 2,
+        "name": "Pai",
+        "access_content": "",
+        "created_at": "2017-12-17T19:57:41.639554-02:00",
+        "updated_at": "2017-12-17T20:00:33.59558-02:00"
+    },
+    "KinshipID": 2,
+    "created_at": "2017-12-17T20:00:33.595858-02:00",
+    "updated_at": "2017-12-17T20:00:33.595858-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-parent-student-relation-responses-d9f071d7-5423-79bb-79f1-5c85507bc348">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1709</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 22:01:19 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 5,
+    "parent": {
+        "id": 2,
+        "user_id": 2,
+        "name": "Bob",
+        "email": "bob@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:43.090966-02:00",
+        "updated_at": "2017-12-17T20:01:19.590584-02:00"
+    },
+    "ParentID": 2,
+    "student": {
+        "id": 2,
+        "institution": {
+            "id": 1,
+            "name": "PIC-Rio",
+            "email": "picrio@escolando.com",
+            "owner": {
+                "id": 3,
+                "name": "Dono da escola",
+                "email": "dono@escolando.com",
+                "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+                "facebook_id": "",
+                "address_postal": "",
+                "address_street": "",
+                "address_number": 0,
+                "address_complement": "",
+                "cpf": "",
+                "rg": "",
+                "phone1": "",
+                "phone2": "",
+                "profile_image_url": "",
+                "extra_info": "",
+                "created_at": "2017-12-17T19:48:07.833835-02:00",
+                "updated_at": "2017-12-17T20:01:19.591099-02:00"
+            },
+            "UserID": 3,
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cnpj": "",
+            "phone1": "",
+            "phone2": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:57.442508-02:00",
+            "updated_at": "2017-12-17T20:01:19.591369-02:00"
+        },
+        "InstitutionID": 1,
+        "responsible": {
+            "id": 1,
+            "user_id": 1,
+            "name": "Amélia",
+            "email": "amelia@escolando.com",
+            "phone": "",
+            "profile_image_url": "",
+            "created_at": "2017-12-17T19:47:19.201622-02:00",
+            "updated_at": "2017-12-17T20:01:19.591644-02:00"
+        },
+        "ParentID": 1,
+        "name": "Romarito",
+        "profile_image_url": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:59:14.880671-02:00",
+        "updated_at": "2017-12-17T20:01:19.591838-02:00"
+    },
+    "StudentID": 2,
+    "kinship": {
+        "id": 2,
+        "name": "Pai",
+        "access_content": "",
+        "created_at": "2017-12-17T19:57:41.639554-02:00",
+        "updated_at": "2017-12-17T20:01:19.592099-02:00"
+    },
+    "KinshipID": 2,
+    "created_at": "2017-12-17T20:01:19.592335-02:00",
+    "updated_at": "2017-12-17T20:01:19.592335-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-parent-student-relation-responses-ac53b494-d15b-121c-46e8-5ee689397549">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1708</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 22:01:40 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 6,
+    "parent": {
+        "id": 2,
+        "user_id": 2,
+        "name": "Bob",
+        "email": "bob@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:43.090966-02:00",
+        "updated_at": "2017-12-17T20:01:40.054575-02:00"
+    },
+    "ParentID": 2,
+    "student": {
+        "id": 3,
+        "institution": {
+            "id": 1,
+            "name": "PIC-Rio",
+            "email": "picrio@escolando.com",
+            "owner": {
+                "id": 3,
+                "name": "Dono da escola",
+                "email": "dono@escolando.com",
+                "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+                "facebook_id": "",
+                "address_postal": "",
+                "address_street": "",
+                "address_number": 0,
+                "address_complement": "",
+                "cpf": "",
+                "rg": "",
+                "phone1": "",
+                "phone2": "",
+                "profile_image_url": "",
+                "extra_info": "",
+                "created_at": "2017-12-17T19:48:07.833835-02:00",
+                "updated_at": "2017-12-17T20:01:40.055339-02:00"
+            },
+            "UserID": 3,
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cnpj": "",
+            "phone1": "",
+            "phone2": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:57.442508-02:00",
+            "updated_at": "2017-12-17T20:01:40.056069-02:00"
+        },
+        "InstitutionID": 1,
+        "responsible": {
+            "id": 1,
+            "user_id": 1,
+            "name": "Amélia",
+            "email": "amelia@escolando.com",
+            "phone": "",
+            "profile_image_url": "",
+            "created_at": "2017-12-17T19:47:19.201622-02:00",
+            "updated_at": "2017-12-17T20:01:40.056738-02:00"
+        },
+        "ParentID": 1,
+        "name": "Fernita",
+        "profile_image_url": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:59:40.029552-02:00",
+        "updated_at": "2017-12-17T20:01:40.057067-02:00"
+    },
+    "StudentID": 3,
+    "kinship": {
+        "id": 2,
+        "name": "Pai",
+        "access_content": "",
+        "created_at": "2017-12-17T19:57:41.639554-02:00",
+        "updated_at": "2017-12-17T20:01:40.057519-02:00"
+    },
+    "KinshipID": 2,
+    "created_at": "2017-12-17T20:01:40.058422-02:00",
+    "updated_at": "2017-12-17T20:01:40.058422-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
 
                             <hr>
                         </div>
@@ -1339,9 +2385,9 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-parent-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Responsavel de Teste",
-	"email": "responsavel@escolando.com",
-	"user_id": 1
+  "name": "Usuario de Teste",
+  "email": "teste@escolando.com",
+  "user_id": 1
 }' "http://54.233.195.52:8080/parents"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-create-parent-example-http">
@@ -1350,9 +2396,9 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Responsavel de Teste",
-	"email": "responsavel@escolando.com",
-	"user_id": 1
+  "name": "Usuario de Teste",
+  "email": "teste@escolando.com",
+  "user_id": 1
 }</code></pre>
                                     </div>
                                 </div>
@@ -1526,10 +2572,10 @@ Host: 54.233.195.52:8080</code></pre>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-get-parent-user-example-curl">
-                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/parent_user/2"</code></pre>
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/parent_user/1"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-get-parent-user-example-http">
-                                        <pre><code class="hljs http">GET /parent_user/2 HTTP/1.1
+                                        <pre><code class="hljs http">GET /parent_user/1 HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
@@ -1942,6 +2988,45 @@ Host: 54.233.195.52:8080</code></pre>
                         
                         <div class="request">
 
+                            <h4 id="request-registers-get-user-registeres">
+                                Get User Registeres
+                                <a href="#request-registers-get-user-registeres"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div><p>Requisicao responsavel por recuperar todos os recados destinados ao usuario X que possuam relação com o Estudante Y.</p>
+
+<p>Parametros: url:/user_registers/:user/:student</p>
+
+<p>Lembrando que <strong>user</strong> é o id do usuario.</p>
+</div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-get-user-registeres-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-get-user-registeres-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-get-user-registeres-example-curl">
+                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/user_registers/1/3"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-get-user-registeres-example-http">
+                                        <pre><code class="hljs http">GET /user_registers/1/3 HTTP/1.1
+Host: 54.233.195.52:8080</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
                             <h4 id="request-registers-create-register">
                                 Create Register
                                 <a href="#request-registers-create-register"><i class="glyphicon glyphicon-link"></i></a>
@@ -1957,14 +3042,14 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-register-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"title": "Testando!",
-	"text": "Hello World!",
-	"register_type": {
-		"id": 1
-	},
-	"target_id": 1,
-	"sender_id": 1,
-	"student_id": 1
+  "title": "Cuidado com piolho!",
+  "text": "Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!",
+  "register_type": {
+    "id": 1
+  },
+  "target_id": 1,
+  "sender_id": 1,
+  "student_id": 3
 }' "http://54.233.195.52:8080/registers"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-create-register-example-http">
@@ -1973,14 +3058,14 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"title": "Testando!",
-	"text": "Hello World!",
-	"register_type": {
-		"id": 1
-	},
-	"target_id": 1,
-	"sender_id": 1,
-	"student_id": 1
+  "title": "Cuidado com piolho!",
+  "text": "Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!",
+  "register_type": {
+    "id": 1
+  },
+  "target_id": 1,
+  "sender_id": 1,
+  "student_id": 3
 }</code></pre>
                                     </div>
                                 </div>
@@ -2015,45 +3100,6 @@ Content-Type: application/json
                                     </div>
                                     <div class="tab-pane" id="request-delete-register-example-http">
                                         <pre><code class="hljs http">DELETE /registers/2 HTTP/1.1
-Host: 54.233.195.52:8080</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-
-                            <hr>
-                        </div>
-                        
-
-                    
-
-                        
-                        <div class="request">
-
-                            <h4 id="request-registers-get-user-registeres">
-                                Get User Registeres
-                                <a href="#request-registers-get-user-registeres"><i class="glyphicon glyphicon-link"></i></a>
-                            </h4>
-
-                            <div><p>Requisicao responsavel por recuperar todos os recados destinados ao usuario X que possuam relação com o Estudante Y.</p>
-
-<p>Parametros: url:/user_registers/:user/:student</p>
-
-<p>Lembrando que <strong>user</strong> é o id do usuario.</p>
-</div>
-
-                            <div>
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#request-get-user-registeres-example-curl" data-toggle="tab">Curl</a></li>
-                                    <li role="presentation"><a href="#request-get-user-registeres-example-http" data-toggle="tab">HTTP</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="request-get-user-registeres-example-curl">
-                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/user_registers/1/1"</code></pre>
-                                    </div>
-                                    <div class="tab-pane" id="request-get-user-registeres-example-http">
-                                        <pre><code class="hljs http">GET /user_registers/1/1 HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
@@ -2142,13 +3188,13 @@ Content-Type: application/json
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-student-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Estudante de Teste",
-	"responsible": {
-		"id": 1
-	},
-	"institution": {
-		"id": 1
-	}
+  "name": "Romarito Jr.",
+  "responsible": {
+    "id": 1
+  },
+  "institution": {
+    "id": 1
+  }
 }' "http://54.233.195.52:8080/students/1"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-create-student-example-http">
@@ -2157,18 +3203,291 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Estudante de Teste",
-	"responsible": {
-		"id": 1
-	},
-	"institution": {
-		"id": 1
-	}
+  "name": "Romarito Jr.",
+  "responsible": {
+    "id": 1
+  },
+  "institution": {
+    "id": 1
+  }
 }</code></pre>
                                     </div>
                                 </div>
                             </div>
 
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-student-responses-011fcdca-e8bb-0405-2deb-bc083343aec1" data-toggle="tab">
+                                            
+                                                Create Ronaito Student
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-student-responses-6a44afb0-7bb1-4439-4eec-bd866b7fe19b" data-toggle="tab">
+                                            
+                                                Create Romarito Student
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-student-responses-61e18933-eeea-23c6-ea0a-88b1d3c2c9af" data-toggle="tab">
+                                            
+                                                Create Fernita Student
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-student-responses-011fcdca-e8bb-0405-2deb-bc083343aec1">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1074</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:58:38 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 1,
+    "institution": {
+        "id": 1,
+        "name": "PIC-Rio",
+        "email": "picrio@escolando.com",
+        "owner": {
+            "id": 3,
+            "name": "Dono da escola",
+            "email": "dono@escolando.com",
+            "password": "",
+            "facebook_id": "",
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cpf": "",
+            "rg": "",
+            "phone1": "",
+            "phone2": "",
+            "profile_image_url": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:07.833835-02:00",
+            "updated_at": "2017-12-17T19:58:38.831549-02:00"
+        },
+        "UserID": 3,
+        "address_postal": "",
+        "address_street": "",
+        "address_number": 0,
+        "address_complement": "",
+        "cnpj": "",
+        "phone1": "",
+        "phone2": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:48:57.442508-02:00",
+        "updated_at": "2017-12-17T19:58:38.83196-02:00"
+    },
+    "InstitutionID": 1,
+    "responsible": {
+        "id": 1,
+        "user_id": 1,
+        "name": "Amélia",
+        "email": "amelia@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:19.201622-02:00",
+        "updated_at": "2017-12-17T19:58:38.832381-02:00"
+    },
+    "ParentID": 1,
+    "name": "Roanito",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:58:38.829965-02:00",
+    "updated_at": "2017-12-17T19:58:38.832619-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-student-responses-6a44afb0-7bb1-4439-4eec-bd866b7fe19b">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1076</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:59:14 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 2,
+    "institution": {
+        "id": 1,
+        "name": "PIC-Rio",
+        "email": "picrio@escolando.com",
+        "owner": {
+            "id": 3,
+            "name": "Dono da escola",
+            "email": "dono@escolando.com",
+            "password": "",
+            "facebook_id": "",
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cpf": "",
+            "rg": "",
+            "phone1": "",
+            "phone2": "",
+            "profile_image_url": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:07.833835-02:00",
+            "updated_at": "2017-12-17T19:59:14.881196-02:00"
+        },
+        "UserID": 3,
+        "address_postal": "",
+        "address_street": "",
+        "address_number": 0,
+        "address_complement": "",
+        "cnpj": "",
+        "phone1": "",
+        "phone2": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:48:57.442508-02:00",
+        "updated_at": "2017-12-17T19:59:14.881399-02:00"
+    },
+    "InstitutionID": 1,
+    "responsible": {
+        "id": 1,
+        "user_id": 1,
+        "name": "Amélia",
+        "email": "amelia@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:19.201622-02:00",
+        "updated_at": "2017-12-17T19:59:14.881633-02:00"
+    },
+    "ParentID": 1,
+    "name": "Romarito",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:59:14.880671-02:00",
+    "updated_at": "2017-12-17T19:59:14.881883-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-student-responses-61e18933-eeea-23c6-ea0a-88b1d3c2c9af">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>1075</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:59:40 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 3,
+    "institution": {
+        "id": 1,
+        "name": "PIC-Rio",
+        "email": "picrio@escolando.com",
+        "owner": {
+            "id": 3,
+            "name": "Dono da escola",
+            "email": "dono@escolando.com",
+            "password": "",
+            "facebook_id": "",
+            "address_postal": "",
+            "address_street": "",
+            "address_number": 0,
+            "address_complement": "",
+            "cpf": "",
+            "rg": "",
+            "phone1": "",
+            "phone2": "",
+            "profile_image_url": "",
+            "extra_info": "",
+            "created_at": "2017-12-17T19:48:07.833835-02:00",
+            "updated_at": "2017-12-17T19:59:40.030058-02:00"
+        },
+        "UserID": 3,
+        "address_postal": "",
+        "address_street": "",
+        "address_number": 0,
+        "address_complement": "",
+        "cnpj": "",
+        "phone1": "",
+        "phone2": "",
+        "extra_info": "",
+        "created_at": "2017-12-17T19:48:57.442508-02:00",
+        "updated_at": "2017-12-17T19:59:40.030302-02:00"
+    },
+    "InstitutionID": 1,
+    "responsible": {
+        "id": 1,
+        "user_id": 1,
+        "name": "Amélia",
+        "email": "amelia@escolando.com",
+        "phone": "",
+        "profile_image_url": "",
+        "created_at": "2017-12-17T19:47:19.201622-02:00",
+        "updated_at": "2017-12-17T19:59:40.030566-02:00"
+    },
+    "ParentID": 1,
+    "name": "Fernita",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:59:40.029552-02:00",
+    "updated_at": "2017-12-17T19:59:40.030777-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             
 
                             <hr>
@@ -2300,16 +3619,18 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-update-student-example-curl">
                                         <pre><code class="hljs curl">curl -X PUT -H "Content-Type: application/json" -d '{
-	"profile_image_url": "http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg"
-}' "http://54.233.195.52:8080/students/2"</code></pre>
+	"profile_image_url": "http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg",
+	"name": "Roanito Jr."
+}' "http://54.233.195.52:8080/students/1"</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-update-student-example-http">
-                                        <pre><code class="hljs http">PUT /students/2 HTTP/1.1
+                                        <pre><code class="hljs http">PUT /students/1 HTTP/1.1
 Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"profile_image_url": "http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg"
+	"profile_image_url": "http://blog.mepassaai.com.br/wp-content/uploads/2016/09/aprenda-como-ser-um-bom-estudante-com-essas-5-dicas.jpeg",
+	"name": "Roanito Jr."
 }</code></pre>
                                     </div>
                                 </div>
@@ -2835,8 +4156,8 @@ Host: 54.233.195.52:8080</code></pre>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-user-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Usuario de Teste",
-	"email": "teste@escolando.com",
+	"name": "Dono da escola",
+	"email": "dono@escolando.com",
 	"password": "teste"
 }' "http://54.233.195.52:8080/users"</code></pre>
                                     </div>
@@ -2846,14 +4167,75 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Usuario de Teste",
-	"email": "teste@escolando.com",
+	"name": "Dono da escola",
+	"email": "dono@escolando.com",
 	"password": "teste"
 }</code></pre>
                                     </div>
                                 </div>
                             </div>
 
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-user-responses-abef675c-6409-d41f-1b22-53064c7c53c4" data-toggle="tab">
+                                            
+                                                Response
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-user-responses-abef675c-6409-d41f-1b22-53064c7c53c4">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>479</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:48:07 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 3,
+    "name": "Dono da escola",
+    "email": "dono@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:48:07.833835-02:00",
+    "updated_at": "2017-12-17T19:48:07.833835-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             
 
                             <hr>
@@ -2917,40 +4299,6 @@ Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                     <div class="tab-pane" id="request-get-users-example-http">
                                         <pre><code class="hljs http">GET /users HTTP/1.1
-Host: 54.233.195.52:8080</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-
-                            <hr>
-                        </div>
-                        
-
-                    
-
-                        
-                        <div class="request">
-
-                            <h4 id="request-users-get-user-institutions">
-                                Get User Institutions
-                                <a href="#request-users-get-user-institutions"><i class="glyphicon glyphicon-link"></i></a>
-                            </h4>
-
-                            <div></div>
-
-                            <div>
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#request-get-user-institutions-example-curl" data-toggle="tab">Curl</a></li>
-                                    <li role="presentation"><a href="#request-get-user-institutions-example-http" data-toggle="tab">HTTP</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="request-get-user-institutions-example-curl">
-                                        <pre><code class="hljs curl">curl -X GET "http://54.233.195.52:8080/users/3/institutions"</code></pre>
-                                    </div>
-                                    <div class="tab-pane" id="request-get-user-institutions-example-http">
-                                        <pre><code class="hljs http">GET /users/3/institutions HTTP/1.1
 Host: 54.233.195.52:8080</code></pre>
                                     </div>
                                 </div>
@@ -3062,8 +4410,8 @@ A outra opcao consiste em alguns passos adicionais:
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="request-create-user-parent-example-curl">
                                         <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
-	"name": "Parente de Teste",
-	"email": "parente@escolando.com",
+	"name": "Bob",
+	"email": "bob@escolando.com",
 	"password": "teste"
 }' "http://54.233.195.52:8080/user_parent"</code></pre>
                                     </div>
@@ -3073,14 +4421,337 @@ Host: 54.233.195.52:8080
 Content-Type: application/json
 
 {
-	"name": "Parente de Teste",
-	"email": "parente@escolando.com",
+	"name": "Bob",
+	"email": "bob@escolando.com",
 	"password": "teste"
 }</code></pre>
                                     </div>
                                 </div>
                             </div>
 
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-user-parent-responses-edbb1440-77bf-c6a1-7749-3251f5c2e6f0" data-toggle="tab">
+                                            
+                                                Create Amelia
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-user-parent-responses-606f4e4b-65d5-ab9f-5f26-ad3bffc41374" data-toggle="tab">
+                                            
+                                                Create Bob
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-user-parent-responses-edbb1440-77bf-c6a1-7749-3251f5c2e6f0">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>474</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:47:19 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 1,
+    "name": "Amélia",
+    "email": "amelia@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:47:19.200863-02:00",
+    "updated_at": "2017-12-17T19:47:19.200863-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-user-parent-responses-606f4e4b-65d5-ab9f-5f26-ad3bffc41374">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>467</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:47:43 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 2,
+    "name": "Bob",
+    "email": "bob@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:47:43.089503-02:00",
+    "updated_at": "2017-12-17T19:47:43.089503-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+
+                            <hr>
+                        </div>
+                        
+
+                    
+
+                        
+                        <div class="request">
+
+                            <h4 id="request-users-create-user-incharge">
+                                Create User InCharge
+                                <a href="#request-users-create-user-incharge"><i class="glyphicon glyphicon-link"></i></a>
+                            </h4>
+
+                            <div></div>
+
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#request-create-user-incharge-example-curl" data-toggle="tab">Curl</a></li>
+                                    <li role="presentation"><a href="#request-create-user-incharge-example-http" data-toggle="tab">HTTP</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="request-create-user-incharge-example-curl">
+                                        <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/json" -d '{
+	"name": "Diretor Johnson",
+	"email": "diretorjohson@escolando.com",
+	"password": "teste"
+}' "http://54.233.195.52:8080/user_incharge/3/1"</code></pre>
+                                    </div>
+                                    <div class="tab-pane" id="request-create-user-incharge-example-http">
+                                        <pre><code class="hljs http">POST /user_incharge/3/1 HTTP/1.1
+Host: 54.233.195.52:8080
+Content-Type: application/json
+
+{
+	"name": "Diretor Johnson",
+	"email": "diretorjohson@escolando.com",
+	"password": "teste"
+}</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    
+                                    <li role="presentation" class="active">
+                                        <a href="#request-create-user-incharge-responses-74b1836a-e823-b475-204d-396eae4193f8" data-toggle="tab">
+                                            
+                                                Create Director Johnson User
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-user-incharge-responses-7b1b2b93-31e1-e5b0-7642-0bdbd35c1fc0" data-toggle="tab">
+                                            
+                                                Create Ivana Teacher User
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                    <li role="presentation">
+                                        <a href="#request-create-user-incharge-responses-e679627f-6598-1c31-6d18-16ecd78fb8bd" data-toggle="tab">
+                                            
+                                                Create Selma Coord. User
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                                <div class="tab-content">
+                                    
+                                    <div class="tab-pane active" id="request-create-user-incharge-responses-74b1836a-e823-b475-204d-396eae4193f8">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>489</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:53:10 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 4,
+    "name": "Diretor Johnson",
+    "email": "diretorjohson@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:53:10.264885-02:00",
+    "updated_at": "2017-12-17T19:53:10.264885-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-user-incharge-responses-7b1b2b93-31e1-e5b0-7642-0bdbd35c1fc0">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>496</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:55:09 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 5,
+    "name": "Professora Ivana Ban Ana",
+    "email": "ivanabanana@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:55:09.277157-02:00",
+    "updated_at": "2017-12-17T19:55:09.277157-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="request-create-user-incharge-responses-e679627f-6598-1c31-6d18-16ecd78fb8bd">
+                                        <table class="table table-bordered">
+                                            <tr><th style="width: 20%;">Status</th><td>201 Created</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Headers</th><td>Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Methods</th><td>POST, GET, OPTIONS, PUT, DELETE</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Access-Control-Allow-Origin</th><td>*</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Length</th><td>474</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Content-Type</th><td>application/json; charset=utf-8</td></tr>
+                                            
+                                            <tr><th style="width: 20%;">Date</th><td>Sun, 17 Dec 2017 21:56:30 GMT</td></tr>
+                                            
+                                            
+                                                
+                                                <tr><td class="response-text-sample" colspan="2">
+                                                    <pre><code>{
+    "id": 6,
+    "name": "Selminha",
+    "email": "selma@escolando.com",
+    "password": "b123e9e19d217169b981a61188920f9d28638709a5132201684d792b9264271b7f09157ed4321b1c097f7a4abecfc0977d40a7ee599c845883bd1074ca23c4af",
+    "facebook_id": "",
+    "address_postal": "",
+    "address_street": "",
+    "address_number": 0,
+    "address_complement": "",
+    "cpf": "",
+    "rg": "",
+    "phone1": "",
+    "phone2": "",
+    "profile_image_url": "",
+    "extra_info": "",
+    "created_at": "2017-12-17T19:56:30.227035-02:00",
+    "updated_at": "2017-12-17T19:56:30.227035-02:00"
+}</code></pre>
+                                                </td></tr>
+                                                
+                                            
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             
 
                             <hr>
