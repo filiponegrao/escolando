@@ -482,7 +482,7 @@
 			"id": "1bd60328-7f2e-e66a-e6c9-45778c74a80d",
 			"headers": "",
 			"headerData": [],
-			"url": "{{url}}/registers/2",
+			"url": "{{url}}/registers/3",
 			"queryParams": [],
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -493,7 +493,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1512938454694,
+			"time": 1513549252621,
 			"name": "Delete Register",
 			"description": "",
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
@@ -676,28 +676,194 @@
 			"headers": "",
 			"headerData": [],
 			"url": "{{url}}/user_registers/1/3",
+			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "GET",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": null,
 			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1513549792897,
 			"name": "Get User Registeres",
 			"description": "Requisicao responsavel por recuperar todos os recados destinados ao usuario X que possuam relação com o Estudante Y.\n\nParametros: url:/user_registers/:user/:student\n\nLembrando que **user** é o id do usuario.",
-			"descriptionFormat": "html",
-			"time": 1512939300030,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": null,
-			"helperAttributes": null,
-			"folder": "e0e2ca0b-c650-e879-0c51-9b8c2d8b609b",
-			"auth": null,
-			"events": null,
-			"rawModeData": null,
-			"variables": null
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 29,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "671",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:28:07 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Link",
+							"value": "<http://54.233.195.52:8080/user_registers/1/2?limit=25&page=2>; rel=\"next\"",
+							"name": "Link",
+							"description": "Used to express a typed relationship with another resource, where the relation type is defined by RFC 5988"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "[{\"RegisterTypeID\":1,\"StatusId\":1,\"created_at\":\"2017-12-17T22:25:51.518910505Z\",\"id\":3,\"register_type\":{\"id\":1,\"name\":\"Notificacao\",\"created_at\":\"2017-12-17T20:13:36.347037-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518255907Z\"},\"sender\":{\"name\":\"Diretor Johnson\",\"role\":\"Diretor\"},\"sender_id\":6,\"status\":{\"id\":1,\"name\":\"register_sent\",\"created_at\":\"2017-12-17T19:46:21.192468-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518668822Z\"},\"student_id\":2,\"target_id\":1,\"text\":\"Com a epoca de festas chegando é importante ficar de olho na alimentação do seu filho. Romarito esta comendo demais\",\"title\":\"Cuidado com a alimentação\",\"updated_at\":\"2017-12-17T22:25:51.518910505Z\"}]",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 200,
+					"responseSize": {
+						"body": 671,
+						"header": 423,
+						"total": 1094
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, W3siUmVnaXN0ZXJUeXBlSUQiOjEsIlN0YXR1c0lkIjoxLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjoyNTo1MS41MTg5MTA1MDVaIiwiaWQiOjMsInJlZ2lzdGVyX3R5cGUiOnsiaWQiOjEsIm5hbWUiOiJOb3RpZmljYWNhbyIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIwOjEzOjM2LjM0NzAzNy0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIyOjI1OjUxLjUxODI1NTkwN1oifSwic2VuZGVyIjp7Im5hbWUiOiJEaXJldG9yIEpvaG5zb24iLCJyb2xlIjoiRGlyZXRvciJ9LCJzZW5kZXJfaWQiOjYsInN0YXR1cyI6eyJpZCI6MSwibmFtZSI6InJlZ2lzdGVyX3NlbnQiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0NjoyMS4xOTI0NjgtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjoyNTo1MS41MTg2Njg4MjJaIn0sInN0dWRlbnRfaWQiOjIsInRhcmdldF9pZCI6MSwidGV4dCI6IkNvbSBhIGVwb2NhIGRlIGZlc3RhcyBjaGVnYW5kbyDDqSBpbXBvcnRhbnRlIGZpY2FyIGRlIG9saG8gbmEgYWxpbWVudGHDp8OjbyBkbyBzZXUgZmlsaG8uIFJvbWFyaXRvIGVzdGEgY29tZW5kbyBkZW1haXMiLCJ0aXRsZSI6IkN1aWRhZG8gY29tIGEgYWxpbWVudGHDp8OjbyIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIyOjI1OjUxLjUxODkxMDUwNVoifV0=",
+					"name": "Get Registeres from User Amelia and about Romarito",
+					"id": "c49711f5-f3b2-54f3-e34d-7d346cdacbff",
+					"request": {
+						"url": "{{url}}/user_registers/1/2",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"headers": "",
+						"data": null,
+						"method": "GET",
+						"dataMode": "params"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 200,
+						"name": "OK",
+						"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+					},
+					"time": 45,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "1559",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:29:51 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						},
+						{
+							"key": "Link",
+							"value": "<http://54.233.195.52:8080/user_registers/1/3?limit=25&page=2>; rel=\"next\"",
+							"name": "Link",
+							"description": "Used to express a typed relationship with another resource, where the relation type is defined by RFC 5988"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "[{\"RegisterTypeID\":1,\"StatusId\":1,\"created_at\":\"2017-12-17T20:13:38.792904-02:00\",\"id\":1,\"register_type\":{\"id\":1,\"name\":\"Notificacao\",\"created_at\":\"2017-12-17T20:13:36.347037-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518255907Z\"},\"sender\":{\"name\":\"Diretor Johnson\",\"role\":\"Diretor\"},\"sender_id\":1,\"status\":{\"id\":1,\"name\":\"register_sent\",\"created_at\":\"2017-12-17T19:46:21.192468-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518668822Z\"},\"student_id\":3,\"target_id\":1,\"text\":\"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\"title\":\"Cuidado com piolho!\",\"updated_at\":\"2017-12-17T20:13:38.792904-02:00\"},{\"RegisterTypeID\":1,\"StatusId\":1,\"created_at\":\"2017-12-17T22:22:11.677658986Z\",\"id\":2,\"register_type\":{\"id\":1,\"name\":\"Notificacao\",\"created_at\":\"2017-12-17T20:13:36.347037-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518255907Z\"},\"sender\":{\"name\":\"Diretor Johnson\",\"role\":\"Diretor\"},\"sender_id\":6,\"status\":{\"id\":1,\"name\":\"register_sent\",\"created_at\":\"2017-12-17T19:46:21.192468-02:00\",\"updated_at\":\"2017-12-17T22:25:51.518668822Z\"},\"student_id\":3,\"target_id\":1,\"text\":\"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\"title\":\"Cuidado com piolho!\",\"updated_at\":\"2017-12-17T22:22:11.677658986Z\"}]",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 200,
+					"responseSize": {
+						"body": 1559,
+						"header": 424,
+						"total": 1983
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, W3siUmVnaXN0ZXJUeXBlSUQiOjEsIlN0YXR1c0lkIjoxLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDoxMzozOC43OTI5MDQtMDI6MDAiLCJpZCI6MSwicmVnaXN0ZXJfdHlwZSI6eyJpZCI6MSwibmFtZSI6Ik5vdGlmaWNhY2FvIiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMjA6MTM6MzYuMzQ3MDM3LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MjU6NTEuNTE4MjU1OTA3WiJ9LCJzZW5kZXIiOnsibmFtZSI6IkRpcmV0b3IgSm9obnNvbiIsInJvbGUiOiJEaXJldG9yIn0sInNlbmRlcl9pZCI6MSwic3RhdHVzIjp7ImlkIjoxLCJuYW1lIjoicmVnaXN0ZXJfc2VudCIsImNyZWF0ZWRfYXQiOiIyMDE3LTEyLTE3VDE5OjQ2OjIxLjE5MjQ2OC0wMjowMCIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIyOjI1OjUxLjUxODY2ODgyMloifSwic3R1ZGVudF9pZCI6MywidGFyZ2V0X2lkIjoxLCJ0ZXh0IjoiUmVjZW50ZW1lbnRlIHRpdmVtb3MgdW0gY2FzbyBkZSBwaW9saG8gbmEgZXNjb2xhLiBPIGVzdHVkYW50ZSBGZXJuYW5kaW5obyB0ZXZlIHVtYSBjcmlzZSBkZSBwaWxob3MuIFBlZGltb3MgYW9zIHBhaXMgcXVlIHRvbWVtIGN1aWRhZG8gY29tIG8gY291cm8gY2FwaWxhciBkZSBzZXVzIGZpbGhvcyBlIGVzdGVqYW0gc2VtcHJlIHByb250b3MgcGFyYSBvIHRyYXRhbWVudG8uIFByZXZpbmlyIGUgcmVtZWRpYSEiLCJ0aXRsZSI6IkN1aWRhZG8gY29tIHBpb2xobyEiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDoxMzozOC43OTI5MDQtMDI6MDAifSx7IlJlZ2lzdGVyVHlwZUlEIjoxLCJTdGF0dXNJZCI6MSwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MjI6MTEuNjc3NjU4OTg2WiIsImlkIjoyLCJyZWdpc3Rlcl90eXBlIjp7ImlkIjoxLCJuYW1lIjoiTm90aWZpY2FjYW8iLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDoxMzozNi4zNDcwMzctMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjoyNTo1MS41MTgyNTU5MDdaIn0sInNlbmRlciI6eyJuYW1lIjoiRGlyZXRvciBKb2huc29uIiwicm9sZSI6IkRpcmV0b3IifSwic2VuZGVyX2lkIjo2LCJzdGF0dXMiOnsiaWQiOjEsIm5hbWUiOiJyZWdpc3Rlcl9zZW50IiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDY6MjEuMTkyNDY4LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MjU6NTEuNTE4NjY4ODIyWiJ9LCJzdHVkZW50X2lkIjozLCJ0YXJnZXRfaWQiOjEsInRleHQiOiJSZWNlbnRlbWVudGUgdGl2ZW1vcyB1bSBjYXNvIGRlIHBpb2xobyBuYSBlc2NvbGEuIE8gZXN0dWRhbnRlIEZlcm5hbmRpbmhvIHRldmUgdW1hIGNyaXNlIGRlIHBpbGhvcy4gUGVkaW1vcyBhb3MgcGFpcyBxdWUgdG9tZW0gY3VpZGFkbyBjb20gbyBjb3VybyBjYXBpbGFyIGRlIHNldXMgZmlsaG9zIGUgZXN0ZWphbSBzZW1wcmUgcHJvbnRvcyBwYXJhIG8gdHJhdGFtZW50by4gUHJldmluaXIgZSByZW1lZGlhISIsInRpdGxlIjoiQ3VpZGFkbyBjb20gcGlvbGhvISIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIyOjIyOjExLjY3NzY1ODk4NloifV0=",
+					"name": "Get Registeres from User Amelia about Fernita",
+					"id": "3f06b965-24b5-a7fd-93a1-de27d13ad5f9",
+					"request": {
+						"url": "{{url}}/user_registers/1/3",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [],
+						"headers": "",
+						"data": null,
+						"method": "GET",
+						"dataMode": "params"
+					}
+				}
+			]
 		},
 		{
 			"id": "3a4c2fc9-1e19-6564-99a8-c5984e30dafc",
@@ -848,27 +1014,121 @@
 		},
 		{
 			"id": "477aa265-a46e-459f-47b8-dbbbaf88573b",
-			"headers": "",
-			"headerData": [],
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
 			"url": "{{url}}/register_types",
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "POST",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": [],
 			"dataMode": "raw",
-			"name": "Create Register Type",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1512932353026,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
+			"time": 1513548731403,
+			"name": "Create Register Type",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 370,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "123",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:09:36 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"name\":\"Notificação\",\"created_at\":\"2017-12-17T22:09:36.200397454Z\",\"updated_at\":\"2017-12-17T22:09:36.200397454Z\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 123,
+						"header": 346,
+						"total": 469
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwibmFtZSI6Ik5vdGlmaWNhw6fDo28iLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjowOTozNi4yMDAzOTc0NTRaIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MDk6MzYuMjAwMzk3NDU0WiJ9",
+					"name": "Create Notification Type",
+					"id": "b102b773-5f4e-c24f-1db9-b937ee5b8700",
+					"request": {
+						"url": "{{url}}/register_types",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n\t\"name\": \"Notificação\"\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
 			"rawModeData": "{\n\t\"name\": \"Tipo de Teste\"\n}"
 		},
 		{
@@ -2019,25 +2279,24 @@
 				}
 			],
 			"url": "{{url}}/register_types/1",
+			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
 			"queryParams": [],
+			"preRequestScript": null,
 			"pathVariables": {},
 			"pathVariableData": [],
-			"preRequestScript": null,
 			"method": "PUT",
-			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
 			"data": [],
 			"dataMode": "raw",
-			"name": "Update Register Type",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1512932432879,
 			"version": 2,
-			"responses": [],
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"folder": "97f8c276-7d02-9d82-cbcb-7a6b8ac2eb49",
-			"rawModeData": "{\n\t\"name\": \"None\"\n}"
+			"time": 1513549393062,
+			"name": "Update Register Type",
+			"description": "",
+			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
+			"responses": [],
+			"rawModeData": "{\n\t\"name\": \"Notificacao\"\n}"
 		},
 		{
 			"id": "7c5abdef-6533-b9ef-fa21-07c0e554b664",
@@ -3366,8 +3625,8 @@
 				{
 					"key": "Content-Type",
 					"value": "application/json",
-					"enabled": true,
-					"description": ""
+					"description": "",
+					"enabled": true
 				}
 			],
 			"url": "{{url}}/registers",
@@ -3380,18 +3639,188 @@
 			"data": [],
 			"dataMode": "raw",
 			"tests": null,
-			"currentHelper": null,
-			"helperAttributes": null,
-			"time": 1512941772196,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1513548693395,
 			"name": "Create Register",
 			"description": null,
 			"collectionId": "4154223b-edee-8a93-765d-7e3ef96a9d3d",
-			"responses": [],
-			"auth": null,
-			"events": null,
-			"descriptionFormat": "html",
-			"variables": null,
-			"rawModeData": "{\n  \"title\": \"Cuidado com piolho!\",\n  \"text\": \"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\n  \"register_type\": {\n    \"id\": 1\n  },\n  \"target_id\": 1,\n  \"sender_id\": 1,\n  \"student_id\": 3\n}"
+			"responses": [
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 106,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "754",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:10:47 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":1,\"title\":\"Cuidado com piolho!\",\"text\":\"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\"register_type\":{\"id\":1,\"name\":\"Notificação\",\"created_at\":\"2017-12-17T22:09:36.200397454Z\",\"updated_at\":\"2017-12-17T22:10:47.248660026Z\"},\"RegisterTypeID\":1,\"sender\":{\"name\":\"\",\"role\":\"\"},\"sender_id\":6,\"target_id\":1,\"student_id\":3,\"status\":{\"id\":1,\"name\":\"register_sent\",\"created_at\":\"2017-12-17T19:46:21.192468-02:00\",\"updated_at\":\"2017-12-17T22:10:47.248892619Z\"},\"StatusId\":1,\"created_at\":\"2017-12-17T22:10:47.249044299Z\",\"updated_at\":\"2017-12-17T22:10:47.249044299Z\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 754,
+						"header": 346,
+						"total": 1100
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6MSwidGl0bGUiOiJDdWlkYWRvIGNvbSBwaW9saG8hIiwidGV4dCI6IlJlY2VudGVtZW50ZSB0aXZlbW9zIHVtIGNhc28gZGUgcGlvbGhvIG5hIGVzY29sYS4gTyBlc3R1ZGFudGUgRmVybmFuZGluaG8gdGV2ZSB1bWEgY3Jpc2UgZGUgcGlsaG9zLiBQZWRpbW9zIGFvcyBwYWlzIHF1ZSB0b21lbSBjdWlkYWRvIGNvbSBvIGNvdXJvIGNhcGlsYXIgZGUgc2V1cyBmaWxob3MgZSBlc3RlamFtIHNlbXByZSBwcm9udG9zIHBhcmEgbyB0cmF0YW1lbnRvLiBQcmV2aW5pciBlIHJlbWVkaWEhIiwicmVnaXN0ZXJfdHlwZSI6eyJpZCI6MSwibmFtZSI6Ik5vdGlmaWNhw6fDo28iLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjowOTozNi4yMDAzOTc0NTRaIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MTA6NDcuMjQ4NjYwMDI2WiJ9LCJSZWdpc3RlclR5cGVJRCI6MSwic2VuZGVyIjp7Im5hbWUiOiIiLCJyb2xlIjoiIn0sInNlbmRlcl9pZCI6NiwidGFyZ2V0X2lkIjoxLCJzdHVkZW50X2lkIjozLCJzdGF0dXMiOnsiaWQiOjEsIm5hbWUiOiJyZWdpc3Rlcl9zZW50IiwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMTk6NDY6MjEuMTkyNDY4LTAyOjAwIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MTA6NDcuMjQ4ODkyNjE5WiJ9LCJTdGF0dXNJZCI6MSwiY3JlYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MTA6NDcuMjQ5MDQ0Mjk5WiIsInVwZGF0ZWRfYXQiOiIyMDE3LTEyLTE3VDIyOjEwOjQ3LjI0OTA0NDI5OVoifQ==",
+					"name": "Send Register for Amelia. By Selma. About Romarito",
+					"id": "7a562a42-b3f8-3026-723e-98d9dc209bb5",
+					"request": {
+						"url": "{{url}}/registers",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "",
+								"enabled": true
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n  \"title\": \"Cuidado com piolho!\",\n  \"text\": \"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\n  \"register_type\": {\n    \"id\": 1\n  },\n  \"target_id\": 1,\n  \"sender_id\": 6,\n  \"student_id\": 3\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				},
+				{
+					"status": "",
+					"responseCode": {
+						"code": 201,
+						"name": "Created",
+						"detail": "The request has been fulfilled and resulted in a new resource being created."
+					},
+					"time": 65,
+					"headers": [
+						{
+							"key": "Access-Control-Allow-Headers",
+							"value": "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, origin",
+							"name": "Access-Control-Allow-Headers",
+							"description": "Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request."
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST, GET, OPTIONS, PUT, DELETE",
+							"name": "Access-Control-Allow-Methods",
+							"description": "Specifies the method or methods allowed when accessing the resource. This is used in response to a preflight request."
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*",
+							"name": "Access-Control-Allow-Origin",
+							"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+						},
+						{
+							"key": "Content-Length",
+							"value": "645",
+							"name": "Content-Length",
+							"description": "The length of the response body in octets (8-bit bytes)"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"name": "Content-Type",
+							"description": "The mime type of this content"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Dec 2017 22:31:27 GMT",
+							"name": "Date",
+							"description": "The date and time that the message was sent"
+						}
+					],
+					"cookies": [],
+					"mime": "",
+					"text": "{\"id\":4,\"title\":\"Ótimas notas\",\"text\":\"Final de ano e tempo de comemorar, mas sem esquecer das responsabilidades. Roanito se esforçou demais e obteve nota A+. Parabens!\",\"register_type\":{\"id\":1,\"name\":\"Notificacao\",\"created_at\":\"2017-12-17T20:13:36.347037-02:00\",\"updated_at\":\"2017-12-17T22:31:27.700289921Z\"},\"RegisterTypeID\":1,\"sender\":{\"name\":\"\",\"role\":\"\"},\"sender_id\":6,\"target_id\":1,\"student_id\":1,\"status\":{\"id\":1,\"name\":\"register_sent\",\"created_at\":\"2017-12-17T19:46:21.192468-02:00\",\"updated_at\":\"2017-12-17T22:31:27.700671865Z\"},\"StatusId\":1,\"created_at\":\"2017-12-17T22:31:27.700953709Z\",\"updated_at\":\"2017-12-17T22:31:27.700953709Z\"}",
+					"language": "json",
+					"previewType": "text",
+					"searchResultScrolledTo": -1,
+					"forceNoPretty": false,
+					"write": true,
+					"empty": false,
+					"failed": false,
+					"code": 201,
+					"responseSize": {
+						"body": 645,
+						"header": 346,
+						"total": 991
+					},
+					"mimeType": "text",
+					"fileName": "response.json",
+					"dataURI": "data:application/json;base64, eyJpZCI6NCwidGl0bGUiOiLDk3RpbWFzIG5vdGFzIiwidGV4dCI6IkZpbmFsIGRlIGFubyBlIHRlbXBvIGRlIGNvbWVtb3JhciwgbWFzIHNlbSBlc3F1ZWNlciBkYXMgcmVzcG9uc2FiaWxpZGFkZXMuIFJvYW5pdG8gc2UgZXNmb3LDp291IGRlbWFpcyBlIG9idGV2ZSBub3RhIEErLiBQYXJhYmVucyEiLCJyZWdpc3Rlcl90eXBlIjp7ImlkIjoxLCJuYW1lIjoiTm90aWZpY2FjYW8iLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMDoxMzozNi4zNDcwMzctMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjozMToyNy43MDAyODk5MjFaIn0sIlJlZ2lzdGVyVHlwZUlEIjoxLCJzZW5kZXIiOnsibmFtZSI6IiIsInJvbGUiOiIifSwic2VuZGVyX2lkIjo2LCJ0YXJnZXRfaWQiOjEsInN0dWRlbnRfaWQiOjEsInN0YXR1cyI6eyJpZCI6MSwibmFtZSI6InJlZ2lzdGVyX3NlbnQiLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QxOTo0NjoyMS4xOTI0NjgtMDI6MDAiLCJ1cGRhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjozMToyNy43MDA2NzE4NjVaIn0sIlN0YXR1c0lkIjoxLCJjcmVhdGVkX2F0IjoiMjAxNy0xMi0xN1QyMjozMToyNy43MDA5NTM3MDlaIiwidXBkYXRlZF9hdCI6IjIwMTctMTItMTdUMjI6MzE6MjcuNzAwOTUzNzA5WiJ9",
+					"name": "Send Register for Amelia about Roanito",
+					"id": "520e60fe-7a2e-0472-d041-6afd99c08b01",
+					"request": {
+						"url": "{{url}}/registers",
+						"pathVariables": {},
+						"pathVariableData": [],
+						"queryParams": [],
+						"headerData": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"enabled": true,
+								"disabled": false,
+								"description": ""
+							}
+						],
+						"headers": "Content-Type: application/json\n",
+						"data": "{\n  \"title\": \"Ótimas notas\",\n  \"text\": \"Final de ano e tempo de comemorar, mas sem esquecer das responsabilidades. Roanito se esforçou demais e obteve nota A+. Parabens!\",\n  \"register_type\": {\n    \"id\": 1\n  },\n  \"target_id\": 1,\n  \"sender_id\": 6,\n  \"student_id\": 1\n}",
+						"method": "POST",
+						"dataMode": "raw"
+					}
+				}
+			],
+			"rawModeData": "{\n  \"title\": \"Cuidado com piolho!\",\n  \"text\": \"Recentemente tivemos um caso de piolho na escola. O estudante Fernandinho teve uma crise de pilhos. Pedimos aos pais que tomem cuidado com o couro capilar de seus filhos e estejam sempre prontos para o tratamento. Previnir e remedia!\",\n  \"register_type\": {\n    \"id\": 1\n  },\n  \"target_id\": 1,\n  \"sender_id\": 6,\n  \"student_id\": 3\n}"
 		},
 		{
 			"id": "f40657a7-f2fe-f79a-153d-8e24932ad562",
