@@ -468,7 +468,7 @@ func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (model
 	var parent models.Parent
 	var err error
 
-	if err = db.First(&incharge).Where("user_id = ?", register.SenderId).Error; err == nil {
+	if err = db.Find(&incharge).Where("user_id = ?", register.SenderId).Error; err == nil {
 
 		db.First(&incharge.Role, incharge.RoleID)
 
@@ -479,7 +479,7 @@ func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (model
 
 		var err2 error
 
-		if err2 = db.First(&parent).Where("user_id = ?", register.SenderId).Error; err2 == nil {
+		if err2 = db.Find(&parent).Where("user_id = ?", register.SenderId).Error; err2 == nil {
 
 			register.Sender.Name = parent.Name
 			register.Sender.Role = "Parente"
