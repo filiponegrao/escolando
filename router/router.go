@@ -24,6 +24,7 @@ func Initialize(r *gin.Engine) {
 		api.OPTIONS("/parent_students", controllers.OptionsUser)
 		api.OPTIONS("/register_statuses", controllers.OptionsUser)
 		api.OPTIONS("/registers", controllers.OptionsUser)
+		api.OPTIONS("/registers_for_class", controllers.OptionsUser)
 		api.OPTIONS("/school_grades", controllers.OptionsUser)
 		api.OPTIONS("/students", controllers.OptionsUser)
 		api.OPTIONS("/student_enrollments", controllers.OptionsUser)
@@ -35,6 +36,8 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
+		api.GET("/classes_school_grades/:id", controllers.GetClassBySchoolGrade)
+		api.POST("/classes", controllers.CreateClass)
 		api.PUT("/classes/:id", controllers.UpdateClass)
 		api.DELETE("/classes/:id", controllers.DeleteClass)
 
@@ -87,6 +90,7 @@ func Initialize(r *gin.Engine) {
 		api.GET("/registers/:id", controllers.GetRegister)
 		api.GET("/user_registers/:user/:student", controllers.GetParentRegisters)
 		api.POST("/registers", controllers.CreateRegister)
+		api.POST("/registers_for_class", controllers.CreateRegisterForClass)
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
 

@@ -297,14 +297,14 @@ func UpdateKinship(c *gin.Context) {
 		return
 	}
 
-	if err := db.Save(&kinship).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	if missing := CheckKinshipMissingFields(kinship); missing != "" {
 		message := "Faltando campo de " + missing + " do grau de parentesco"
 		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	if err := db.Save(&kinship).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 

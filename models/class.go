@@ -5,9 +5,7 @@ import (
 )
 
 type Class struct {
-	ID            int64       `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`
-	Institution   Institution `gorm:"ForeignKey:InstitutionID;not null" json:"institution" form:"institution"`
-	InstitutionID int64
+	ID            int64    `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`
 	InCharge      InCharge `gorm:"ForeignKey:InChargeID;not null" json:"in_charge" form:"in_charge"`
 	InChargeID    int64
 	Name          string      `gorm:"type:text;not null" json:"name" form:"name"`

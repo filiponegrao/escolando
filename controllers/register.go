@@ -281,16 +281,11 @@ func GetRegister(c *gin.Context) {
 }
 
 func CreateRegister(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
 	db := dbpkg.DBInstance(c)
 	register := models.Register{}
 
-	if err = c.Bind(&register); err != nil {
+	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -301,14 +296,14 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
-	missing := CheckRegisterMissingFields(register)
+	missing := CheckRegisterMissingFields(register, 0)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do recado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
-	if err = db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
+	if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
 		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
@@ -316,7 +311,7 @@ func CreateRegister(c *gin.Context) {
 
 	var targetUser models.User
 	targetId := register.TargetId
-	if err = db.First(&targetUser, targetId).Error; err != nil {
+	if err := db.First(&targetUser, targetId).Error; err != nil {
 		message := "Usuario com id " + strconv.FormatInt(targetId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
@@ -324,14 +319,14 @@ func CreateRegister(c *gin.Context) {
 
 	var student models.Student
 	studentId := register.StudentId
-	if err = db.First(&student, studentId).Error; err != nil {
+	if err := db.First(&student, studentId).Error; err != nil {
 		message := "Estudante com id " + strconv.FormatInt(studentId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
 	// Recupera o id do status de enviado
-	if err = db.Where("name = ?", REGISTER_SENT).First(&register.Status).Error; err != nil {
+	if err := db.Where("name = ?", REGISTER_SENT).First(&register.Status).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -341,15 +336,72 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	db.First(&register.RegisterType, register.RegisterTypeID)
 	db.First(&register.Status, register.StatusId)
 
 	c.JSON(201, register)
+}
+
+func CreateRegisterForClass(c *gin.Context) {
+
+	db := dbpkg.DBInstance(c)
+
+	register := models.Register{}
+
+	if err := c.Bind(&register); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckRegisterMissingFields(register, 1)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do recado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	// Em recados para a turma, o target representa o id da turma.
+	classId := register.TargetId
+
+	if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
+		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	// Recupera os cadastros de alunos nessa turma
+	enrollments := GetStudentEnrollmentByClass(classId, c)
+	for _, enrollment := range enrollments {
+		// Encontra o id de cada aluno
+		studentId := enrollment.StudentID
+
+		// Recupera todos os relacionamentos familiares desse aluno especifico
+		studentParentRelations := GetParentStudentByStudent(studentId, c)
+		for _, studentParentRelation := range studentParentRelations {
+
+			// Encontra o registro do parente e salva no array
+			var parent models.Parent
+			if err := db.First(&parent, studentParentRelation.ParentID).Error; err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			// Para cada parente cria o recado
+			var newRegister models.Register
+			newRegister.CreatedAt = register.CreatedAt
+			newRegister.RegisterType.ID = register.RegisterType.ID
+			newRegister.SenderId = register.SenderId
+			newRegister.TargetId = parent.UserId
+			newRegister.StudentId = studentId
+			newRegister.Text = register.Text
+			newRegister.Title = register.Title
+
+			if err := db.Create(&newRegister).Error; err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	}
 }
 
 func UpdateRegister(c *gin.Context) {
@@ -442,23 +494,6 @@ func DeleteRegister(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
-func CheckRegisterMissingFields(register models.Register) string {
-	if register.RegisterType.ID == 0 {
-		return "id do tipo (\"register_type\":{\"id\": id})"
-	}
-	if register.SenderId == 0 {
-		return "id do remetente (\"sender_id\":id)"
-	}
-	if register.TargetId == 0 {
-		return "id do destinatario (\"target_id\": id)"
-	}
-	if register.StudentId == 0 {
-		return "id do estudante (\"student_id\": id)"
-	}
-
-	return ""
-}
-
 func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (models.Register, error) {
 
 	register.Sender.Name = "Desconhecido"
@@ -468,6 +503,7 @@ func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (model
 	var parent models.Parent
 	var err error
 
+	// Verifica se é um recado de funcionario
 	if err = db.Where("user_id = ?", register.SenderId).Find(&incharge).Error; err == nil {
 
 		db.First(&incharge.Role, incharge.RoleID)
@@ -475,19 +511,48 @@ func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (model
 		register.Sender.Name = incharge.Name
 		register.Sender.Role = incharge.Role.Name
 
+		// Se é um recado de um parente
+	} else if err = db.Where("user_id = ?", register.SenderId).Find(&parent).Error; err == nil {
+
+		register.Sender.Name = parent.Name
+		register.Sender.Role = "Parente"
+
 	} else {
 
-		var err2 error
+		var user models.User
+		db.First(&user, register.SenderId)
 
-		if err2 = db.Where("user_id = ?", register.SenderId).Find(&parent).Error; err2 == nil {
+		register.Sender.Name = user.Name
+		register.Sender.Role = "Sem cargo"
 
-			register.Sender.Name = parent.Name
-			register.Sender.Role = "Parente"
-
-		} else {
-			return register, err2
-		}
 	}
 
 	return register, nil
+}
+
+func CheckRegisterMissingFields(register models.Register, targetType int) string {
+
+	// Target Types:
+	// 0 - usuario
+	// 1 - turma
+	// 2 - serie
+
+	if register.RegisterType.ID == 0 {
+		return "id do tipo ('register_type':{'id': <int>})"
+	}
+	if register.SenderId == 0 {
+		return "id do remetente ('sender_id': <int>:id)"
+	}
+	if register.TargetId == 0 {
+		return "id do destinatario ('target_id': <int>)"
+	}
+
+	// so verifica o aluno se for um recado especifico de um aluno
+	if targetType == 0 {
+		if register.StudentId == 0 {
+			return "id do estudante ('student_id': <int>)"
+		}
+	}
+
+	return ""
 }

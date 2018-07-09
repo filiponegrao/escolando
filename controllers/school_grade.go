@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"net/http"
+	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -162,6 +162,21 @@ func CreateSchoolGrade(c *gin.Context) {
 		return
 	}
 
+	missingFields := CheckSchoolGradeMissingFields(schoolGrade)
+	if missingFields != "" {
+		message := "Faltando campo de " + missingFields + " da série."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	institutionId := schoolGrade.Institution.ID
+	err = db.First(&schoolGrade.Institution, institutionId).Error
+	if err != nil {
+		content := gin.H{"error": "Instituição com o id " + strconv.FormatInt(institutionId, 10) + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
 	if err := db.Create(&schoolGrade).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -194,6 +209,25 @@ func UpdateSchoolGrade(c *gin.Context) {
 
 	if err := c.Bind(&schoolGrade); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	var institutionId int64 = schoolGrade.InstitutionID
+	if schoolGrade.Institution.ID != 0 {
+		institutionId = schoolGrade.Institution.ID
+	}
+
+	err = db.First(&schoolGrade.Institution, institutionId).Error
+	if err != nil {
+		content := gin.H{"error": "Instituição com o id " + strconv.FormatInt(institutionId, 10) + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	missing := CheckSchoolGradeMissingFields(schoolGrade)
+	if missing != "" {
+		message := "Faltando campo de " + missing + " da série."
+		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -237,5 +271,18 @@ func DeleteSchoolGrade(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
-	c.Writer.WriteHeader(http.StatusNoContent)
+	c.JSON(200, nil)
+}
+
+func CheckSchoolGradeMissingFields(grade models.SchoolGrade) string {
+
+	if grade.Name == "" {
+		return "nome"
+	}
+
+	if grade.Institution.ID == 0 {
+		return "id da instituição (ex: 'institutuin': {'id':<int>})"
+	}
+
+	return ""
 }

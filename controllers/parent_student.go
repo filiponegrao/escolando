@@ -165,6 +165,35 @@ func GetParentStudent(c *gin.Context) {
 	}
 }
 
+func GetParentStudentByStudent(sutdentId int64, c *gin.Context) []models.ParentStudent {
+
+	var result []models.ParentStudent
+
+	db := dbpkg.DBInstance(c)
+	parameter, err := dbpkg.NewParameter(c, models.ParentStudent{})
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return result
+	}
+
+	db, err = parameter.Paginate(db)
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return result
+	}
+
+	db = parameter.SetPreloads(db)
+	db = parameter.SortRecords(db)
+	db = parameter.FilterFields(db)
+
+	if err := db.Where("student_id = ?", sutdentId).Find(&result).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return result
+	}
+
+	return result
+}
+
 func CreateParentStudent(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
