@@ -404,6 +404,120 @@ func CreateRegisterForClass(c *gin.Context) {
 	}
 }
 
+func CreateRegisterForSchoolGrade(c *gin.Context) {
+
+	db := dbpkg.DBInstance(c)
+	register := models.Register{}
+
+	if err := c.Bind(&register); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	missing := CheckRegisterMissingFields(register, 2)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do recado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	schoolGradeId := register.TargetId
+
+	// Encontra todas as turmas desta série
+	var classes []models.Class
+
+	if err := db.Where("school_grade_id = ?", schoolGradeId).Find(&classes).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, class := range classes {
+
+		var enrollments []models.StudentEnrollment
+
+		if err := db.Where("class_id = ?", class.ID).Find(&enrollments).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		for _, enrollment := range enrollments {
+
+			var relations []models.ParentStudent
+
+			if err := db.Where("student_id = ?", enrollment.StudentID).Find(&relations).Error; err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			for _, relation := range relations {
+
+				var parent models.Parent
+
+				if err := db.First(&parent, relation.ParentID).Error; err != nil {
+					c.JSON(400, gin.H{"error": err.Error()})
+					return
+				}
+
+				// Para cada parente cria o recado
+				var newRegister models.Register
+				newRegister.RegisterType.ID = register.RegisterType.ID
+				newRegister.SenderId = register.SenderId
+				newRegister.TargetId = parent.UserId
+				newRegister.StudentId = relation.StudentID
+				newRegister.Text = register.Text
+				newRegister.Title = register.Title
+
+				if err := db.Create(&newRegister).Error; err != nil {
+					c.JSON(400, gin.H{"error": err.Error()})
+					return
+				}
+			}
+		}
+	}
+}
+
+func CreateRegisterForStudent(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+
+	var register models.Register
+	if err := c.Bind(&register); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	studentId := register.TargetId
+
+	var relations []models.ParentStudent
+
+	if err := db.Where("student_id = ?", studentId).Find(&relations).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, relation := range relations {
+
+		var parent models.Parent
+
+		if err := db.First(&parent, relation.ParentID).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		var newRegister models.Register
+		newRegister.RegisterType.ID = register.RegisterType.ID
+		newRegister.SenderId = register.SenderId
+		newRegister.TargetId = parent.UserId
+		newRegister.StudentId = studentId
+		newRegister.Text = register.Text
+		newRegister.Title = register.Title
+
+		if err := db.Create(&newRegister).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+}
+
 func UpdateRegister(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
