@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -453,6 +454,60 @@ func Login(c *gin.Context) {
 	user.Password = ""
 
 	c.JSON(200, user)
+}
+
+func UserAuthentication(email string, password string, c *gin.Context) (interface{}, bool) {
+
+	db := dbpkg.DBInstance(c)
+
+	if email == "" {
+		message := "Faltando email"
+		c.JSON(400, gin.H{"error": message})
+		return nil, false
+	}
+
+	if password == "" {
+		message := "Faltando senha (password)"
+		c.JSON(400, gin.H{"error": message})
+		return nil, false
+	}
+
+	var user models.User
+
+	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
+		//message := "Usuario com email " + email + " nao encontrado."
+		//c.JSON(400, gin.H{"error": message})
+		return nil, false
+	}
+
+	encPassword := tools.EncryptTextSHA512(password)
+
+	if encPassword != user.Password {
+		//message := "Senha incorreta"
+		//c.JSON(400, gin.H{"error": message})
+		return nil, false
+	}
+
+	user.Password = ""
+
+	return &user, true
+}
+
+func UserAuthorization(user interface{}, c *gin.Context) bool {
+	return true
+}
+
+// Falha na autênticação
+func UserUnauthorized(c *gin.Context, code int, message string) {
+	err := ""
+	if strings.Contains(message, "missing") {
+		err = "Faltando email ou senha"
+	} else if strings.Contains(message, "incorrect") {
+		err = "Email ou senha incorreta"
+	} else {
+		err = message
+	}
+	c.JSON(code, gin.H{"error": err})
 }
 
 func CheckUserMissingFields(user models.User) string {

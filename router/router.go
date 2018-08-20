@@ -1,6 +1,9 @@
 package router
 
 import (
+	"time"
+
+	jwt "github.com/appleboy/gin-jwt"
 	"github.com/filiponegrao/escolando/controllers"
 
 	"github.com/gin-gonic/gin"
@@ -8,9 +11,39 @@ import (
 
 func Initialize(r *gin.Engine) {
 
+	// the jwt middleware
+	authMiddleware := &jwt.GinJWTMiddleware{
+		Realm:         "test zone",
+		Key:           []byte("secret key"),
+		Timeout:       time.Hour,
+		MaxRefresh:    time.Hour,
+		Authenticator: controllers.UserAuthentication,
+		Authorizator:  controllers.UserAuthorization,
+		Unauthorized:  controllers.UserUnauthorized,
+		// TokenLookup is a string in the form of "<source>:<name>" that is used
+		// to extract token from the request.
+		// Optional. Default value "header:Authorization".
+		// Possible values:
+		// - "header:<name>"
+		// - "query:<name>"
+		// - "cookie:<name>"
+		TokenLookup: "header: Authorization, query: token, cookie: jwt",
+		// TokenLookup: "query:token",
+		// TokenLookup: "cookie:token",
+
+		// TokenHeadName is a string in the header. Default value is "Bearer"
+		TokenHeadName: "Bearer",
+
+		// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
+		TimeFunc: time.Now,
+	}
+
 	r.GET("/", controllers.APIEndpoints)
 
+	r.POST("/login", authMiddleware.LoginHandler)
+
 	api := r.Group("")
+	api.Use(authMiddleware.MiddlewareFunc())
 	{
 		// Especial para requisicoes Web, que enviam um OPTIONS antes de
 		// fazer a requisicao propriamente dita
@@ -147,7 +180,6 @@ func Initialize(r *gin.Engine) {
 		api.OPTIONS("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
-		api.POST("/login", controllers.Login)
 
 		api.GET("/user_accesses", controllers.GetUserAccesses)
 		api.GET("/user_accesses/:id", controllers.GetUserAccess)
@@ -162,5 +194,9 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/user_access_profiles/:id", controllers.UpdateUserAccessProfile)
 		api.DELETE("/user_access_profiles/:id", controllers.DeleteUserAccessProfile)
 
+		// Login
+		//api.POST("/login", controllers.UserLogin)
+
 	}
+
 }

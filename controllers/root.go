@@ -60,3 +60,11 @@ func APIEndpoints(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, resources)
 }
+
+func APIAuthorizedResources(c *gin.Context) {
+
+}
+
+func APIUnauthorizedResources(c *gin.Context) {
+
+}
