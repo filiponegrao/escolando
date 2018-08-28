@@ -38,11 +38,11 @@ func Initialize(r *gin.Engine) {
 		TimeFunc: time.Now,
 	}
 
+	r.Use(controllers.CORSMiddleware())
 	r.GET("/", controllers.APIEndpoints)
 
-	r.POST("/login", authMiddleware.LoginHandler)
-
 	api := r.Group("")
+	api.POST("/login", authMiddleware.LoginHandler)
 	api.Use(authMiddleware.MiddlewareFunc())
 	{
 		// Especial para requisicoes Web, que enviam um OPTIONS antes de
