@@ -14,6 +14,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type login struct {
+	Username string `form:"username" json:"username" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
+
 func GetUsers(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
@@ -456,9 +461,22 @@ func Login(c *gin.Context) {
 	c.JSON(200, user)
 }
 
-func UserAuthentication(email string, password string, c *gin.Context) (interface{}, bool) {
+func UserAuthentication(c *gin.Context) (interface{}, bool) {
+
+	var loginVals login
+
+	if err := c.Bind(&loginVals); err != nil {
+		return nil, false
+	}
+
+	email := loginVals.Username
+	password := loginVals.Password
 
 	db := dbpkg.DBInstance(c)
+
+	println("CREDENCIAIS")
+	println(email)
+	println(password)
 
 	if email == "" {
 		message := "Faltando email"
