@@ -461,16 +461,18 @@ func Login(c *gin.Context) {
 	c.JSON(200, user)
 }
 
-func UserAuthentication(c *gin.Context) (interface{}, bool) {
+func UserAuthentication(email string, password string, c *gin.Context) (interface{}, bool) {
 
-	var loginVals login
+	/*var loginVals login
 
 	if err := c.Bind(&loginVals); err != nil {
-		return nil, false
+		return nil, err
 	}
 
 	email := loginVals.Username
 	password := loginVals.Password
+
+	*/
 
 	db := dbpkg.DBInstance(c)
 
