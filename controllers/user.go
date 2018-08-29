@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strings"
 
@@ -461,9 +462,9 @@ func Login(c *gin.Context) {
 	c.JSON(200, user)
 }
 
-func UserAuthentication(email string, password string, c *gin.Context) (interface{}, bool) {
+func UserAuthentication(c *gin.Context) (interface{}, error) {
 
-	/*var loginVals login
+	var loginVals login
 
 	if err := c.Bind(&loginVals); err != nil {
 		return nil, err
@@ -471,8 +472,6 @@ func UserAuthentication(email string, password string, c *gin.Context) (interfac
 
 	email := loginVals.Username
 	password := loginVals.Password
-
-	*/
 
 	db := dbpkg.DBInstance(c)
 
@@ -483,13 +482,13 @@ func UserAuthentication(email string, password string, c *gin.Context) (interfac
 	if email == "" {
 		message := "Faltando email"
 		c.JSON(400, gin.H{"error": message})
-		return nil, false
+		return nil, errors.New(message)
 	}
 
 	if password == "" {
 		message := "Faltando senha (password)"
 		c.JSON(400, gin.H{"error": message})
-		return nil, false
+		return nil, errors.New(message)
 	}
 
 	var user models.User
@@ -497,7 +496,7 @@ func UserAuthentication(email string, password string, c *gin.Context) (interfac
 	if err := db.Where("email = ?", email).First(&user).Error; err != nil {
 		//message := "Usuario com email " + email + " nao encontrado."
 		//c.JSON(400, gin.H{"error": message})
-		return nil, false
+		return nil, err
 	}
 
 	encPassword := tools.EncryptTextSHA512(password)
@@ -505,12 +504,12 @@ func UserAuthentication(email string, password string, c *gin.Context) (interfac
 	if encPassword != user.Password {
 		//message := "Senha incorreta"
 		//c.JSON(400, gin.H{"error": message})
-		return nil, false
+		return nil, errors.New("Senha incorreta")
 	}
 
 	user.Password = ""
 
-	return &user, true
+	return &user, nil
 }
 
 func UserAuthorization(user interface{}, c *gin.Context) bool {

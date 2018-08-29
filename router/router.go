@@ -3,7 +3,7 @@ package router
 import (
 	"time"
 
-	jwt "github.com/appleboy/gin-jwt"
+	"github.com/appleboy/gin-jwt"
 	"github.com/filiponegrao/escolando/controllers"
 
 	"github.com/gin-gonic/gin"
