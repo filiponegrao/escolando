@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	jwt "github.com/appleboy/gin-jwt"
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
@@ -110,12 +111,14 @@ func GetUsers(c *gin.Context) {
 }
 
 func GetUser(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
+	if strings.HasPrefix(c.Request.RequestURI, "/users/email") {
+		GetUserByEmail(c)
+	} else {
+		GetUserById(c)
 	}
+}
 
+func GetUserById(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	parameter, err := dbpkg.NewParameter(c, models.User{})
 	if err != nil {
@@ -130,7 +133,7 @@ func GetUser(c *gin.Context) {
 	queryFields := helper.QueryFields(models.User{}, fields)
 
 	if err := db.Select(queryFields).First(&user, id).Error; err != nil {
-		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
+		content := gin.H{"error": "Usuario com o id " + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -144,16 +147,28 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	if _, ok := c.GetQuery("pretty"); ok {
 		c.IndentedJSON(200, fieldMap)
 	} else {
 		c.JSON(200, fieldMap)
 	}
+}
+
+func GetUserByEmail(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+
+	email := c.Params.ByName("email")
+
+	user := models.User{}
+	if err := db.First(&user).Where("email = ?", email).Error; err != nil {
+		content := gin.H{"error": "Usuario com o email " + email + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	user.Password = ""
+
+	c.JSON(200, user)
 }
 
 func CreateUser(c *gin.Context) {
@@ -527,6 +542,14 @@ func UserUnauthorized(c *gin.Context, code int, message string) {
 		err = message
 	}
 	c.JSON(code, gin.H{"error": err})
+}
+
+func AuthorizationPayload(data interface{}) jwt.MapClaims {
+	m := make(map[string]interface{})
+	if v, ok := data.(*models.User); ok {
+		m["user_id"] = v.ID
+	}
+	return m
 }
 
 func CheckUserMissingFields(user models.User) string {

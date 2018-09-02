@@ -14,6 +14,7 @@ import (
 )
 
 func GetInstitutions(c *gin.Context) {
+
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})

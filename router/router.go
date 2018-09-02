@@ -17,6 +17,7 @@ func Initialize(r *gin.Engine) {
 		Key:           []byte("secret key"),
 		Timeout:       time.Hour,
 		MaxRefresh:    time.Hour,
+		PayloadFunc:   controllers.AuthorizationPayload,
 		Authenticator: controllers.UserAuthentication,
 		Authorizator:  controllers.UserAuthorization,
 		Unauthorized:  controllers.UserUnauthorized,
@@ -45,29 +46,6 @@ func Initialize(r *gin.Engine) {
 	api.POST("/login", authMiddleware.LoginHandler)
 	api.Use(authMiddleware.MiddlewareFunc())
 	{
-		// Especial para requisicoes Web, que enviam um OPTIONS antes de
-		// fazer a requisicao propriamente dita
-		api.OPTIONS("/classes", controllers.OptionsUser)
-		api.OPTIONS("/disciplines", controllers.OptionsUser)
-		api.OPTIONS("/in_charges", controllers.OptionsUser)
-		api.OPTIONS("/in_charge_roles", controllers.OptionsUser)
-		api.OPTIONS("/institutions", controllers.OptionsUser)
-		api.OPTIONS("/kinships", controllers.OptionsUser)
-		api.OPTIONS("/parents", controllers.OptionsUser)
-		api.OPTIONS("/parent_students", controllers.OptionsUser)
-		api.OPTIONS("/register_statuses", controllers.OptionsUser)
-		api.OPTIONS("/registers", controllers.OptionsUser)
-		api.OPTIONS("/registers_for_class", controllers.OptionsUser)
-		api.OPTIONS("/registers_for_school_grade", controllers.OptionsUser)
-		api.OPTIONS("/registers_for_student", controllers.OptionsUser)
-		api.OPTIONS("/school_grades", controllers.OptionsUser)
-		api.OPTIONS("/students", controllers.OptionsUser)
-		api.OPTIONS("/student_enrollments", controllers.OptionsUser)
-		api.OPTIONS("/teacher_classes", controllers.OptionsUser)
-		api.OPTIONS("/users", controllers.OptionsUser)
-		api.OPTIONS("/user_accesses", controllers.OptionsUser)
-		api.OPTIONS("/user_access_profiles", controllers.OptionsUser)
-		// --------
 
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
@@ -151,6 +129,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/students", controllers.GetStudents)
 		api.GET("/students/:id", controllers.GetStudent)
+		api.GET("/students/:id/class", controllers.GetStudentByClass)
 		api.GET("/students_of_parent/:id", controllers.GetStudentsOfParent)
 		api.POST("/students/:kinship", controllers.CreateStudent)
 		api.PUT("/students/:id", controllers.UpdateStudent)
@@ -173,11 +152,8 @@ func Initialize(r *gin.Engine) {
 		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
 		api.POST("/user_parent", controllers.CreateUserParent)
-		api.OPTIONS("/user_parent", controllers.CreateUserParent)
 		api.POST("/user_incharge/:roleId/:institutionId", controllers.CreateUserInCharge)
-		api.OPTIONS("/user_incharge/:roleId/:institutionId", controllers.CreateUserInCharge)
 		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
-		api.OPTIONS("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
 

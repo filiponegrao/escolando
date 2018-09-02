@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -229,6 +230,14 @@ func GetStudentsOfParent(c *gin.Context) {
 }
 
 func GetStudent(c *gin.Context) {
+	if strings.HasPrefix(c.Request.RequestURI, "/students/class") {
+		GetStudentByClass(c)
+	} else {
+		GetStudentById(c)
+	}
+}
+
+func GetStudentById(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -274,6 +283,80 @@ func GetStudent(c *gin.Context) {
 		c.IndentedJSON(200, fieldMap)
 	} else {
 		c.JSON(200, fieldMap)
+	}
+}
+
+func GetStudentByClass(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	classId := c.Params.ByName("id")
+
+	var enrollments []models.StudentEnrollment
+	if err := db.Where("class_id = ?", classId).Find(&enrollments).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	var studentIds []int64
+	for _, enrollment := range enrollments {
+		studentIds = append(studentIds, enrollment.StudentID)
+	}
+
+	var students []models.Student
+	if err := db.Find(&students, studentIds).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, student := range students {
+		db.First(&student.Institution, student.InstitutionID)
+	}
+
+	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+
+	if _, ok := c.GetQuery("stream"); ok {
+		enc := json.NewEncoder(c.Writer)
+		c.Status(200)
+
+		for _, student := range students {
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+			fieldMap, err := helper.FieldToMap(student, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			if err := enc.Encode(fieldMap); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+		}
+	} else {
+		fieldMaps := []map[string]interface{}{}
+
+		for _, student := range students {
+
+			db.First(&student.Institution, student.InstitutionID)
+			db.First(&student.Institution.Owner, student.Institution.UserID)
+			db.First(&student.Responsible, student.ParentID)
+			student.Institution.Owner.Password = ""
+
+			fieldMap, err := helper.FieldToMap(student, fields)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			fieldMaps = append(fieldMaps, fieldMap)
+		}
+
+		if _, ok := c.GetQuery("pretty"); ok {
+			c.IndentedJSON(200, fieldMaps)
+		} else {
+			c.JSON(200, fieldMaps)
+		}
 	}
 }
 

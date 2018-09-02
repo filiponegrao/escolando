@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	jwt "github.com/appleboy/gin-jwt"
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
@@ -295,6 +296,11 @@ func CreateRegister(c *gin.Context) {
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
+
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["user_id"].(float64))
+
+	register.SenderId = int64(userId)
 
 	missing := CheckRegisterMissingFields(register, 0)
 	if missing != "" {
