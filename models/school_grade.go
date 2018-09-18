@@ -9,6 +9,6 @@ type SchoolGrade struct {
 	Name          string      `gorm:"type:text;not null" json:"name" form:"name"`
 	Institution   Institution `gorm:"ForeignKey:InstitutionID;AssociationForeignKey:ID;not null" json:"institution" form:"institution"`
 	InstitutionID int64
-	CreatedAt     *time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt     *time.Time `json:"updated_at" form:"updated_at"`
+	CreatedAt     *time.Time `json:"createdAt" form:"created_at"`
+	UpdatedAt     *time.Time `json:"updatedAt" form:"updated_at"`
 }

@@ -15,7 +15,7 @@ func Initialize(r *gin.Engine) {
 	authMiddleware := &jwt.GinJWTMiddleware{
 		Realm:         "test zone",
 		Key:           []byte("secret key"),
-		Timeout:       time.Hour,
+		Timeout:       time.Hour * 24 * 7,
 		MaxRefresh:    time.Hour,
 		PayloadFunc:   controllers.AuthorizationPayload,
 		Authenticator: controllers.UserAuthentication,
@@ -99,15 +99,14 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/parent_students/:id", controllers.UpdateParentStudent)
 		api.DELETE("/parent_students/:id", controllers.DeleteParentStudent)
 
-		api.GET("/registers", controllers.GetRegisters)
-		api.GET("/registers/:id", controllers.GetRegister)
-		api.GET("/user_registers/:user/:student", controllers.GetParentRegisters)
+		// Registers
+		api.GET("/registers", controllers.GetUserRegisters)
+		api.GET("/registers/:id", controllers.GetSomeRegisters)
 		api.POST("/registers", controllers.CreateRegister)
-		api.POST("/registers_for_class", controllers.CreateRegisterForClass)
-		api.POST("/registers_for_school_grade", controllers.CreateRegisterForSchoolGrade)
-		api.POST("/registers_for_student", controllers.CreateRegisterForStudent)
+		api.POST("/registers/student", controllers.CreateRegister)
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
+		// api.GET("/registers/user/", controllers.GetUserRegisters)
 
 		api.GET("/register_statuses", controllers.GetRegisterStatuses)
 		api.GET("/register_statuses/:id", controllers.GetRegisterStatus)

@@ -10,7 +10,7 @@ type Parent struct {
 	Name            string     `gorm:"not null;type:text" json:"name" form:"name"`
 	Email           string     `gorm:"not null;type:text" json:"email" form:"email"`
 	Phone           string     `gorm:"type:text" json:"phone" form:"phone"`
-	ProfileImageUrl string     `gorm:"column:profile_image_url" json:"profile_image_url" form:"profile_image_url"`
-	CreatedAt       *time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt       *time.Time `json:"updated_at" form:"updated_at"`
+	ProfileImageUrl string     `gorm:"column:profile_image_url" json:"profileImageUrl" form:"profile_image_url"`
+	CreatedAt       *time.Time `json:"createdAt" form:"created_at"`
+	UpdatedAt       *time.Time `json:"updatedAt" form:"updated_at"`
 }

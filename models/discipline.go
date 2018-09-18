@@ -9,6 +9,6 @@ type Discipline struct {
 	Name        string     `gorm:"not null;type:text" json:"name" form:"name"`
 	Description string     `gorm:"not null;type:text" json:"description" form:"description"`
 	Segment     string     `json:"segment" form:"segment"`
-	CreatedAt   *time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt   *time.Time `json:"updated_at" form:"updated_at"`
+	CreatedAt   *time.Time `json:"createdAt" form:"created_at"`
+	UpdatedAt   *time.Time `json:"updatedAt" form:"updated_at"`
 }

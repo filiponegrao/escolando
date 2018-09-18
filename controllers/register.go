@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"strings"
+	"time"
 
 	jwt "github.com/appleboy/gin-jwt"
 	dbpkg "github.com/filiponegrao/escolando/db"
@@ -16,28 +18,18 @@ import (
 )
 
 func GetRegisters(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
+	println("PRIMEIRO PASSO:")
+	if strings.HasPrefix(c.Request.RequestURI, "/registers/user") {
+		GetUserRegisters(c)
+	} else {
+		GetAllRegisters(c)
 	}
+}
+
+func GetAllRegisters(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Register{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
 	registers := []models.Register{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 	queryFields := helper.QueryFields(models.Register{}, fields)
@@ -47,32 +39,24 @@ func GetRegisters(c *gin.Context) {
 		return
 	}
 
-	index := 0
-
-	if len(registers) > 0 {
-		index = int(registers[len(registers)-1].ID)
-	}
-
-	if err := parameter.SetHeaderLink(c, index); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	if _, ok := c.GetQuery("stream"); ok {
 		enc := json.NewEncoder(c.Writer)
 		c.Status(200)
 
 		for _, register := range registers {
 
+			var err error
+
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
-			register, err = GetRegisterSenderInformations(register, db)
+			err = GetRegisterSenderInformations(&register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			err = GetRegisterTargetInformations(&register, db)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -94,10 +78,18 @@ func GetRegisters(c *gin.Context) {
 
 		for _, register := range registers {
 
+			var err error
+
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
-			register, err = GetRegisterSenderInformations(register, db)
+			err = GetRegisterSenderInformations(&register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			err = GetRegisterTargetInformations(&register, db)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -120,55 +112,32 @@ func GetRegisters(c *gin.Context) {
 	}
 }
 
-func GetParentRegisters(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+func GetUserRegisters(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Register{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["user_id"].(float64))
 
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
-
-	userId := c.Params.ByName("user")
 	studentId := c.Params.ByName("student")
 
 	registers := []models.Register{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 
-	if err := db.Where("target_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	index := 0
-
-	if len(registers) > 0 {
-		index = int(registers[len(registers)-1].ID)
-	}
-
-	if err := parameter.SetHeaderLink(c, index); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
+	// Verifica se é um recado para um aluno especifico
+	if studentId == "" {
+		if err := db.Where("target_id = ? OR sender_id = ?", userId, userId).Find(&registers).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	} else {
+		// Caso nao seja para um aluno especifico
+		response := db.Where("(target_id = ? OR sender_id = ?) AND (student_id = ?)", userId, userId, studentId).Find(&registers)
+		err := response.Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
 	}
 
 	if _, ok := c.GetQuery("stream"); ok {
@@ -180,7 +149,13 @@ func GetParentRegisters(c *gin.Context) {
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
-			register, err = GetRegisterSenderInformations(register, db)
+			err := GetRegisterSenderInformations(&register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+
+			err = GetRegisterTargetInformations(&register, db)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -205,10 +180,15 @@ func GetParentRegisters(c *gin.Context) {
 			db.First(&register.RegisterType, register.RegisterTypeID)
 			db.First(&register.Status, register.StatusId)
 
-			register, err = GetRegisterSenderInformations(register, db)
+			err := GetRegisterSenderInformations(&register, db)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
+			}
+
+			err = GetRegisterTargetInformations(&register, db)
+			if err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
 			}
 
 			fieldMap, err := helper.FieldToMap(register, fields)
@@ -228,27 +208,98 @@ func GetParentRegisters(c *gin.Context) {
 	}
 }
 
-func GetRegister(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
+func GetSentRegisters(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["user_id"].(float64))
+	studentId := c.Params.ByName("studentId")
+	var registers []models.Register
+
+	// Recados enviados a um aluno especifico
+	if studentId != "" {
+		err := db.Where("sender_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	} else {
+		err := db.Where("sender_id = ?", userId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
 	}
+
+	registersInfo := make([]models.Register, 0)
+
+	for _, register := range registers {
+		err := GetRegisterTargetInformations(&register, db)
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		} else {
+			registersInfo = append(registersInfo, register)
+		}
+	}
+
+	c.JSON(200, registersInfo)
+}
+
+func GetReceivedRegisters(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["user_id"].(float64))
+	studentId := c.Params.ByName("studentId")
+	var registers []models.Register
+
+	// Recados enviados a um aluno especifico
+	if studentId != "" {
+		err := db.Where("target_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	} else {
+		err := db.Where("target_id = ?", userId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	registersInfo := make([]models.Register, 0)
+
+	for _, register := range registers {
+		err := GetRegisterSenderInformations(&register, db)
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		} else {
+			registersInfo = append(registersInfo, register)
+		}
+	}
+
+	c.JSON(200, registersInfo)
+}
+
+func GetSomeRegisters(c *gin.Context) {
+	if strings.HasPrefix(c.Request.RequestURI, "/registers/sent") {
+		GetSentRegisters(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/received") {
+		GetReceivedRegisters(c)
+	} else {
+		GetRegister(c)
+	}
+}
+
+func GetRegister(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Register{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
-	db = parameter.SetPreloads(db)
 	register := models.Register{}
 	id := c.Params.ByName("id")
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.Register{}, fields)
 
-	if err := db.Select(queryFields).First(&register, id).Error; err != nil {
+	if err := db.First(&register, id).Error; err != nil {
 		content := gin.H{"error": "Registro com id " + id + " nao encontrado."}
 		c.JSON(404, content)
 		return
@@ -257,35 +308,40 @@ func GetRegister(c *gin.Context) {
 	db.First(&register.RegisterType, register.RegisterTypeID)
 	db.First(&register.Status, register.StatusId)
 
-	register, err = GetRegisterSenderInformations(register, db)
+	err := GetRegisterSenderInformations(&register, db)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	fieldMap, err := helper.FieldToMap(register, fields)
+	err = GetRegisterTargetInformations(&register, db)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	if _, ok := c.GetQuery("pretty"); ok {
-		c.IndentedJSON(200, fieldMap)
-	} else {
-		c.JSON(200, fieldMap)
-	}
+	c.JSON(200, register)
 }
 
 func CreateRegister(c *gin.Context) {
+	if strings.HasPrefix(c.Request.RequestURI, "/registers/grade") {
+		CreateRegisterForSchoolGrade(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/class") {
+		CreateRegisterForClass(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/student") {
+		CreateRegisterForStudent(c)
+	} else {
+		CreateSingleRegister(c)
+	}
+}
+
+func CreateSingleRegister(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
-	register := models.Register{}
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
 
+	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -297,10 +353,9 @@ func CreateRegister(c *gin.Context) {
 		return
 	}
 
-	claims := jwt.ExtractClaims(c)
-	userId := int(claims["user_id"].(float64))
-
 	register.SenderId = int64(userId)
+	println("CRIA RECADO")
+	println(register.TargetId)
 
 	missing := CheckRegisterMissingFields(register, 0)
 	if missing != "" {
@@ -348,16 +403,68 @@ func CreateRegister(c *gin.Context) {
 	c.JSON(201, register)
 }
 
-func CreateRegisterForClass(c *gin.Context) {
+func CreateRegisterForStudent(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
 
-	register := models.Register{}
-
+	var register models.Register
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	register.SenderId = userId
+
+	missing := CheckRegisterMissingFields(register, 1)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do recado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
+	studentId := register.TargetId
+
+	var relations []models.ParentStudent
+
+	if err := db.Where("student_id = ?", studentId).Find(&relations).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	for _, relation := range relations {
+
+		var parent models.Parent
+
+		if err := db.First(&parent, relation.ParentID).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		register.StudentId = studentId
+		register.TargetId = parent.UserId
+
+		if err := SaveRegister(db, register, userId); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+}
+
+func CreateRegisterForClass(c *gin.Context) {
+
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
+
+	register := models.Register{}
+	if err := c.Bind(&register); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	register.SenderId = userId
 
 	missing := CheckRegisterMissingFields(register, 1)
 	if missing != "" {
@@ -392,17 +499,10 @@ func CreateRegisterForClass(c *gin.Context) {
 				return
 			}
 
-			// Para cada parente cria o recado
-			var newRegister models.Register
-			newRegister.CreatedAt = register.CreatedAt
-			newRegister.RegisterType.ID = register.RegisterType.ID
-			newRegister.SenderId = register.SenderId
-			newRegister.TargetId = parent.UserId
-			newRegister.StudentId = studentId
-			newRegister.Text = register.Text
-			newRegister.Title = register.Title
+			register.StudentId = studentId
+			register.TargetId = parent.UserId
 
-			if err := db.Create(&newRegister).Error; err != nil {
+			if err := SaveRegister(db, register, userId); err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
 			}
@@ -413,12 +513,16 @@ func CreateRegisterForClass(c *gin.Context) {
 func CreateRegisterForSchoolGrade(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
-	register := models.Register{}
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
 
+	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	register.SenderId = userId
 
 	missing := CheckRegisterMissingFields(register, 2)
 	if missing != "" {
@@ -464,16 +568,10 @@ func CreateRegisterForSchoolGrade(c *gin.Context) {
 					return
 				}
 
-				// Para cada parente cria o recado
-				var newRegister models.Register
-				newRegister.RegisterType.ID = register.RegisterType.ID
-				newRegister.SenderId = register.SenderId
-				newRegister.TargetId = parent.UserId
-				newRegister.StudentId = relation.StudentID
-				newRegister.Text = register.Text
-				newRegister.Title = register.Title
+				register.StudentId = enrollment.StudentID
+				register.TargetId = parent.UserId
 
-				if err := db.Create(&newRegister).Error; err != nil {
+				if err := SaveRegister(db, register, userId); err != nil {
 					c.JSON(400, gin.H{"error": err.Error()})
 					return
 				}
@@ -482,45 +580,25 @@ func CreateRegisterForSchoolGrade(c *gin.Context) {
 	}
 }
 
-func CreateRegisterForStudent(c *gin.Context) {
-	db := dbpkg.DBInstance(c)
+func SaveRegister(db *gorm.DB, register models.Register, sender int64) error {
+	var newRegister models.Register
 
-	var register models.Register
-	if err := c.Bind(&register); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+	date := time.Now()
+	newRegister.CreatedAt = &date
+	newRegister.UpdatedAt = &date
+	newRegister.StatusId = 1
+	newRegister.RegisterTypeID = 1
+	newRegister.Text = register.Text
+	newRegister.Title = register.Title
+	newRegister.StudentId = register.StudentId
 
-	studentId := register.TargetId
+	newRegister.SenderId = sender
+	newRegister.TargetId = register.TargetId
 
-	var relations []models.ParentStudent
-
-	if err := db.Where("student_id = ?", studentId).Find(&relations).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	for _, relation := range relations {
-
-		var parent models.Parent
-
-		if err := db.First(&parent, relation.ParentID).Error; err != nil {
-			c.JSON(400, gin.H{"error": err.Error()})
-			return
-		}
-
-		var newRegister models.Register
-		newRegister.RegisterType.ID = register.RegisterType.ID
-		newRegister.SenderId = register.SenderId
-		newRegister.TargetId = parent.UserId
-		newRegister.StudentId = studentId
-		newRegister.Text = register.Text
-		newRegister.Title = register.Title
-
-		if err := db.Create(&newRegister).Error; err != nil {
-			c.JSON(400, gin.H{"error": err.Error()})
-			return
-		}
+	if err := db.Create(&newRegister).Error; err != nil {
+		return err
+	} else {
+		return nil
 	}
 }
 
@@ -614,7 +692,7 @@ func DeleteRegister(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusNoContent)
 }
 
-func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (models.Register, error) {
+func GetRegisterSenderInformations(register *models.Register, db *gorm.DB) error {
 
 	register.Sender.Name = "Desconhecido"
 	register.Sender.Role = "Desconhecido"
@@ -638,16 +716,55 @@ func GetRegisterSenderInformations(register models.Register, db *gorm.DB) (model
 		register.Sender.Role = "Parente"
 
 	} else {
-
 		var user models.User
 		db.First(&user, register.SenderId)
 
 		register.Sender.Name = user.Name
 		register.Sender.Role = "Sem cargo"
-
 	}
 
-	return register, nil
+	db.First(&register.RegisterType, register.RegisterTypeID)
+	db.First(&register.Status, register.StatusId)
+
+	return nil
+}
+
+func GetRegisterTargetInformations(register *models.Register, db *gorm.DB) error {
+
+	register.Target.Name = "Desconhecido"
+	register.Target.Role = "Desconhecido"
+
+	var incharge models.InCharge
+	var parent models.Parent
+	var err error
+
+	// Verifica se é um recado de funcionario
+	if err = db.Where("user_id = ?", register.TargetId).Find(&incharge).Error; err == nil {
+
+		db.First(&incharge.Role, incharge.RoleID)
+
+		register.Target.Name = incharge.Name
+		register.Target.Role = incharge.Role.Name
+
+		// Se é um recado de um parente
+	} else if err = db.Where("user_id = ?", register.TargetId).Find(&parent).Error; err == nil {
+
+		register.Target.Name = parent.Name
+		register.Target.Role = "Parente"
+
+	} else {
+
+		var user models.User
+		db.First(&user, register.TargetId)
+
+		register.Target.Name = user.Name
+		register.Target.Role = "Sem cargo"
+	}
+
+	db.First(&register.RegisterType, register.RegisterTypeID)
+	db.First(&register.Status, register.StatusId)
+
+	return nil
 }
 
 func CheckRegisterMissingFields(register models.Register, targetType int) string {
@@ -656,6 +773,7 @@ func CheckRegisterMissingFields(register models.Register, targetType int) string
 	// 0 - usuario
 	// 1 - turma
 	// 2 - serie
+	// 3 - parentes
 
 	if register.RegisterType.ID == 0 {
 		return "id do tipo ('register_type':{'id': <int>})"
@@ -668,7 +786,7 @@ func CheckRegisterMissingFields(register models.Register, targetType int) string
 	}
 
 	// so verifica o aluno se for um recado especifico de um aluno
-	if targetType == 0 {
+	if targetType == 0 || targetType == 3 {
 		if register.StudentId == 0 {
 			return "id do estudante ('student_id': <int>)"
 		}

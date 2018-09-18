@@ -10,8 +10,8 @@ type UserAccess struct {
 	UserID              int64
 	Institution         Institution `gorm:"ForeignKey:InstitutionID;AssociationForeignKey:ID;not null" json:"institution" form:"institution"`
 	InstitutionID       int64
-	UserAccessProfile   UserAccessProfile `gorm:"ForeignKey:UserAccessProfileID;AssociationForeignKey:ID;not null" json:"user_access_profile" form:"user_access_profile"`
+	UserAccessProfile   UserAccessProfile `gorm:"ForeignKey:UserAccessProfileID;AssociationForeignKey:ID;not null" json:"userAccessProfile" form:"user_access_profile"`
 	UserAccessProfileID int64
-	CreatedAt           *time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt           *time.Time `json:"updated_at" form:"updated_at"`
+	CreatedAt           *time.Time `json:"createdAt" form:"created_at"`
+	UpdatedAt           *time.Time `json:"updatedAt" form:"updated_at"`
 }

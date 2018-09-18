@@ -12,11 +12,11 @@ type TeacherClass struct {
 	DisciplineID int64
 	Class        Class `gorm:"ForeignKey:ClassID" json:"class" form:"class"`
 	ClassID      int64
-	WeekDay      string     `gorm:"type:text;not null" json:"week_day" form:"week_day"`
-	StartHour    int        `gorm:"not null;default:0" json:"start_hour" form:"start_hour"`
-	StartMinutes int        `gorm:"not null;default:0" json:"start_minutes" form:"start_minutes"`
-	EndHour      int        `gorm:"not null;default:0" json:"end_hour" form:"end_hour"`
-	EndMinutes   int        `gorm:"not null;default:0" json:"en_minutes" form:"end_minutes"`
-	CreatedAt    *time.Time `json:"created_at" form:"created_at"`
-	UpdatedAt    *time.Time `json:"updated_at" form:"updated_at"`
+	WeekDays     string     `gorm:"type:text;not null" json:"weekDays" form:"week_day"`
+	StartHour    int        `gorm:"not null;default:0" json:"startHour" form:"start_hour"`
+	StartMinutes int        `gorm:"not null;default:0" json:"startMinutes" form:"start_minutes"`
+	EndHour      int        `gorm:"not null;default:0" json:"endHour" form:"end_hour"`
+	EndMinutes   int        `gorm:"not null;default:0" json:"endMinutes" form:"end_minutes"`
+	CreatedAt    *time.Time `json:"createdAt" form:"created_at"`
+	UpdatedAt    *time.Time `json:"updatedAt" form:"updated_at"`
 }
