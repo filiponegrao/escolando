@@ -118,7 +118,7 @@ func GetRegisterType(c *gin.Context) {
 	queryFields := helper.QueryFields(models.RegisterType{}, fields)
 
 	if err := db.Select(queryFields).First(&registerType, id).Error; err != nil {
-		content := gin.H{"error": "Tipo de registro com id " + id + " nao encontrado."}
+		content := gin.H{"error": "register_type with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -156,19 +156,6 @@ func CreateRegisterType(c *gin.Context) {
 		return
 	}
 
-	if registerType.ID != 0 {
-		message := "Nao é permitida a escolha de um id para um novo objeto."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	missing := CheckRegisterTypeMissingFields(registerType)
-	if missing != "" {
-		message := "Faltando campo de " + missing + " no tipo do registro."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
 	if err := db.Create(&registerType).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -194,7 +181,7 @@ func UpdateRegisterType(c *gin.Context) {
 	registerType := models.RegisterType{}
 
 	if db.First(&registerType, id).Error != nil {
-		content := gin.H{"error": "Tipo de registro com id " + id + " nao encontrado."}
+		content := gin.H{"error": "register_type with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -229,7 +216,7 @@ func DeleteRegisterType(c *gin.Context) {
 	registerType := models.RegisterType{}
 
 	if db.First(&registerType, id).Error != nil {
-		content := gin.H{"error": "Tipo de registro com id " + id + " nao encontrado."}
+		content := gin.H{"error": "register_type with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -245,12 +232,4 @@ func DeleteRegisterType(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
-}
-
-func CheckRegisterTypeMissingFields(t models.RegisterType) string {
-	if t.Name == "" {
-		return "nome"
-	}
-
-	return ""
 }

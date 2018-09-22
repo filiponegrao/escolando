@@ -94,14 +94,14 @@ PUT    /registers/:id
 DELETE /registers/:id
 ```
 
-### RegisterCurrentStatuses Resource
+### RegisterContacts Resource
 
 ```
-GET    /registercurrentstatuses
-GET    /registercurrentstatuses/:id
-POST   /registercurrentstatuses
-PUT    /registercurrentstatuses/:id
-DELETE /registercurrentstatuses/:id
+GET    /registercontacts
+GET    /registercontacts/:id
+POST   /registercontacts
+PUT    /registercontacts/:id
+DELETE /registercontacts/:id
 ```
 
 ### RegisterStatuses Resource
@@ -132,6 +132,16 @@ GET    /schoolgrades/:id
 POST   /schoolgrades
 PUT    /schoolgrades/:id
 DELETE /schoolgrades/:id
+```
+
+### Segments Resource
+
+```
+GET    /segments
+GET    /segments/:id
+POST   /segments
+PUT    /segments/:id
+DELETE /segments/:id
 ```
 
 ### Students Resource

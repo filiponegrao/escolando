@@ -1,0 +1,87 @@
+# Group RegisterContacts
+Welcome to the register contacts API. This API provides access to the register contacts service.
+
+## register contacts [/register_contacts]
+
+### Create register contact [POST]
+
+Create a new register contact
+
++ Request register contact (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + role: ROLE (string)
+
++ Response 201 (application/json; charset=utf-8)
+    + Attributes (register_contact, fixed)
+
+### Get register contacts [GET]
+
+Returns a register contact list.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (array, fixed)
+        + (register_contact)
+
+## register contact details [/register_contacts/{id}]
+
++ Parameters
+    + id: `1` (enum[string]) - The ID of the desired register contact.
+        + Members
+            + `1`
+            + `2`
+            + `3`
+
+### Get register contact [GET]
+
+Returns a register contact.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_contact, fixed)
+
+### Update register contact [PUT]
+
+Update a register contact.
+
++ Request register_contact (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+    + Attributes
+
+        + name: NAME (string)
+        + role: ROLE (string)
+
++ Response 200 (application/json; charset=utf-8)
+    + Attributes (register_contact, fixed)
+
+### Delete register contact [DELETE]
+
+Delete a register contact.
+
++ Request (application/json; charset=utf-8)
+    + Headers
+
+            Accept: application/vnd.filiponegrao+json
+
++ Response 204
+
+# Data Structures
+## register_contact (object)
+
++ name: *NAME* (string)
++ role: *ROLE* (string)

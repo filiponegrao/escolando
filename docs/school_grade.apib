@@ -14,6 +14,8 @@ Create a new school grade
     + Attributes
 
         + name: NAME (string)
+        + institution (institution)
+        + InstitutionID: 1 (number)
 
 + Response 201 (application/json; charset=utf-8)
     + Attributes (school_grade, fixed)
@@ -63,6 +65,8 @@ Update a school grade.
     + Attributes
 
         + name: NAME (string)
+        + institution (institution)
+        + InstitutionID: 1 (number)
 
 + Response 200 (application/json; charset=utf-8)
     + Attributes (school_grade, fixed)
@@ -83,5 +87,7 @@ Delete a school grade.
 
 + id: *1* (number)
 + name: *NAME* (string)
-+ created_at: `*2000-01-01 00:00:00*` (string)
-+ updated_at: `*2000-01-01 00:00:00*` (string)
++ institution (institution)
++ InstitutionID: *1* (number)
++ createdAt: `*2000-01-01 00:00:00*` (string)
++ updatedAt: `*2000-01-01 00:00:00*` (string)

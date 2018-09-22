@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
@@ -66,16 +65,6 @@ func GetUserAccesses(c *gin.Context) {
 		c.Status(200)
 
 		for _, userAccess := range userAccesses {
-
-			db.First(&userAccess.User, userAccess.UserID)
-			db.First(&userAccess.Institution, userAccess.InstitutionID)
-			db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
-			db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID)
-
-			// Removendo senha dos usuarios por motivos de seguranca
-			userAccess.User.Password = ""
-			userAccess.Institution.Owner.Password = ""
-
 			fieldMap, err := helper.FieldToMap(userAccess, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -91,15 +80,6 @@ func GetUserAccesses(c *gin.Context) {
 		fieldMaps := []map[string]interface{}{}
 
 		for _, userAccess := range userAccesses {
-
-			db.First(&userAccess.User, userAccess.UserID)
-			db.First(&userAccess.Institution, userAccess.InstitutionID)
-			db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID)
-
-			// Removendo senha dos usuarios por motivos de seguranca
-			userAccess.User.Password = ""
-			userAccess.Institution.Owner.Password = ""
-
 			fieldMap, err := helper.FieldToMap(userAccess, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
@@ -137,20 +117,11 @@ func GetUserAccess(c *gin.Context) {
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 	queryFields := helper.QueryFields(models.UserAccess{}, fields)
 
-	if err = db.Select(queryFields).First(&userAccess, id).Error; err != nil {
-		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
+	if err := db.Select(queryFields).First(&userAccess, id).Error; err != nil {
+		content := gin.H{"error": "user_access with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
-
-	db.First(&userAccess.User, userAccess.UserID)
-	db.First(&userAccess.Institution, userAccess.InstitutionID)
-	db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
-	db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfileID)
-
-	// Removendo senha dos usuarios por motivos de seguranca
-	userAccess.User.Password = ""
-	userAccess.Institution.Owner.Password = ""
 
 	fieldMap, err := helper.FieldToMap(userAccess, fields)
 	if err != nil {
@@ -185,47 +156,6 @@ func CreateUserAccess(c *gin.Context) {
 		return
 	}
 
-	if userAccess.ID != 0 {
-		message := "Nao é permitida a escolha de um id para um novo objeto."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	// AASERT: Verifica campos faltantes
-	missing := CheckUserAccessMissingField(userAccess)
-	if missing != "" {
-		message := "Faltando campo " + missing + " do acesso."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	// ASSERT: Verifica se o usuario existe de fato
-	err = db.First(&userAccess.User, userAccess.User.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.User.ID, 10)
-		content := gin.H{"error": "Usuario com o id" + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica se a instituicao existe de fato
-	err = db.First(&userAccess.Institution, userAccess.Institution.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.Institution.ID, 10)
-		content := gin.H{"error": "Instituicao com o id" + id + " não encontrada."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica se o perfil de acesso existe de fato
-	err = db.First(&userAccess.UserAccessProfile, userAccess.UserAccessProfile.ID).Error
-	if err != nil {
-		id := strconv.FormatInt(userAccess.UserAccessProfile.ID, 10)
-		content := gin.H{"error": "Perfil de acesso com o id" + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
 	if err := db.Create(&userAccess).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -235,9 +165,6 @@ func CreateUserAccess(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
-
-	userAccess.User.Password = ""
-	userAccess.Institution.Owner.Password = ""
 
 	c.JSON(201, userAccess)
 }
@@ -254,63 +181,13 @@ func UpdateUserAccess(c *gin.Context) {
 	userAccess := models.UserAccess{}
 
 	if db.First(&userAccess, id).Error != nil {
-		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
+		content := gin.H{"error": "user_access with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
 	if err := c.Bind(&userAccess); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	// ASSERT: Verifica se o usuario existe de fato
-	userId := userAccess.UserID
-	if userAccess.User.ID != 0 {
-		userId = userAccess.User.ID
-	}
-	err = db.First(&userAccess.User, userId).Error
-	if err != nil {
-		id := strconv.FormatInt(userId, 10)
-		content := gin.H{"error": "Usuario com o id " + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica se a instituicao existe de fato
-	institutionId := userAccess.InstitutionID
-	if userAccess.Institution.ID != 0 {
-		institutionId = userAccess.Institution.ID
-	}
-	err = db.First(&userAccess.Institution, institutionId).Error
-	if err != nil {
-		id := strconv.FormatInt(institutionId, 10)
-		content := gin.H{"error": "Instituicao com o id " + id + " não encontrada."}
-		c.JSON(404, content)
-		return
-	}
-
-	// Recupera o dono da instituicao. Nao ha necessidade de assertivas
-	db.First(&userAccess.Institution.Owner, userAccess.Institution.UserID)
-
-	// ASSERT: Verifica se o perfil de acesso existe de fato
-	profileId := userAccess.UserAccessProfileID
-	if userAccess.UserAccessProfile.ID != 0 {
-		profileId = userAccess.UserAccessProfile.ID
-	}
-	err = db.First(&userAccess.UserAccessProfile, profileId).Error
-	if err != nil {
-		id := strconv.FormatInt(profileId, 10)
-		content := gin.H{"error": "Perfil de acesso com o id " + id + " não encontrado."}
-		c.JSON(404, content)
-		return
-	}
-
-	// ASSERT: Verifica campos faltantes
-	missing := CheckUserAccessMissingField(userAccess)
-	if missing != "" {
-		message := "Faltando campo " + missing + " do acesso."
-		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
@@ -323,9 +200,6 @@ func UpdateUserAccess(c *gin.Context) {
 		// conditional branch by version.
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
-
-	userAccess.User.Password = ""
-	userAccess.Institution.Owner.Password = ""
 
 	c.JSON(200, userAccess)
 }
@@ -342,7 +216,7 @@ func DeleteUserAccess(c *gin.Context) {
 	userAccess := models.UserAccess{}
 
 	if db.First(&userAccess, id).Error != nil {
-		content := gin.H{"error": "Acesso de usuario com id " + id + " nao encontrado."}
+		content := gin.H{"error": "user_access with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -358,20 +232,4 @@ func DeleteUserAccess(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
-}
-
-func CheckUserAccessMissingField(access models.UserAccess) string {
-	if access.User.ID == 0 {
-		return "id do usuario (user.id)"
-	}
-
-	if access.Institution.ID == 0 {
-		return "id da instituicao (institution.id)"
-	}
-
-	if access.UserAccessProfile.ID == 0 {
-		return "id do perfil de acesso (user_access_profile.id)"
-	}
-
-	return ""
 }

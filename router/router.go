@@ -1,50 +1,19 @@
 package router
 
 import (
-	"log"
-	"time"
-
-	"github.com/appleboy/gin-jwt"
 	"github.com/filiponegrao/escolando/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
 func Initialize(r *gin.Engine) {
-
-	// the jwt middleware
-	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Realm:           "test zone",
-		Key:             []byte("secret key"),
-		Timeout:         time.Hour * 24 * 7,
-		MaxRefresh:      time.Hour,
-		IdentityKey:     "id",
-		PayloadFunc:     controllers.AuthorizationPayload,
-		IdentityHandler: controllers.IdentityHandler,
-		Authenticator:   controllers.UserAuthentication,
-		Authorizator:    controllers.UserAuthorization,
-		Unauthorized:    controllers.UserUnauthorized,
-		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
-		TokenHeadName:   "Bearer",
-		TimeFunc:        time.Now,
-	})
-
-	if err != nil {
-		log.Fatal("JWT Error:" + err.Error())
-	}
-
-	r.Use(controllers.CORSMiddleware())
 	r.GET("/", controllers.APIEndpoints)
 
 	api := r.Group("")
-	api.POST("/login", authMiddleware.LoginHandler)
-
-	api.Use(authMiddleware.MiddlewareFunc())
 	{
 
 		api.GET("/classes", controllers.GetClasses)
 		api.GET("/classes/:id", controllers.GetClass)
-		api.GET("/classes_school_grades/:id", controllers.GetClassBySchoolGrade)
 		api.POST("/classes", controllers.CreateClass)
 		api.PUT("/classes/:id", controllers.UpdateClass)
 		api.DELETE("/classes/:id", controllers.DeleteClass)
@@ -57,7 +26,6 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/in_charges", controllers.GetInCharges)
 		api.GET("/in_charges/:id", controllers.GetInCharge)
-		api.GET("/institution_in_charges/:id", controllers.GetInstitutionInCharges)
 		api.POST("/in_charges", controllers.CreateInCharge)
 		api.PUT("/in_charges/:id", controllers.UpdateInCharge)
 		api.DELETE("/in_charges/:id", controllers.DeleteInCharge)
@@ -76,14 +44,12 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/kinships", controllers.GetKinships)
 		api.GET("/kinships/:id", controllers.GetKinship)
-		api.GET("/kinships_by_name/:name", controllers.GetKinshipsByName)
 		api.POST("/kinships", controllers.CreateKinship)
 		api.PUT("/kinships/:id", controllers.UpdateKinship)
 		api.DELETE("/kinships/:id", controllers.DeleteKinship)
 
 		api.GET("/parents", controllers.GetParents)
 		api.GET("/parents/:id", controllers.GetParent)
-		api.GET("/parent_user/:id", controllers.GetUserParent)
 		api.POST("/parents", controllers.CreateParent)
 		api.PUT("/parents/:id", controllers.UpdateParent)
 		api.DELETE("/parents/:id", controllers.DeleteParent)
@@ -94,14 +60,17 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/parent_students/:id", controllers.UpdateParentStudent)
 		api.DELETE("/parent_students/:id", controllers.DeleteParentStudent)
 
-		// Registers
-		api.GET("/registers", controllers.GetUserRegisters)
-		api.GET("/registers/:id", controllers.GetSomeRegisters)
+		api.GET("/registers", controllers.GetRegisters)
+		api.GET("/registers/:id", controllers.GetRegister)
 		api.POST("/registers", controllers.CreateRegister)
-		api.POST("/registers/student", controllers.CreateRegister)
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
-		// api.GET("/registers/user/", controllers.GetUserRegisters)
+
+		api.GET("/register_contacts", controllers.GetRegisterContacts)
+		api.GET("/register_contacts/:id", controllers.GetRegisterContact)
+		api.POST("/register_contacts", controllers.CreateRegisterContact)
+		api.PUT("/register_contacts/:id", controllers.UpdateRegisterContact)
+		api.DELETE("/register_contacts/:id", controllers.DeleteRegisterContact)
 
 		api.GET("/register_statuses", controllers.GetRegisterStatuses)
 		api.GET("/register_statuses/:id", controllers.GetRegisterStatus)
@@ -121,11 +90,15 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/school_grades/:id", controllers.UpdateSchoolGrade)
 		api.DELETE("/school_grades/:id", controllers.DeleteSchoolGrade)
 
+		api.GET("/segments", controllers.GetSegments)
+		api.GET("/segments/:id", controllers.GetSegment)
+		api.POST("/segments", controllers.CreateSegment)
+		api.PUT("/segments/:id", controllers.UpdateSegment)
+		api.DELETE("/segments/:id", controllers.DeleteSegment)
+
 		api.GET("/students", controllers.GetStudents)
 		api.GET("/students/:id", controllers.GetStudent)
-		api.GET("/students/:id/class", controllers.GetStudentByClass)
-		api.GET("/students_of_parent/:id", controllers.GetStudentsOfParent)
-		api.POST("/students/:kinship", controllers.CreateStudent)
+		api.POST("/students", controllers.CreateStudent)
 		api.PUT("/students/:id", controllers.UpdateStudent)
 		api.DELETE("/students/:id", controllers.DeleteStudent)
 
@@ -143,11 +116,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/users", controllers.GetUsers)
 		api.GET("/users/:id", controllers.GetUser)
-		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
-		api.POST("/user_parent", controllers.CreateUserParent)
-		api.POST("/user_incharge/:roleId/:institutionId", controllers.CreateUserInCharge)
-		api.POST("/user_parent_and_student", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
 
@@ -159,14 +128,9 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/user_access_profiles", controllers.GetUserAccessProfiles)
 		api.GET("/user_access_profiles/:id", controllers.GetUserAccessProfile)
-		api.GET("/user_access_profiles_by_name/:name", controllers.GetUserAccessProfilesByName)
 		api.POST("/user_access_profiles", controllers.CreateUserAccessProfile)
 		api.PUT("/user_access_profiles/:id", controllers.UpdateUserAccessProfile)
 		api.DELETE("/user_access_profiles/:id", controllers.DeleteUserAccessProfile)
 
-		// Login
-		//api.POST("/login", controllers.UserLogin)
-
 	}
-
 }

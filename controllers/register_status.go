@@ -8,14 +8,9 @@ import (
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
 	"github.com/filiponegrao/escolando/version"
-	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
-
-const REGISTER_SENT = "register_sent"
-const REGISTER_RECEIVED = "register_received"
-const REGISTER_SEEN = "register_seen"
 
 func GetRegisterStatuses(c *gin.Context) {
 	ver, err := version.New(c)
@@ -123,7 +118,7 @@ func GetRegisterStatus(c *gin.Context) {
 	queryFields := helper.QueryFields(models.RegisterStatus{}, fields)
 
 	if err := db.Select(queryFields).First(&registerStatus, id).Error; err != nil {
-		content := gin.H{"error": "Status de registro com id" + id + " nao encontrado."}
+		content := gin.H{"error": "register_status with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -161,12 +156,6 @@ func CreateRegisterStatus(c *gin.Context) {
 		return
 	}
 
-	if registerStatus.ID != 0 {
-		message := "Nao é permitida a escolha de um id para um novo objeto."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
 	if err := db.Create(&registerStatus).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -192,7 +181,7 @@ func UpdateRegisterStatus(c *gin.Context) {
 	registerStatus := models.RegisterStatus{}
 
 	if db.First(&registerStatus, id).Error != nil {
-		content := gin.H{"error": "Status de registro com id" + id + " nao encontrado."}
+		content := gin.H{"error": "register_status with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -227,7 +216,7 @@ func DeleteRegisterStatus(c *gin.Context) {
 	registerStatus := models.RegisterStatus{}
 
 	if db.First(&registerStatus, id).Error != nil {
-		content := gin.H{"error": "Status de registro com id" + id + " nao encontrado."}
+		content := gin.H{"error": "register_status with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
@@ -243,41 +232,4 @@ func DeleteRegisterStatus(c *gin.Context) {
 	}
 
 	c.Writer.WriteHeader(http.StatusNoContent)
-}
-
-func ChecRegisterStatusMissingField(status models.RegisterStatus) string {
-	if status.Name == "" {
-		return "nome"
-	}
-
-	return ""
-}
-
-func CheckDefaultRegisterStatus(db gorm.DB) error {
-
-	statusArray := []string{REGISTER_SENT, REGISTER_RECEIVED, REGISTER_SEEN}
-	// Para cada status default deinifindo na aplicacao:
-	for _, status := range statusArray {
-		var statusTemp models.RegisterStatus
-		// Verifica se ja existe um registro deste status no banco:
-		if err := db.Where("name = ?", status).First(&statusTemp).Error; err != nil {
-			// Se nao houver, cria:
-			if err2 := CreateInternalRegisterStatus(status, db); err2 != nil {
-				return err2
-			}
-		}
-	}
-	return nil
-}
-
-func CreateInternalRegisterStatus(name string, db gorm.DB) error {
-
-	status := models.RegisterStatus{}
-	status.Name = name
-
-	if err := db.Create(&status).Error; err != nil {
-		return err
-	}
-
-	return nil
 }

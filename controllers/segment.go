@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetSchoolGrades(c *gin.Context) {
+func GetSegments(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -20,7 +20,7 @@ func GetSchoolGrades(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
+	parameter, err := dbpkg.NewParameter(c, models.Segment{})
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -35,19 +35,19 @@ func GetSchoolGrades(c *gin.Context) {
 	db = parameter.SetPreloads(db)
 	db = parameter.SortRecords(db)
 	db = parameter.FilterFields(db)
-	schoolGrades := []models.SchoolGrade{}
+	segments := []models.Segment{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
+	queryFields := helper.QueryFields(models.Segment{}, fields)
 
-	if err := db.Select(queryFields).Find(&schoolGrades).Error; err != nil {
+	if err := db.Select(queryFields).Find(&segments).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	index := 0
 
-	if len(schoolGrades) > 0 {
-		index = int(schoolGrades[len(schoolGrades)-1].ID)
+	if len(segments) > 0 {
+		index = int(segments[len(segments)-1].ID)
 	}
 
 	if err := parameter.SetHeaderLink(c, index); err != nil {
@@ -64,8 +64,8 @@ func GetSchoolGrades(c *gin.Context) {
 		enc := json.NewEncoder(c.Writer)
 		c.Status(200)
 
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+		for _, segment := range segments {
+			fieldMap, err := helper.FieldToMap(segment, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -79,8 +79,8 @@ func GetSchoolGrades(c *gin.Context) {
 	} else {
 		fieldMaps := []map[string]interface{}{}
 
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+		for _, segment := range segments {
+			fieldMap, err := helper.FieldToMap(segment, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -97,7 +97,7 @@ func GetSchoolGrades(c *gin.Context) {
 	}
 }
 
-func GetSchoolGrade(c *gin.Context) {
+func GetSegment(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -105,25 +105,25 @@ func GetSchoolGrade(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
+	parameter, err := dbpkg.NewParameter(c, models.Segment{})
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	db = parameter.SetPreloads(db)
-	schoolGrade := models.SchoolGrade{}
+	segment := models.Segment{}
 	id := c.Params.ByName("id")
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
+	queryFields := helper.QueryFields(models.Segment{}, fields)
 
-	if err := db.Select(queryFields).First(&schoolGrade, id).Error; err != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if err := db.Select(queryFields).First(&segment, id).Error; err != nil {
+		content := gin.H{"error": "segment with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+	fieldMap, err := helper.FieldToMap(segment, fields)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -141,7 +141,7 @@ func GetSchoolGrade(c *gin.Context) {
 	}
 }
 
-func CreateSchoolGrade(c *gin.Context) {
+func CreateSegment(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -149,14 +149,14 @@ func CreateSchoolGrade(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	schoolGrade := models.SchoolGrade{}
+	segment := models.Segment{}
 
-	if err := c.Bind(&schoolGrade); err != nil {
+	if err := c.Bind(&segment); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.Create(&schoolGrade).Error; err != nil {
+	if err := db.Create(&segment).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -166,10 +166,10 @@ func CreateSchoolGrade(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
-	c.JSON(201, schoolGrade)
+	c.JSON(201, segment)
 }
 
-func UpdateSchoolGrade(c *gin.Context) {
+func UpdateSegment(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -178,20 +178,20 @@ func UpdateSchoolGrade(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
-	schoolGrade := models.SchoolGrade{}
+	segment := models.Segment{}
 
-	if db.First(&schoolGrade, id).Error != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if db.First(&segment, id).Error != nil {
+		content := gin.H{"error": "segment with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	if err := c.Bind(&schoolGrade); err != nil {
+	if err := c.Bind(&segment); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.Save(&schoolGrade).Error; err != nil {
+	if err := db.Save(&segment).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -201,10 +201,10 @@ func UpdateSchoolGrade(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
-	c.JSON(200, schoolGrade)
+	c.JSON(200, segment)
 }
 
-func DeleteSchoolGrade(c *gin.Context) {
+func DeleteSegment(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -213,15 +213,15 @@ func DeleteSchoolGrade(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
-	schoolGrade := models.SchoolGrade{}
+	segment := models.Segment{}
 
-	if db.First(&schoolGrade, id).Error != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if db.First(&segment, id).Error != nil {
+		content := gin.H{"error": "segment with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	if err := db.Delete(&schoolGrade).Error; err != nil {
+	if err := db.Delete(&segment).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}

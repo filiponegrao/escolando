@@ -1,30 +1,28 @@
-# Group Parents
-Welcome to the parents API. This API provides access to the parents service.
+# Group Segments
+Welcome to the segments API. This API provides access to the segments service.
 
-## parents [/parents]
+## segments [/segments]
 
-### Create parent [POST]
+### Create segment [POST]
 
-Create a new parent
+Create a new segment
 
-+ Request parent (application/json; charset=utf-8)
++ Request segment (application/json; charset=utf-8)
     + Headers
 
             Accept: application/vnd.filiponegrao+json
     + Attributes
 
-        + user_id: 1 (number)
+        +  (institution)
         + name: NAME (string)
-        + email: EMAIL (string)
-        + phone: PHONE (string)
-        + profileImageUrl: PROFILEIMAGEURL (string)
+        + description: DESCRIPTION (string)
 
 + Response 201 (application/json; charset=utf-8)
-    + Attributes (parent, fixed)
+    + Attributes (segment, fixed)
 
-### Get parents [GET]
+### Get segments [GET]
 
-Returns a parent list.
+Returns a segment list.
 
 + Request (application/json; charset=utf-8)
     + Headers
@@ -33,20 +31,20 @@ Returns a parent list.
 
 + Response 200 (application/json; charset=utf-8)
     + Attributes (array, fixed)
-        + (parent)
+        + (segment)
 
-## parent details [/parents/{id}]
+## segment details [/segments/{id}]
 
 + Parameters
-    + id: `1` (enum[string]) - The ID of the desired parent.
+    + id: `1` (enum[string]) - The ID of the desired segment.
         + Members
             + `1`
             + `2`
             + `3`
 
-### Get parent [GET]
+### Get segment [GET]
 
-Returns a parent.
+Returns a segment.
 
 + Request (application/json; charset=utf-8)
     + Headers
@@ -54,30 +52,28 @@ Returns a parent.
             Accept: application/vnd.filiponegrao+json
 
 + Response 200 (application/json; charset=utf-8)
-    + Attributes (parent, fixed)
+    + Attributes (segment, fixed)
 
-### Update parent [PUT]
+### Update segment [PUT]
 
-Update a parent.
+Update a segment.
 
-+ Request parent (application/json; charset=utf-8)
++ Request segment (application/json; charset=utf-8)
     + Headers
 
             Accept: application/vnd.filiponegrao+json
     + Attributes
 
-        + user_id: 1 (number)
+        +  (institution)
         + name: NAME (string)
-        + email: EMAIL (string)
-        + phone: PHONE (string)
-        + profileImageUrl: PROFILEIMAGEURL (string)
+        + description: DESCRIPTION (string)
 
 + Response 200 (application/json; charset=utf-8)
-    + Attributes (parent, fixed)
+    + Attributes (segment, fixed)
 
-### Delete parent [DELETE]
+### Delete segment [DELETE]
 
-Delete a parent.
+Delete a segment.
 
 + Request (application/json; charset=utf-8)
     + Headers
@@ -87,13 +83,11 @@ Delete a parent.
 + Response 204
 
 # Data Structures
-## parent (object)
+## segment (object)
 
 + id: *1* (number)
-+ user_id: *1* (number)
++  (institution)
 + name: *NAME* (string)
-+ email: *EMAIL* (string)
-+ phone: *PHONE* (string)
-+ profileImageUrl: *PROFILEIMAGEURL* (string)
++ description: *DESCRIPTION* (string)
 + createdAt: `*2000-01-01 00:00:00*` (string)
 + updatedAt: `*2000-01-01 00:00:00*` (string)

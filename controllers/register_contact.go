@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetSchoolGrades(c *gin.Context) {
+func GetRegisterContacts(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -20,7 +20,7 @@ func GetSchoolGrades(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
+	parameter, err := dbpkg.NewParameter(c, models.RegisterContact{})
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -35,19 +35,19 @@ func GetSchoolGrades(c *gin.Context) {
 	db = parameter.SetPreloads(db)
 	db = parameter.SortRecords(db)
 	db = parameter.FilterFields(db)
-	schoolGrades := []models.SchoolGrade{}
+	registerContacts := []models.RegisterContact{}
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
+	queryFields := helper.QueryFields(models.RegisterContact{}, fields)
 
-	if err := db.Select(queryFields).Find(&schoolGrades).Error; err != nil {
+	if err := db.Select(queryFields).Find(&registerContacts).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	index := 0
 
-	if len(schoolGrades) > 0 {
-		index = int(schoolGrades[len(schoolGrades)-1].ID)
+	if len(registerContacts) > 0 {
+		index = int(registerContacts[len(registerContacts)-1].ID)
 	}
 
 	if err := parameter.SetHeaderLink(c, index); err != nil {
@@ -64,8 +64,8 @@ func GetSchoolGrades(c *gin.Context) {
 		enc := json.NewEncoder(c.Writer)
 		c.Status(200)
 
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+		for _, registerContact := range registerContacts {
+			fieldMap, err := helper.FieldToMap(registerContact, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -79,8 +79,8 @@ func GetSchoolGrades(c *gin.Context) {
 	} else {
 		fieldMaps := []map[string]interface{}{}
 
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+		for _, registerContact := range registerContacts {
+			fieldMap, err := helper.FieldToMap(registerContact, fields)
 			if err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
@@ -97,7 +97,7 @@ func GetSchoolGrades(c *gin.Context) {
 	}
 }
 
-func GetSchoolGrade(c *gin.Context) {
+func GetRegisterContact(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -105,25 +105,25 @@ func GetSchoolGrade(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
+	parameter, err := dbpkg.NewParameter(c, models.RegisterContact{})
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
 	db = parameter.SetPreloads(db)
-	schoolGrade := models.SchoolGrade{}
+	registerContact := models.RegisterContact{}
 	id := c.Params.ByName("id")
 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
+	queryFields := helper.QueryFields(models.RegisterContact{}, fields)
 
-	if err := db.Select(queryFields).First(&schoolGrade, id).Error; err != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if err := db.Select(queryFields).First(&registerContact, id).Error; err != nil {
+		content := gin.H{"error": "register_contact with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	fieldMap, err := helper.FieldToMap(schoolGrade, fields)
+	fieldMap, err := helper.FieldToMap(registerContact, fields)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
@@ -141,7 +141,7 @@ func GetSchoolGrade(c *gin.Context) {
 	}
 }
 
-func CreateSchoolGrade(c *gin.Context) {
+func CreateRegisterContact(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -149,14 +149,14 @@ func CreateSchoolGrade(c *gin.Context) {
 	}
 
 	db := dbpkg.DBInstance(c)
-	schoolGrade := models.SchoolGrade{}
+	registerContact := models.RegisterContact{}
 
-	if err := c.Bind(&schoolGrade); err != nil {
+	if err := c.Bind(&registerContact); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.Create(&schoolGrade).Error; err != nil {
+	if err := db.Create(&registerContact).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -166,10 +166,10 @@ func CreateSchoolGrade(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
-	c.JSON(201, schoolGrade)
+	c.JSON(201, registerContact)
 }
 
-func UpdateSchoolGrade(c *gin.Context) {
+func UpdateRegisterContact(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -178,20 +178,20 @@ func UpdateSchoolGrade(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
-	schoolGrade := models.SchoolGrade{}
+	registerContact := models.RegisterContact{}
 
-	if db.First(&schoolGrade, id).Error != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if db.First(&registerContact, id).Error != nil {
+		content := gin.H{"error": "register_contact with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	if err := c.Bind(&schoolGrade); err != nil {
+	if err := c.Bind(&registerContact); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err := db.Save(&schoolGrade).Error; err != nil {
+	if err := db.Save(&registerContact).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -201,10 +201,10 @@ func UpdateSchoolGrade(c *gin.Context) {
 		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
-	c.JSON(200, schoolGrade)
+	c.JSON(200, registerContact)
 }
 
-func DeleteSchoolGrade(c *gin.Context) {
+func DeleteRegisterContact(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -213,15 +213,15 @@ func DeleteSchoolGrade(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
-	schoolGrade := models.SchoolGrade{}
+	registerContact := models.RegisterContact{}
 
-	if db.First(&schoolGrade, id).Error != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+	if db.First(&registerContact, id).Error != nil {
+		content := gin.H{"error": "register_contact with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
 
-	if err := db.Delete(&schoolGrade).Error; err != nil {
+	if err := db.Delete(&registerContact).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
