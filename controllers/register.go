@@ -211,7 +211,7 @@ func GetUserRegisters(c *gin.Context) {
 func GetSentRegisters(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int(claims["user_id"].(float64))
+	userId := int(claims["id"].(float64))
 	studentId := c.Params.ByName("studentId")
 	var registers []models.Register
 
@@ -248,7 +248,7 @@ func GetSentRegisters(c *gin.Context) {
 func GetReceivedRegisters(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int(claims["user_id"].(float64))
+	userId := int(claims["id"].(float64))
 	studentId := c.Params.ByName("studentId")
 	var registers []models.Register
 

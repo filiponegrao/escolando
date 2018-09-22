@@ -544,12 +544,28 @@ func UserUnauthorized(c *gin.Context, code int, message string) {
 	c.JSON(code, gin.H{"error": err})
 }
 
+// func AuthorizationPayload(data interface{}) jwt.MapClaims {
+// 	m := make(map[string]interface{})
+// 	if v, ok := data.(*models.User); ok {
+// 		m["user_id"] = v.ID
+// 	}
+// 	return m
+// }
+
 func AuthorizationPayload(data interface{}) jwt.MapClaims {
-	m := make(map[string]interface{})
-	if v, ok := data.(*models.User); ok {
-		m["user_id"] = v.ID
+	if user, ok := data.(*models.User); ok {
+		return jwt.MapClaims{
+			"id": user.ID,
+		}
 	}
-	return m
+	return jwt.MapClaims{}
+}
+
+func IdentityHandler(c *gin.Context) interface{} {
+	claims := jwt.ExtractClaims(c)
+	return &models.User{
+		ID: int64(claims["id"].(float64)),
+	}
 }
 
 func CheckUserMissingFields(user models.User) string {

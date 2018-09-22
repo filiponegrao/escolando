@@ -1,6 +1,7 @@
 package router
 
 import (
+	"log"
 	"time"
 
 	"github.com/appleboy/gin-jwt"
@@ -12,31 +13,24 @@ import (
 func Initialize(r *gin.Engine) {
 
 	// the jwt middleware
-	authMiddleware := &jwt.GinJWTMiddleware{
-		Realm:         "test zone",
-		Key:           []byte("secret key"),
-		Timeout:       time.Hour * 24 * 7,
-		MaxRefresh:    time.Hour,
-		PayloadFunc:   controllers.AuthorizationPayload,
-		Authenticator: controllers.UserAuthentication,
-		Authorizator:  controllers.UserAuthorization,
-		Unauthorized:  controllers.UserUnauthorized,
-		// TokenLookup is a string in the form of "<source>:<name>" that is used
-		// to extract token from the request.
-		// Optional. Default value "header:Authorization".
-		// Possible values:
-		// - "header:<name>"
-		// - "query:<name>"
-		// - "cookie:<name>"
-		TokenLookup: "header: Authorization, query: token, cookie: jwt",
-		// TokenLookup: "query:token",
-		// TokenLookup: "cookie:token",
+	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
+		Realm:           "test zone",
+		Key:             []byte("secret key"),
+		Timeout:         time.Hour * 24 * 7,
+		MaxRefresh:      time.Hour,
+		IdentityKey:     "id",
+		PayloadFunc:     controllers.AuthorizationPayload,
+		IdentityHandler: controllers.IdentityHandler,
+		Authenticator:   controllers.UserAuthentication,
+		Authorizator:    controllers.UserAuthorization,
+		Unauthorized:    controllers.UserUnauthorized,
+		TokenLookup:     "header: Authorization, query: token, cookie: jwt",
+		TokenHeadName:   "Bearer",
+		TimeFunc:        time.Now,
+	})
 
-		// TokenHeadName is a string in the header. Default value is "Bearer"
-		TokenHeadName: "Bearer",
-
-		// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
-		TimeFunc: time.Now,
+	if err != nil {
+		log.Fatal("JWT Error:" + err.Error())
 	}
 
 	r.Use(controllers.CORSMiddleware())
@@ -44,6 +38,7 @@ func Initialize(r *gin.Engine) {
 
 	api := r.Group("")
 	api.POST("/login", authMiddleware.LoginHandler)
+
 	api.Use(authMiddleware.MiddlewareFunc())
 	{
 
