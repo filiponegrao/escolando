@@ -44,6 +44,8 @@ func APIEndpoints(c *gin.Context) {
 		"register_type_url":             baseURL + "/register_types/{id}",
 		"school_grades_url":             baseURL + "/school_grades",
 		"school_grade_url":              baseURL + "/school_grades/{id}",
+		"segments_url":                  baseURL + "/segments",
+		"segment_url":                   baseURL + "/segments/{id}",
 		"students_url":                  baseURL + "/students",
 		"student_url":                   baseURL + "/students/{id}",
 		"student_enrollments_url":       baseURL + "/student_enrollments",

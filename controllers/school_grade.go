@@ -7,18 +7,11 @@ import (
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
-	"github.com/filiponegrao/escolando/version"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetSchoolGrades(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
 	if err != nil {
@@ -53,11 +46,6 @@ func GetSchoolGrades(c *gin.Context) {
 	if err := parameter.SetHeaderLink(c, index); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
 	if _, ok := c.GetQuery("stream"); ok {
@@ -98,12 +86,6 @@ func GetSchoolGrades(c *gin.Context) {
 }
 
 func GetSchoolGrade(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
 	if err != nil {
@@ -118,7 +100,7 @@ func GetSchoolGrade(c *gin.Context) {
 	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
 
 	if err := db.Select(queryFields).First(&schoolGrade, id).Error; err != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+		content := gin.H{"error": "Série com id " + id + " nao encontrada"}
 		c.JSON(404, content)
 		return
 	}
@@ -129,11 +111,6 @@ func GetSchoolGrade(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	if _, ok := c.GetQuery("pretty"); ok {
 		c.IndentedJSON(200, fieldMap)
 	} else {
@@ -142,11 +119,6 @@ func GetSchoolGrade(c *gin.Context) {
 }
 
 func CreateSchoolGrade(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
 	db := dbpkg.DBInstance(c)
 	schoolGrade := models.SchoolGrade{}
@@ -155,24 +127,21 @@ func CreateSchoolGrade(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	if schoolGrade.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	missingFields := CheckSchoolGradeMissingFields(schoolGrade)
 	if missingFields != "" {
 		message := "Faltando campo de " + missingFields + " da série."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
-	institutionId := schoolGrade.Institution.ID
-	err = db.First(&schoolGrade.Institution, institutionId).Error
+	segmentId := schoolGrade.Segment.ID
+	err := db.First(&schoolGrade.Segment, segmentId).Error
 	if err != nil {
-		content := gin.H{"error": "Instituição com o id " + strconv.FormatInt(institutionId, 10) + " não encontrado."}
+		content := gin.H{"error": "Segmento com o id " + strconv.FormatInt(segmentId, 10) + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -182,27 +151,16 @@ func CreateSchoolGrade(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(201, schoolGrade)
 }
 
 func UpdateSchoolGrade(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
 	schoolGrade := models.SchoolGrade{}
 
 	if db.First(&schoolGrade, id).Error != nil {
-		content := gin.H{"error": "school_grade with id#" + id + " not found"}
+		content := gin.H{"error": "Série com o id " + id + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -212,14 +170,14 @@ func UpdateSchoolGrade(c *gin.Context) {
 		return
 	}
 
-	var institutionId int64 = schoolGrade.InstitutionID
-	if schoolGrade.Institution.ID != 0 {
-		institutionId = schoolGrade.Institution.ID
+	var segmentId int64 = schoolGrade.SegmentId
+	if schoolGrade.Segment.ID != 0 {
+		segmentId = schoolGrade.Segment.ID
 	}
 
-	err = db.First(&schoolGrade.Institution, institutionId).Error
+	err := db.First(&schoolGrade.Segment, segmentId).Error
 	if err != nil {
-		content := gin.H{"error": "Instituição com o id " + strconv.FormatInt(institutionId, 10) + " não encontrado."}
+		content := gin.H{"error": "Segmento com o id " + strconv.FormatInt(segmentId, 10) + " não encontrado."}
 		c.JSON(404, content)
 		return
 	}
@@ -236,53 +194,46 @@ func UpdateSchoolGrade(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(200, schoolGrade)
 }
 
 func DeleteSchoolGrade(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
 	schoolGrade := models.SchoolGrade{}
-
 	if db.First(&schoolGrade, id).Error != nil {
 		content := gin.H{"error": "school_grade with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
-
 	if err := db.Delete(&schoolGrade).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(200, nil)
 }
 
-func CheckSchoolGradeMissingFields(grade models.SchoolGrade) string {
+func GetSchoolGradesBySegment(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	var schoolGrades []models.SchoolGrade
+	segmentId := c.Params.ByName("id")
+	if segmentId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id do segmento"})
+		return
+	}
+	if err := db.Where("segment_id = ?", segmentId).Find(&schoolGrades).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, schoolGrades)
+}
 
+func CheckSchoolGradeMissingFields(grade models.SchoolGrade) string {
 	if grade.Name == "" {
 		return "nome"
 	}
-
-	if grade.Institution.ID == 0 {
-		return "id da instituição (ex: 'institutuin': {'id':<int>})"
+	if grade.Segment.ID == 0 {
+		return "id do segmento (ex: 'segment': {'id':<int>})"
 	}
-
 	return ""
 }

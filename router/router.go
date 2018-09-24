@@ -117,9 +117,17 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/school_grades", controllers.GetSchoolGrades)
 		api.GET("/school_grades/:id", controllers.GetSchoolGrade)
+		api.GET("/school_grades_institution/:id", controllers.GetSchoolGradesBySegment)
 		api.POST("/school_grades", controllers.CreateSchoolGrade)
 		api.PUT("/school_grades/:id", controllers.UpdateSchoolGrade)
 		api.DELETE("/school_grades/:id", controllers.DeleteSchoolGrade)
+
+		api.GET("/segments", controllers.GetAllSegments)
+		api.GET("/segments/:id", controllers.GetSegments)
+		api.GET("/segments_institution/:id", controllers.GetInsitutionSegments)
+		api.POST("segments", controllers.CreateSegment)
+		api.PUT("/segments/:id", controllers.UpdateSegment)
+		api.DELETE("/segments/:id", controllers.DeleteSegment)
 
 		api.GET("/students", controllers.GetStudents)
 		api.GET("/students/:id", controllers.GetStudent)
