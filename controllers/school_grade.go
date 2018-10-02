@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"log"
 	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
@@ -127,6 +128,8 @@ func CreateSchoolGrade(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	log.Println("Serie a ser criada: ", schoolGrade)
+
 	if schoolGrade.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
 		c.JSON(400, gin.H{"error": message})
@@ -145,6 +148,16 @@ func CreateSchoolGrade(c *gin.Context) {
 		c.JSON(404, content)
 		return
 	}
+
+	institutionId := schoolGrade.Segment.InstitutionID
+	err = db.First(&schoolGrade.Segment.Institution, institutionId).Error
+	if err != nil {
+		content := gin.H{"error": "Instituião não encontrada."}
+		c.JSON(404, content)
+		return
+	}
+
+	log.Println("Serie a ser criada com informacoes preenchidas: ", schoolGrade)
 
 	if err := db.Create(&schoolGrade).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})

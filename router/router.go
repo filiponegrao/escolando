@@ -172,6 +172,8 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/user_access_profiles/:id", controllers.UpdateUserAccessProfile)
 		api.DELETE("/user_access_profiles/:id", controllers.DeleteUserAccessProfile)
 
+		api.POST("/password", controllers.ChangePassword)
+
 		// Login
 		//api.POST("/login", controllers.UserLogin)
 

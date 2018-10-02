@@ -455,6 +455,7 @@ func CreateRegisterForStudent(c *gin.Context) {
 func CreateRegisterForClass(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
+
 	claims := jwt.ExtractClaims(c)
 	userId := int64(claims["user_id"].(float64))
 

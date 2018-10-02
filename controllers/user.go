@@ -21,6 +21,12 @@ type login struct {
 	Password string `form:"password" json:"password" binding:"required"`
 }
 
+type newPassword struct {
+	OldPassowrd     string `form:"oldPassword" json:"oldPassword"`
+	NewPassword     string `form:"newPassword" json:"newPassword"`
+	ConfirmPassowrd string `form:"confirmPassowrd" json:"confirmPassowrd"`
+}
+
 func GetUsers(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
@@ -477,6 +483,40 @@ func Login(c *gin.Context) {
 	c.JSON(200, user)
 }
 
+func ChangePassword(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	var newPassword newPassword
+	if err := c.Bind(&newPassword); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
+	var user models.User
+	if err := db.First(&user, userId).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	encPassword := tools.EncryptTextSHA512(user.Password)
+	// Vrifica corretude de senha recebida
+	if newPassword.OldPassowrd != encPassword {
+		message := "Senha atual incorreta."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	// Verifica se nova senha foi escrita corretamente
+	if newPassword.NewPassword != newPassword.ConfirmPassowrd {
+		message := "Nova senha nao confere."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	newPasswordEnc := tools.EncryptTextSHA512(newPassword.NewPassword)
+	user.Password = newPasswordEnc
+	db.Save(user)
+
+	c.JSON(200, "Senha atualizada com sucesso")
+}
+
 func UserAuthentication(c *gin.Context) (interface{}, error) {
 
 	var loginVals login
@@ -489,10 +529,6 @@ func UserAuthentication(c *gin.Context) (interface{}, error) {
 	password := loginVals.Password
 
 	db := dbpkg.DBInstance(c)
-
-	println("CREDENCIAIS")
-	println(email)
-	println(password)
 
 	if email == "" {
 		message := "Faltando email"
@@ -538,6 +574,8 @@ func UserUnauthorized(c *gin.Context, code int, message string) {
 		err = "Faltando email ou senha"
 	} else if strings.Contains(message, "incorrect") {
 		err = "Email ou senha incorreta"
+	} else if strings.Contains(message, "cookie token is empty") {
+		err = "Faltando HEADER de autenticação!"
 	} else {
 		err = message
 	}

@@ -103,6 +103,21 @@ func GetClasses(c *gin.Context) {
 	}
 }
 
+func GetClassBySchoolGrade(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	var classes []models.Class
+	gradeId := c.Params.ByName("id")
+	if gradeId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id da série"})
+		return
+	}
+	if err := db.Where("school_grade_id = ?", gradeId).Find(&classes).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(200, classes)
+}
+
 func GetClass(c *gin.Context) {
 	ver, err := version.New(c)
 	if err != nil {
@@ -149,82 +164,82 @@ func GetClass(c *gin.Context) {
 	}
 }
 
-func GetClassBySchoolGrade(c *gin.Context) {
+// func GetClassBySchoolGrade(c *gin.Context) {
 
-	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Class{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+// 	db := dbpkg.DBInstance(c)
+// 	parameter, err := dbpkg.NewParameter(c, models.Class{})
+// 	if err != nil {
+// 		c.JSON(400, gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+// 	db, err = parameter.Paginate(db)
+// 	if err != nil {
+// 		c.JSON(400, gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
+// 	db = parameter.SetPreloads(db)
+// 	db = parameter.SortRecords(db)
+// 	db = parameter.FilterFields(db)
 
-	gradeId := c.Params.ByName("id")
-	if gradeId == "" || gradeId == "0" {
-		message := "Faltando id da série."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
+// 	gradeId := c.Params.ByName("id")
+// 	if gradeId == "" || gradeId == "0" {
+// 		message := "Faltando id da série."
+// 		c.JSON(400, gin.H{"error": message})
+// 		return
+// 	}
 
-	classes := []models.Class{}
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
+// 	classes := []models.Class{}
+// 	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
 
-	if err := db.Where("school_grade_id = ?", gradeId).Find(&classes).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+// 	if err := db.Where("school_grade_id = ?", gradeId).Find(&classes).Error; err != nil {
+// 		c.JSON(400, gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	if _, ok := c.GetQuery("stream"); ok {
-		enc := json.NewEncoder(c.Writer)
-		c.Status(200)
+// 	if _, ok := c.GetQuery("stream"); ok {
+// 		enc := json.NewEncoder(c.Writer)
+// 		c.Status(200)
 
-		for _, class := range classes {
+// 		for _, class := range classes {
 
-			db.First(&class.SchoolGrade, class.SchoolGradeID)
+// 			db.First(&class.SchoolGrade, class.SchoolGradeID)
 
-			fieldMap, err := helper.FieldToMap(class, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
+// 			fieldMap, err := helper.FieldToMap(class, fields)
+// 			if err != nil {
+// 				c.JSON(400, gin.H{"error": err.Error()})
+// 				return
+// 			}
 
-			if err := enc.Encode(fieldMap); err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-		}
-	} else {
-		fieldMaps := []map[string]interface{}{}
+// 			if err := enc.Encode(fieldMap); err != nil {
+// 				c.JSON(400, gin.H{"error": err.Error()})
+// 				return
+// 			}
+// 		}
+// 	} else {
+// 		fieldMaps := []map[string]interface{}{}
 
-		for _, class := range classes {
+// 		for _, class := range classes {
 
-			db.First(&class.SchoolGrade, class.SchoolGradeID)
+// 			db.First(&class.SchoolGrade, class.SchoolGradeID)
 
-			fieldMap, err := helper.FieldToMap(class, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
+// 			fieldMap, err := helper.FieldToMap(class, fields)
+// 			if err != nil {
+// 				c.JSON(400, gin.H{"error": err.Error()})
+// 				return
+// 			}
 
-			fieldMaps = append(fieldMaps, fieldMap)
-		}
+// 			fieldMaps = append(fieldMaps, fieldMap)
+// 		}
 
-		if _, ok := c.GetQuery("pretty"); ok {
-			c.IndentedJSON(200, fieldMaps)
-		} else {
-			c.JSON(200, fieldMaps)
-		}
-	}
-}
+// 		if _, ok := c.GetQuery("pretty"); ok {
+// 			c.IndentedJSON(200, fieldMaps)
+// 		} else {
+// 			c.JSON(200, fieldMaps)
+// 		}
+// 	}
+// }
 
 func CreateClass(c *gin.Context) {
 	ver, err := version.New(c)
@@ -258,6 +273,14 @@ func CreateClass(c *gin.Context) {
 	err = db.First(&class.SchoolGrade, gradeId).Error
 	if err != nil {
 		content := gin.H{"error": "Série com o id " + strconv.FormatInt(gradeId, 10) + " não encontrado."}
+		c.JSON(404, content)
+		return
+	}
+
+	segmentId := class.SchoolGrade.SegmentId
+	err = db.First(&class.SchoolGrade.Segment, segmentId).Error
+	if err != nil {
+		content := gin.H{"error": "Segmento não encontrado."}
 		c.JSON(404, content)
 		return
 	}
