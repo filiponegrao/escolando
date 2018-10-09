@@ -464,9 +464,7 @@ func CreateRegisterForClass(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	register.SenderId = userId
-
 	missing := CheckRegisterMissingFields(register, 1)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do recado."
@@ -476,13 +474,11 @@ func CreateRegisterForClass(c *gin.Context) {
 
 	// Em recados para a turma, o target representa o id da turma.
 	classId := register.TargetId
-
 	if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
 		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	// Recupera os cadastros de alunos nessa turma
 	enrollments := GetStudentEnrollmentByClass(classId, c)
 	for _, enrollment := range enrollments {

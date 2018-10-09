@@ -86,6 +86,11 @@ func CreateSegment(c *gin.Context) {
 		return
 	}
 
+	if err := db.First(&segment.Institution.Owner, segment.Institution.UserID).Error; err != nil {
+		c.JSON(400, gin.H{"error": "Usuário dono da instituição não existe mais. Informação precisa ser atualizada."})
+		return
+	}
+
 	if err := db.Create(&segment).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

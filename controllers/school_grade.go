@@ -238,6 +238,35 @@ func GetSchoolGradesBySegment(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	for i := 0; i < len(schoolGrades); i++ {
+		db.First(&schoolGrades[i].Segment, schoolGrades[i].SegmentId)
+		db.First(&schoolGrades[i].Segment.Institution, schoolGrades[i].Segment.InstitutionID)
+	}
+	c.JSON(200, schoolGrades)
+}
+
+func GetSchoolGradesByInstitution(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	var segments []models.Segment
+	institutionId := c.Params.ByName("id")
+	if institutionId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id do segmento"})
+		return
+	}
+	if err := db.Where("institution_id = ?", institutionId).Find(&segments).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	var schoolGrades []models.SchoolGrade
+	if err := db.Find(&schoolGrades, segments).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	for i := 0; i < len(schoolGrades); i++ {
+		db.First(&schoolGrades[i].Segment, schoolGrades[i].SegmentId)
+		db.First(&schoolGrades[i].Segment.Institution, schoolGrades[i].Segment.InstitutionID)
+	}
+
 	c.JSON(200, schoolGrades)
 }
 

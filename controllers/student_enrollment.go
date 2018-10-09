@@ -196,6 +196,12 @@ func CreateStudentEnrollment(c *gin.Context) {
 		return
 	}
 
+	// Verfica a consistencia das informacoes dependentes
+	if err := db.First(&studentEnrollment.Student.Institution, studentEnrollment.Student.InstitutionID).Error; err != nil {
+		c.JSON(400, gin.H{"error": "Instituição não encontrada."})
+		return
+	}
+
 	if err := db.Create(&studentEnrollment).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

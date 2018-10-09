@@ -25,5 +25,13 @@ func InitConfigurations(db gorm.DB) error {
 		return err
 	}
 
+	if err = controllers.CheckDefaultKinships(db); err != nil {
+		return err
+	}
+
+	if err = controllers.CheckDefaultInchargeRoles(db); err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -195,49 +195,40 @@ func GetParentStudentByStudent(sutdentId int64, c *gin.Context) []models.ParentS
 }
 
 func CreateParentStudent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	parentStudent := models.ParentStudent{}
 
-	if err = c.Bind(&parentStudent); err != nil {
+	if err := c.Bind(&parentStudent); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	if parentStudent.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	missing := CheckParentStudentMissingFields(parentStudent)
 	if missing != "" {
 		message := "Faltando campo " + missing + " da relacao de parente com estudante."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	parentId := parentStudent.Parent.ID
-	if err = db.First(&parentStudent.Parent, parentId).Error; err != nil {
+	if err := db.First(&parentStudent.Parent, parentId).Error; err != nil {
 		message := "Parent com id " + strconv.FormatInt(parentId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
 	studentId := parentStudent.Student.ID
-	if err = db.First(&parentStudent.Student, studentId).Error; err != nil {
+	if err := db.First(&parentStudent.Student, studentId).Error; err != nil {
 		message := "Estudante com id " + strconv.FormatInt(studentId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
 
 	kinshipId := parentStudent.Kinship.ID
-	if err = db.First(&parentStudent.Kinship, kinshipId).Error; err != nil {
+	if err := db.First(&parentStudent.Kinship, kinshipId).Error; err != nil {
 		message := "Grau de parentesco com id " + strconv.FormatInt(kinshipId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
@@ -252,28 +243,16 @@ func CreateParentStudent(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(201, parentStudent)
 }
 
 /** Método responsável por criar um estudante, um partente e suas credenciais,
 * e liga-los */
 func CreateParentAndStudent(c *gin.Context) {
-
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	parentStudent := models.ParentStudent{}
 
-	if err = c.Bind(&parentStudent); err != nil {
+	if err := c.Bind(&parentStudent); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
@@ -300,13 +279,6 @@ func CreateParentAndStudent(c *gin.Context) {
 		return
 	}
 
-	institutionId := parentStudent.Student.Institution.ID
-	if err = db.First(&parentStudent.Student.Institution, institutionId).Error; err != nil {
-		message := "Instituicao com id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
 	// Verifica se algum campo esta faltando para a criacao de um Parent
 	missing = CheckParentWithoutUserMissingFields(parentStudent.Parent)
 	if missing != "" {
@@ -315,10 +287,24 @@ func CreateParentAndStudent(c *gin.Context) {
 		return
 	}
 
+	// Verifica se os ids da instituição correspondem
+	if parentStudent.Student.Institution.ID != parentStudent.Parent.Institution.ID {
+		c.JSON(400, gin.H{"error": "Id da instituição do aluno deve ser igual ao id da instituição do parente."})
+		return
+	}
+
+	institutionId := parentStudent.Student.Institution.ID
+	var institution models.Institution
+	if err := db.First(&institution, institutionId).Error; err != nil {
+		message := "Instituicao com id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+
 	// Recupera o grau de parentesco
 	kinshipId := parentStudent.Kinship.ID
-	if err = db.First(&parentStudent.Kinship, kinshipId).Error; err != nil {
-		message := "Grau de parentesco com id " + strconv.FormatInt(kinshipId, 10) + " nao encontrado."
+	if err := db.First(&parentStudent.Kinship, kinshipId).Error; err != nil {
+		message := "Grau de paresntesco com id " + strconv.FormatInt(kinshipId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
@@ -333,37 +319,40 @@ func CreateParentAndStudent(c *gin.Context) {
 	// Abre uma transacao no banco
 	tx := db.Begin()
 
-	if err = tx.Create(&user).Error; err != nil {
+	if err := tx.Create(&user).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
 		return
 	}
 
 	parentStudent.Parent.UserId = user.ID
 
-	if err = tx.Create(&parentStudent.Parent).Error; err != nil {
+	if err := tx.Set("gorm:association_autoupdate", false).Create(&parentStudent.Parent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
 		return
 	}
 
 	parentStudent.Student.Responsible = parentStudent.Parent
 
-	if err = tx.Create(&parentStudent).Error; err != nil {
+	if err := tx.Set("gorm:association_autoupdate", false).Create(&parentStudent.Student).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
 		return
 	}
 
-	if err = tx.Commit().Error; err != nil {
+	if err := tx.Set("gorm:association_autoupdate", false).Create(&parentStudent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
+	if err := tx.Commit().Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		tx.Rollback()
+		return
 	}
-
 	c.JSON(201, parentStudent)
-
 }
 
 func UpdateParentStudent(c *gin.Context) {

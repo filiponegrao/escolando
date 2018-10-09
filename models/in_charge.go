@@ -7,7 +7,7 @@ import (
 type InCharge struct {
 	ID              int64       `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`
 	UserId          int64       `gorm:"column:user_id;not null" json:"userId" form:"user_id"`
-	Institution     Institution `gorm:"ForeignKey:InstitutionID;not null" json:"institution" form:"institution"`
+	Institution     Institution `gorm:"ForeignKey:InstitutionID;not null;association_autoupdate:false;association_autocreate:false" json:"institution" form:"institution"`
 	InstitutionID   int64
 	Name            string       `gorm:"not null;type:text" json:"name" form:"name"`
 	Email           string       `gorm:"not null;type:text" json:"email" form:"email"`

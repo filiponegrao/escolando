@@ -8,9 +8,14 @@ import (
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
 	"github.com/filiponegrao/escolando/version"
+	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
+
+const KINSHIP_MOTHER = "Mãe"
+const KINSHIP_FATHER = "Pai"
+const KINSHIP_OTHER = "Outro"
 
 func GetKinships(c *gin.Context) {
 	ver, err := version.New(c)
@@ -353,4 +358,33 @@ func CheckKinshipMissingFields(kinship models.Kinship) string {
 	}
 
 	return ""
+}
+
+func CheckDefaultKinships(db gorm.DB) error {
+
+	kinshipsArray := []string{KINSHIP_MOTHER, KINSHIP_FATHER, KINSHIP_OTHER}
+	// Para cada status default deinifindo na aplicacao:
+	for _, kinshipString := range kinshipsArray {
+		var kinships models.Kinship
+		// Verifica se ja existe um registro deste status no banco:
+		if err := db.Where("name = ?", kinshipString).First(&kinships).Error; err != nil {
+			// Se nao houver, cria:
+			if err2 := CreateInternalKinships(kinshipString, db); err2 != nil {
+				return err2
+			}
+		}
+	}
+	return nil
+}
+
+func CreateInternalKinships(name string, db gorm.DB) error {
+
+	kinship := models.Kinship{}
+	kinship.Name = name
+
+	if err := db.Create(&kinship).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

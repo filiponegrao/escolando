@@ -9,9 +9,17 @@ import (
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
 	"github.com/filiponegrao/escolando/version"
+	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
+
+const INCHARGE_DIRECTOR = "Diretor(a)"
+const INCHARGE_COORDINATOR = "Coordenador(a)"
+const INCHARGE_SECRETARY = "Secretário(a)"
+const INCHARGE_TEEACHER = "Professor(a)"
+const INCHARGE_ORGANIZATOR = "Organizador(a)"
+const INCHARGE_OTHER = "Outro"
 
 func GetInCharges(c *gin.Context) {
 	ver, err := version.New(c)
@@ -108,103 +116,14 @@ func GetInCharges(c *gin.Context) {
 }
 
 func GetInstitutionInCharges(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.InCharge{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
-	inCharges := []models.InCharge{}
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.InCharge{}, fields)
-
+	var incharges []models.InCharge
 	institutionId := c.Params.ByName("id")
-	if institutionId == "" {
-		c.JSON(400, gin.H{"error": "Faltando id da instituição."})
-		return
-	}
-
-	if err := db.Select(queryFields).Where("institution_id = ?", institutionId).Find(&inCharges).Error; err != nil {
+	if err := db.Where("institution_id = ?", institutionId).Find(&incharges).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	index := 0
-
-	if len(inCharges) > 0 {
-		index = int(inCharges[len(inCharges)-1].ID)
-	}
-
-	if err := parameter.SetHeaderLink(c, index); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	if _, ok := c.GetQuery("stream"); ok {
-		enc := json.NewEncoder(c.Writer)
-		c.Status(200)
-
-		for _, inCharge := range inCharges {
-
-			db.First(&inCharge.Institution, inCharge.InstitutionID)
-			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
-			db.First(&inCharge.Role, inCharge.RoleID)
-
-			fieldMap, err := helper.FieldToMap(inCharge, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			if err := enc.Encode(fieldMap); err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-		}
-	} else {
-		fieldMaps := []map[string]interface{}{}
-		for _, inCharge := range inCharges {
-
-			db.First(&inCharge.Institution, inCharge.InstitutionID)
-			db.First(&inCharge.Institution.Owner, inCharge.Institution.UserID)
-			db.First(&inCharge.Role, inCharge.RoleID)
-
-			fieldMap, err := helper.FieldToMap(inCharge, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			fieldMaps = append(fieldMaps, fieldMap)
-		}
-
-		if _, ok := c.GetQuery("pretty"); ok {
-			c.IndentedJSON(200, fieldMaps)
-		} else {
-			c.JSON(200, fieldMaps)
-		}
-	}
+	c.JSON(200, incharges)
 }
 
 func GetInCharge(c *gin.Context) {
@@ -455,4 +374,40 @@ func CheckInChargeWithoutUserMissingFields(incharge models.InCharge) string {
 	}
 
 	return ""
+}
+
+func CheckDefaultInchargeRoles(db gorm.DB) error {
+
+	rolesString := []string{
+		INCHARGE_DIRECTOR,
+		INCHARGE_COORDINATOR,
+		INCHARGE_SECRETARY,
+		INCHARGE_TEEACHER,
+		INCHARGE_ORGANIZATOR,
+		INCHARGE_OTHER,
+	}
+	// Para cada status default deinifindo na aplicacao:
+	for _, roleString := range rolesString {
+		var role models.InChargeRole
+		// Verifica se ja existe um registro deste status no banco:
+		if err := db.Where("name = ?", roleString).First(&role).Error; err != nil {
+			// Se nao houver, cria:
+			if err2 := CreateInteralInchargeRole(roleString, db); err2 != nil {
+				return err2
+			}
+		}
+	}
+	return nil
+}
+
+func CreateInteralInchargeRole(name string, db gorm.DB) error {
+
+	role := models.InChargeRole{}
+	role.Name = name
+
+	if err := db.Create(&role).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

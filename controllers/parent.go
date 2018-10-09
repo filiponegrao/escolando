@@ -1,287 +1,119 @@
 package controllers
 
 import (
-	"encoding/json"
-	"net/http"
 	"strconv"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
-	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
-	"github.com/filiponegrao/escolando/version"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetParents(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Parent{})
-	if err != nil {
+	var parents models.Parent
+	if err := db.Find(&parents).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
-	parents := []models.Parent{}
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.Parent{}, fields)
-
-	if err := db.Select(queryFields).Find(&parents).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	index := 0
-
-	if len(parents) > 0 {
-		index = int(parents[len(parents)-1].ID)
-	}
-
-	if err := parameter.SetHeaderLink(c, index); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	if _, ok := c.GetQuery("stream"); ok {
-		enc := json.NewEncoder(c.Writer)
-		c.Status(200)
-
-		for _, parent := range parents {
-			fieldMap, err := helper.FieldToMap(parent, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			if err := enc.Encode(fieldMap); err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-		}
-	} else {
-		fieldMaps := []map[string]interface{}{}
-
-		for _, parent := range parents {
-			fieldMap, err := helper.FieldToMap(parent, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			fieldMaps = append(fieldMaps, fieldMap)
-		}
-
-		if _, ok := c.GetQuery("pretty"); ok {
-			c.IndentedJSON(200, fieldMaps)
-		} else {
-			c.JSON(200, fieldMaps)
-		}
-	}
+	c.JSON(200, parents)
 }
 
 func GetParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
 
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Parent{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db = parameter.SetPreloads(db)
-	parent := models.Parent{}
 	id := c.Params.ByName("id")
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.Parent{}, fields)
-
-	if err := db.Select(queryFields).First(&parent, id).Error; err != nil {
-		content := gin.H{"error": "parent with id#" + id + " not found"}
-		c.JSON(404, content)
+	var parent models.Parent
+	if err := db.First(&parent, id).Error; err != nil {
+		c.JSON(400, gin.H{"error": "Parente com o id " + id + " não encontrado."})
 		return
 	}
-
-	fieldMap, err := helper.FieldToMap(parent, fields)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	if _, ok := c.GetQuery("pretty"); ok {
-		c.IndentedJSON(200, fieldMap)
-	} else {
-		c.JSON(200, fieldMap)
-	}
+	c.JSON(200, parent)
 }
 
 func GetUserParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.Parent{})
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db = parameter.SetPreloads(db)
-	parent := models.Parent{}
 	id := c.Params.ByName("id")
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-
-	if err = db.Where("user_id = ?", id).First(&parent).Error; err != nil {
-		content := gin.H{"error": "Parente com o id de usuario " + id + " nao encontrado."}
-		c.JSON(404, content)
+	var parent models.Parent
+	if err := db.Where("user_id = ?", id).First(&parent).Error; err != nil {
+		c.JSON(400, gin.H{"error": "Parente com o id de usuario " + id + " não encontrado."})
 		return
 	}
+	c.JSON(200, parent)
+}
 
-	fieldMap, err := helper.FieldToMap(parent, fields)
-	if err != nil {
+func GetInstitutionParents(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	id := c.Params.ByName("id")
+	var parents []models.Parent
+	if err := db.Where("institution_id = ?", id).Find(&parents).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	if _, ok := c.GetQuery("pretty"); ok {
-		c.IndentedJSON(200, fieldMap)
-	} else {
-		c.JSON(200, fieldMap)
-	}
+	c.JSON(200, parents)
 }
 
 func CreateParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
+
 	parent := models.Parent{}
 
 	if err := c.Bind(&parent); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	if parent.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	missing := CheckParentMissingFields(parent)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do responsavel."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	var user models.User
-	if err = db.First(&user, parent.UserId).Error; err != nil {
+	if err := db.First(&user, parent.UserId).Error; err != nil {
 		message := "Usuario com o id " + strconv.FormatInt(parent.UserId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	if err := db.Create(&parent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
 	}
 
 	c.JSON(201, parent)
 }
 
 func UpdateParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
 	parent := models.Parent{}
-
 	if db.First(&parent, id).Error != nil {
 		content := gin.H{"error": "parent with id#" + id + " not found"}
 		c.JSON(404, content)
 		return
 	}
-
 	if err := c.Bind(&parent); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	missing := CheckParentMissingFields(parent)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do responsavel."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	if err := db.Save(&parent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(200, parent)
 }
 
 func DeleteParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	id := c.Params.ByName("id")
 	parent := models.Parent{}
@@ -297,12 +129,7 @@ func DeleteParent(c *gin.Context) {
 		return
 	}
 
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	c.Writer.WriteHeader(http.StatusNoContent)
+	c.JSON(200, "Deletado com sucesso.")
 }
 
 func CheckParentMissingFields(parent models.Parent) string {
@@ -319,6 +146,10 @@ func CheckParentMissingFields(parent models.Parent) string {
 		return "id do usuario (user_id)"
 	}
 
+	if parent.InstitutionID == 0 {
+		return "id da instituição (institutionId)"
+	}
+
 	return ""
 }
 
@@ -330,6 +161,9 @@ func CheckParentWithoutUserMissingFields(parent models.Parent) string {
 
 	if parent.Name == "" {
 		return "nome (name)"
+	}
+	if parent.Institution.ID == 0 {
+		return "instituição (institution.Id)"
 	}
 
 	return ""

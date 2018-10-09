@@ -6,7 +6,7 @@ import (
 
 type Student struct {
 	ID              int64       `gorm:"primary_key;AUTO_INCREMENT" json:"id" form:"id"`
-	Institution     Institution `gorm:"ForeignKey:InstitutionID;not null" json:"institution" form:"institution"`
+	Institution     Institution `gorm:"ForeignKey:InstitutionID;not null;association_autoupdate:false;association_autocreate:false" json:"institution" form:"institution"`
 	InstitutionID   int64
 	Responsible     Parent `gorm:"ForeignKey:ParentID;not null" json:"responsible" form:"responsible"`
 	ParentID        int64

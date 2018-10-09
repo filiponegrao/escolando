@@ -18,7 +18,7 @@ import (
 
 type login struct {
 	Username string `form:"username" json:"username" binding:"required"`
-	Password string `form:"password" json:"password" binding:"required"`
+	Password string `form:"password" json:"password"`
 }
 
 type newPassword struct {
@@ -536,11 +536,11 @@ func UserAuthentication(c *gin.Context) (interface{}, error) {
 		return nil, errors.New(message)
 	}
 
-	if password == "" {
-		message := "Faltando senha (password)"
-		c.JSON(400, gin.H{"error": message})
-		return nil, errors.New(message)
-	}
+	// if password == "" {
+	// 	message := "Faltando senha (password)"
+	// 	c.JSON(400, gin.H{"error": message})
+	// 	return nil, errors.New(message)
+	// }
 
 	var user models.User
 
@@ -550,12 +550,17 @@ func UserAuthentication(c *gin.Context) (interface{}, error) {
 		return nil, err
 	}
 
-	encPassword := tools.EncryptTextSHA512(password)
+	// Verifica se é usuario com primeiro acesso
+	if password == "" {
 
-	if encPassword != user.Password {
-		//message := "Senha incorreta"
-		//c.JSON(400, gin.H{"error": message})
-		return nil, errors.New("Senha incorreta")
+	} else {
+		encPassword := tools.EncryptTextSHA512(password)
+
+		if encPassword != user.Password {
+			//message := "Senha incorreta"
+			//c.JSON(400, gin.H{"error": message})
+			return nil, errors.New("Senha incorreta")
+		}
 	}
 
 	user.Password = ""
