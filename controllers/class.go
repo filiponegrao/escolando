@@ -115,6 +115,12 @@ func GetClassBySchoolGrade(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	for i := 0; i < len(classes); i++ {
+		db.First(&classes[i].InCharge, classes[i].InChargeID)
+		db.First(&classes[i].InCharge.Role, classes[i].InCharge.RoleID)
+		db.First(&classes[i].SchoolGrade, classes[i].SchoolGradeID)
+		db.First(&classes[i].SchoolGrade.Segment, classes[i].SchoolGrade.SegmentId)
+	}
 	c.JSON(200, classes)
 }
 
@@ -142,6 +148,8 @@ func GetClassByInstitution(c *gin.Context) {
 	}
 
 	for i := 0; i < len(classes); i++ {
+		db.First(&classes[i].InCharge, classes[i].InChargeID)
+		db.First(&classes[i].InCharge.Role, classes[i].InCharge.RoleID)
 		db.First(&classes[i].SchoolGrade, classes[i].SchoolGradeID)
 		db.First(&classes[i].SchoolGrade.Segment, classes[i].SchoolGrade.SegmentId)
 	}

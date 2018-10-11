@@ -324,7 +324,9 @@ func GetRegister(c *gin.Context) {
 }
 
 func CreateRegister(c *gin.Context) {
-	if strings.HasPrefix(c.Request.RequestURI, "/registers/grade") {
+	if strings.HasPrefix(c.Request.RequestURI, "/registers/segment") {
+		CreateRegisterForSegment(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/grade") {
 		CreateRegisterForSchoolGrade(c)
 	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/class") {
 		CreateRegisterForClass(c)
@@ -508,69 +510,111 @@ func CreateRegisterForClass(c *gin.Context) {
 }
 
 func CreateRegisterForSchoolGrade(c *gin.Context) {
-
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
 	userId := int64(claims["user_id"].(float64))
-
 	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	register.SenderId = userId
-
 	missing := CheckRegisterMissingFields(register, 2)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do recado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	schoolGradeId := register.TargetId
-
 	// Encontra todas as turmas desta série
 	var classes []models.Class
-
 	if err := db.Where("school_grade_id = ?", schoolGradeId).Find(&classes).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	for _, class := range classes {
-
 		var enrollments []models.StudentEnrollment
-
 		if err := db.Where("class_id = ?", class.ID).Find(&enrollments).Error; err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-
 		for _, enrollment := range enrollments {
-
 			var relations []models.ParentStudent
-
 			if err := db.Where("student_id = ?", enrollment.StudentID).Find(&relations).Error; err != nil {
 				c.JSON(400, gin.H{"error": err.Error()})
 				return
 			}
-
 			for _, relation := range relations {
-
 				var parent models.Parent
-
 				if err := db.First(&parent, relation.ParentID).Error; err != nil {
 					c.JSON(400, gin.H{"error": err.Error()})
 					return
 				}
-
 				register.StudentId = enrollment.StudentID
 				register.TargetId = parent.UserId
-
 				if err := SaveRegister(db, register, userId); err != nil {
 					c.JSON(400, gin.H{"error": err.Error()})
 					return
+				}
+			}
+		}
+	}
+}
+
+func CreateRegisterForSegment(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int64(claims["user_id"].(float64))
+	register := models.Register{}
+	if err := c.Bind(&register); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	register.SenderId = userId
+	missing := CheckRegisterMissingFields(register, 2)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do recado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	segmentId := register.TargetId
+	// Encontra todas as series desse segmento
+	var grades []models.SchoolGrade
+	if err := db.Where("segment_id = ?", segmentId).Find(&grades).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	for _, grade := range grades {
+		// Encontra todas as turmas de cada segmento
+		var classes []models.Class
+		if err := db.Where("school_grade_id = ?", grade.ID).Find(&classes).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		for _, class := range classes {
+			var enrollments []models.StudentEnrollment
+			if err := db.Where("class_id = ?", class.ID).Find(&enrollments).Error; err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+			for _, enrollment := range enrollments {
+				var relations []models.ParentStudent
+				if err := db.Where("student_id = ?", enrollment.StudentID).Find(&relations).Error; err != nil {
+					c.JSON(400, gin.H{"error": err.Error()})
+					return
+				}
+				for _, relation := range relations {
+					var parent models.Parent
+					if err := db.First(&parent, relation.ParentID).Error; err != nil {
+						c.JSON(400, gin.H{"error": err.Error()})
+						return
+					}
+					register.StudentId = enrollment.StudentID
+					register.TargetId = parent.UserId
+					if err := SaveRegister(db, register, userId); err != nil {
+						c.JSON(400, gin.H{"error": err.Error()})
+						return
+					}
 				}
 			}
 		}

@@ -123,6 +123,9 @@ func GetInstitutionInCharges(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	for i := 0; i < len(incharges); i++ {
+		db.First(&incharges[i].Role, incharges[i].RoleID)
+	}
 	c.JSON(200, incharges)
 }
 
@@ -174,63 +177,96 @@ func GetInCharge(c *gin.Context) {
 	}
 }
 
-func CreateInCharge(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
+func CreateInChargeUser(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	inCharge := models.InCharge{}
-
 	if err := c.Bind(&inCharge); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 	if inCharge.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
+	missing := CheckInChargeWithoutUserMissingFields(inCharge)
+	if missing != "" {
+		message := "Faltando campo " + missing + " do encarregado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	if err := db.First(&inCharge.Role, inCharge.Role.ID).Error; err != nil {
+		message := "Cargo com id " + strconv.FormatInt(inCharge.Role.ID, 10) + " nao encontrado"
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	if err := db.First(&inCharge.Institution, inCharge.Institution.ID).Error; err != nil {
+		message := "Instituição com id " + strconv.FormatInt(inCharge.Institution.ID, 10) + " não encontrado."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
+	tx := db.Begin()
+	var user models.User
+	user.Name = inCharge.Name
+	user.Email = inCharge.Email
+	user.Phone1 = inCharge.Phone
+	user.ProfileImageUrl = inCharge.ProfileImageUrl
 
+	if err := tx.Create(&user).Error; err != nil {
+		tx.Rollback()
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	inCharge.UserId = user.ID
+	if err := tx.Create(&inCharge).Error; err != nil {
+		tx.Rollback()
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	tx.Commit()
+
+	c.JSON(201, inCharge)
+}
+
+func CreateInCharge(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	inCharge := models.InCharge{}
+	if err := c.Bind(&inCharge); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	if inCharge.ID != 0 {
+		message := "Nao é permitida a escolha de um id para um novo objeto."
+		c.JSON(400, gin.H{"error": message})
+		return
+	}
 	missing := CheckInChargeMissingFields(inCharge)
 	if missing != "" {
 		message := "Faltando campo " + missing + " do encarregado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	var user models.User
-	if err = db.First(&user, inCharge.UserId).Error; err != nil {
+	if err := db.First(&user, inCharge.UserId).Error; err != nil {
 		message := "Usuario com o id " + strconv.FormatInt(inCharge.UserId, 10) + " nao encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
-	if err = db.First(&inCharge.Role, inCharge.Role.ID).Error; err != nil {
+	if err := db.First(&inCharge.Role, inCharge.Role.ID).Error; err != nil {
 		message := "Cargo com id " + strconv.FormatInt(inCharge.Role.ID, 10) + " nao encontrado"
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
-	if err = db.First(&inCharge.Institution, inCharge.Institution.ID).Error; err != nil {
+	if err := db.First(&inCharge.Institution, inCharge.Institution.ID).Error; err != nil {
 		message := "Instituição com id " + strconv.FormatInt(inCharge.Institution.ID, 10) + " não encontrado."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
 	if err := db.Create(&inCharge).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(201, inCharge)
 }
 
@@ -341,7 +377,7 @@ func CheckInChargeMissingFields(incharge models.InCharge) string {
 	}
 
 	if incharge.UserId == 0 {
-		return "id do usuario (user_id)"
+		return "id do usuario (userId)"
 	}
 
 	if incharge.Role.ID == 0 {

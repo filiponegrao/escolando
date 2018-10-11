@@ -60,6 +60,7 @@ func Initialize(r *gin.Engine) {
 		api.GET("/inCharges/:id", controllers.GetInCharge)
 		api.GET("/inChargesOfInstitution/:id", controllers.GetInstitutionInCharges)
 		api.POST("/inCharges", controllers.CreateInCharge)
+		api.POST("/inChargeUser", controllers.CreateInChargeUser)
 		api.PUT("/inCharges/:id", controllers.UpdateInCharge)
 		api.DELETE("/inCharges/:id", controllers.DeleteInCharge)
 
