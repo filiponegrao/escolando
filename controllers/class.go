@@ -338,11 +338,15 @@ func CheckClassParameterMissing(class models.Class) string {
 	}
 
 	if class.SchoolGrade.ID == 0 {
-		return "id da série (ex: 'school_grade': {'id': <int>})"
+		return "id da série (ex: 'schoolGrade': {'id': <int>})"
 	}
 
 	if class.Name == "" {
 		return "nome da turma"
+	}
+
+	if class.InCharge.ID == 0 {
+		return "id do responsável (ex: 'inCharge': {'id': <int>})"
 	}
 
 	return ""

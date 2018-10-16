@@ -50,6 +50,9 @@ func GetInstitutionParents(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	for i := 0; i < len(parents); i++ {
+		db.First(&parents[i].Institution, parents[i].InstitutionID)
+	}
 	c.JSON(200, parents)
 }
 

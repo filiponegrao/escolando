@@ -102,7 +102,7 @@ func Initialize(r *gin.Engine) {
 		api.GET("/registers", controllers.GetUserRegisters)
 		api.GET("/registers/:id", controllers.GetSomeRegisters)
 		api.POST("/registers", controllers.CreateRegister)
-		api.POST("/registers/student", controllers.CreateRegister)
+		api.POST("/registers/:parameter", controllers.CreateRegister)
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
 		// api.GET("/registers/user/", controllers.GetUserRegisters)

@@ -341,7 +341,7 @@ func CreateSingleRegister(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 
 	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
@@ -409,7 +409,7 @@ func CreateRegisterForStudent(c *gin.Context) {
 
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 
 	var register models.Register
 	if err := c.Bind(&register); err != nil {
@@ -459,7 +459,7 @@ func CreateRegisterForClass(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 
 	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
@@ -476,11 +476,11 @@ func CreateRegisterForClass(c *gin.Context) {
 
 	// Em recados para a turma, o target representa o id da turma.
 	classId := register.TargetId
-	if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
-		message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
+	// if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
+	// 	message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
+	// 	c.JSON(400, gin.H{"error": message})
+	// 	return
+	// }
 	// Recupera os cadastros de alunos nessa turma
 	enrollments := GetStudentEnrollmentByClass(classId, c)
 	for _, enrollment := range enrollments {
@@ -512,7 +512,7 @@ func CreateRegisterForClass(c *gin.Context) {
 func CreateRegisterForSchoolGrade(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -564,7 +564,7 @@ func CreateRegisterForSchoolGrade(c *gin.Context) {
 func CreateRegisterForSegment(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 	register := models.Register{}
 	if err := c.Bind(&register); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})

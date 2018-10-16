@@ -257,13 +257,6 @@ func CreateParentAndStudent(c *gin.Context) {
 		return
 	}
 
-	// Verifica a definicao de um id para um objeto parent novo.
-	if parentStudent.Parent.ID != 0 {
-		message := "Nao é permitida a escolha de um id para um novo objeto."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
 	// Verifica a definicao de um id para um objeto Student novo.
 	if parentStudent.Student.ID != 0 {
 		message := "Nao é permitida a escolha de um id para um novo objeto."
@@ -309,28 +302,29 @@ func CreateParentAndStudent(c *gin.Context) {
 		return
 	}
 
-	// Define um novo usuario para o parente
-	user := models.User{}
-	user.Email = parentStudent.Parent.Email
-	user.Name = parentStudent.Parent.Name
-	user.Phone1 = parentStudent.Parent.Phone
-	user.ProfileImageUrl = parentStudent.Parent.ProfileImageUrl
-
 	// Abre uma transacao no banco
 	tx := db.Begin()
 
-	if err := tx.Create(&user).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		tx.Rollback()
-		return
-	}
+	// Verifica se o parente ja existe
+	if parentStudent.Parent.ID == 0 {
+		// Define um novo usuario para o parente
+		user := models.User{}
+		user.Email = parentStudent.Parent.Email
+		user.Name = parentStudent.Parent.Name
+		user.Phone1 = parentStudent.Parent.Phone
+		user.ProfileImageUrl = parentStudent.Parent.ProfileImageUrl
 
-	parentStudent.Parent.UserId = user.ID
-
-	if err := tx.Set("gorm:association_autoupdate", false).Create(&parentStudent.Parent).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		tx.Rollback()
-		return
+		if err := tx.Create(&user).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			tx.Rollback()
+			return
+		}
+		parentStudent.Parent.UserId = user.ID
+		if err := tx.Set("gorm:association_autoupdate", false).Create(&parentStudent.Parent).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			tx.Rollback()
+			return
+		}
 	}
 
 	parentStudent.Student.Responsible = parentStudent.Parent
