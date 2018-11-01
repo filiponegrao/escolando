@@ -5,8 +5,9 @@ import (
 )
 
 type RegisterContact struct {
-	Name string `json:"name" form:"name"`
-	Role string `json:"role" form:"role"`
+	Name     string `json:"name" form:"name"`
+	Role     string `json:"role" form:"role"`
+	ImageURL string `json:"imageUrl" form:"imageUrl"`
 }
 
 type Register struct {
@@ -18,10 +19,12 @@ type Register struct {
 	Sender         RegisterContact `json:"sender"`
 	SenderId       int64           `gorm:"not null" form:"sender_id"`
 	Target         RegisterContact `json:"target"`
-	TargetId       int64           `gorm:"not null" json:"targetId" form:"target_id"`
-	StudentId      int64           `gorm:"not null" json:"studentId" form:"student_id"`
+	TargetId       int64           `gorm:"not null" json:"targetId" form:"targetId"`
+	StudentId      int64           `gorm:"not null" json:"studentId" form:"studentId"`
 	Status         RegisterStatus  `gorm:"ForeignKey:StatusId;not null" json:"status"`
-	StatusId       int64
-	CreatedAt      *time.Time `json:"createdAt" form:"created_at"`
-	UpdatedAt      *time.Time `json:"updatedAt" form:"updated_at"`
+	StatusId       int64           `json:""`
+	GroupTargetId  string          `gorm:"type:text" json:"groupTargetId" form:"groupTargetId"`
+	ResponsesCount int64           `gorm:"type:text" json:"responsesCount" form:"responsesCount"`
+	CreatedAt      *time.Time      `json:"createdAt" form:"createdAt"`
+	UpdatedAt      *time.Time      `json:"updatedAt" form:"updatedAt"`
 }

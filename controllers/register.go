@@ -245,7 +245,7 @@ func GetSentRegisters(c *gin.Context) {
 	c.JSON(200, registersInfo)
 }
 
-func GetReceivedRegisters(c *gin.Context) {
+func GetSentRegistersChat(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
 	userId := int(claims["id"].(float64))
@@ -254,12 +254,150 @@ func GetReceivedRegisters(c *gin.Context) {
 
 	// Recados enviados a um aluno especifico
 	if studentId != "" {
+		err := db.Where("sender_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	} else {
+		err := db.Where("sender_id = ?", userId).Find(&registers).Error
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
+	var chats []models.Chat
+	for i := 0; i < len(registers); i++ {
+		register := registers[i]
+		var responses []models.RegisterResponse
+
+		if err := db.Where("register_id = ?", register.ID).Find(&responses).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		var chat models.Chat
+		chat.Register = register
+		chat.Responses = responses
+
+		chats = append(chats, chat)
+	}
+
+	c.JSON(200, chats)
+}
+
+func GetSentRegistersGroupChat(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
+
+	var chatGroupsIds []string
+	rows, err := db.Table("registers").Where("sender_id = ?", userId).Order("created_at desc").Select("distinct group_target_id").Rows()
+	if err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var chatGroupId string
+		rows.Scan(&chatGroupId)
+		chatGroupsIds = append(chatGroupsIds, chatGroupId)
+	}
+
+	var chatGroups []models.ChatGroup
+	for i := 0; i < len(chatGroupsIds); i++ {
+		chatGroupId := chatGroupsIds[i]
+		var chatGroup models.ChatGroup
+		var registers []models.Register
+		if err := db.Where("group_target_id = ?", chatGroupId).Order("created_at desc").Find(&registers).Error; err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+		var virtualRegister models.Register
+		virtualRegister.Text = registers[0].Text
+		virtualRegister.CreatedAt = registers[0].CreatedAt
+		virtualRegister.RegisterType = registers[0].RegisterType
+		virtualRegister.Title = registers[0].Title
+		virtualRegister.GroupTargetId = chatGroupId
+
+		targetType := strings.Split(chatGroupId, "_")[0]
+		targetId := strings.Split(chatGroupId, "_")[1]
+		targetName := ""
+
+		if targetType == "SEGMENT" {
+			db.Table("segments").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+		} else if targetType == "SCHOOLGRADE" {
+			db.Table("school_grades").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+		} else if targetType == "CLASS" {
+			db.Table("classes").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+		} else if targetType == "STUDENT" {
+			db.Table("students").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+			targetName = "Parentes de " + targetName
+		}
+
+		chatGroup.Register = virtualRegister
+		chatGroup.TargetName = targetName
+
+		for _, register := range registers {
+			if err := GetRegisterTargetInformations(&register, db); err != nil {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+			chatGroup.Targets = append(chatGroup.Targets, register.Target)
+		}
+		chatGroups = append(chatGroups, chatGroup)
+	}
+	c.JSON(200, chatGroups)
+}
+
+func DeleteRegisterGroupChat(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
+
+	id := c.Params.ByName("id")
+
+	if id == "" {
+		c.JSON(400, gin.H{"error": "Estrutura precisa conter o campo Registro(\"registro\")"})
+		return
+	}
+	var registers []models.Register
+	if err := db.Where("group_target_id = ?", id).Find(&registers).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	// Verifica se nao é o criador das mensagens
+	for _, register := range registers {
+		if int(register.SenderId) != userId {
+			c.JSON(400, gin.H{"error": "Somente o remetente da mensagem pode deletá-la"})
+			return
+		}
+	}
+	if err := db.Delete(&registers).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, nil)
+}
+
+func GetReceivedRegisters(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
+	studentId := c.Params.ByName("studentId")
+	var registers []models.Register
+
+	// Recados recebidos a um aluno especifico
+	if studentId != "" {
 		err := db.Where("target_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error
 		if err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 	} else {
+		// Recados recebidos, de todos os alunos.
 		err := db.Where("target_id = ?", userId).Find(&registers).Error
 		if err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
@@ -285,8 +423,12 @@ func GetReceivedRegisters(c *gin.Context) {
 func GetSomeRegisters(c *gin.Context) {
 	if strings.HasPrefix(c.Request.RequestURI, "/registers/sent") {
 		GetSentRegisters(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/sentChat") {
+		GetSentRegistersChat(c)
 	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/received") {
 		GetReceivedRegisters(c)
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/receivedChat") {
+
 	} else {
 		GetRegister(c)
 	}
@@ -356,8 +498,6 @@ func CreateSingleRegister(c *gin.Context) {
 	}
 
 	register.SenderId = int64(userId)
-	println("CRIA RECADO")
-	println(register.TargetId)
 
 	missing := CheckRegisterMissingFields(register, 0)
 	if missing != "" {
@@ -435,6 +575,8 @@ func CreateRegisterForStudent(c *gin.Context) {
 		return
 	}
 
+	uniqueID := CreateUniqueIdForGroupMessageTargets("STUDENT", studentId)
+	register.GroupTargetId = uniqueID
 	for _, relation := range relations {
 
 		var parent models.Parent
@@ -473,16 +615,12 @@ func CreateRegisterForClass(c *gin.Context) {
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
-	// Em recados para a turma, o target representa o id da turma.
 	classId := register.TargetId
-	// if err := db.First(&register.RegisterType, register.RegisterType.ID).Error; err != nil {
-	// 	message := "Tipo de registro com o id " + strconv.FormatInt(register.RegisterType.ID, 10) + " nao encontrado."
-	// 	c.JSON(400, gin.H{"error": message})
-	// 	return
-	// }
 	// Recupera os cadastros de alunos nessa turma
 	enrollments := GetStudentEnrollmentByClass(classId, c)
+
+	uniqueID := CreateUniqueIdForGroupMessageTargets("CLASS", classId)
+	register.GroupTargetId = uniqueID
 	for _, enrollment := range enrollments {
 		// Encontra o id de cada aluno
 		studentId := enrollment.StudentID
@@ -532,6 +670,8 @@ func CreateRegisterForSchoolGrade(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	uniqueID := CreateUniqueIdForGroupMessageTargets("SCHOOLGRADE", schoolGradeId)
+	register.GroupTargetId = uniqueID
 	for _, class := range classes {
 		var enrollments []models.StudentEnrollment
 		if err := db.Where("class_id = ?", class.ID).Find(&enrollments).Error; err != nil {
@@ -584,6 +724,9 @@ func CreateRegisterForSegment(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	uniqueID := CreateUniqueIdForGroupMessageTargets("SEGMENT", segmentId)
+	register.GroupTargetId = uniqueID
+
 	for _, grade := range grades {
 		// Encontra todas as turmas de cada segmento
 		var classes []models.Class
@@ -635,6 +778,8 @@ func SaveRegister(db *gorm.DB, register models.Register, sender int64) error {
 
 	newRegister.SenderId = sender
 	newRegister.TargetId = register.TargetId
+
+	newRegister.GroupTargetId = register.GroupTargetId
 
 	if err := db.Create(&newRegister).Error; err != nil {
 		return err
@@ -749,12 +894,14 @@ func GetRegisterSenderInformations(register *models.Register, db *gorm.DB) error
 
 		register.Sender.Name = incharge.Name
 		register.Sender.Role = incharge.Role.Name
+		register.Sender.ImageURL = incharge.ProfileImageUrl
 
 		// Se é um recado de um parente
 	} else if err = db.Where("user_id = ?", register.SenderId).Find(&parent).Error; err == nil {
 
 		register.Sender.Name = parent.Name
 		register.Sender.Role = "Parente"
+		register.Sender.ImageURL = parent.ProfileImageUrl
 
 	} else {
 		var user models.User
@@ -762,10 +909,13 @@ func GetRegisterSenderInformations(register *models.Register, db *gorm.DB) error
 
 		register.Sender.Name = user.Name
 		register.Sender.Role = "Sem cargo"
+		register.Sender.ImageURL = user.ProfileImageUrl
+
 	}
 
 	db.First(&register.RegisterType, register.RegisterTypeID)
 	db.First(&register.Status, register.StatusId)
+	// db.Table("register_responses").Where("register_id = ?", register.ID).Select("sum(*)").Scan(&register.ResponsesCount)
 
 	return nil
 }
@@ -786,12 +936,14 @@ func GetRegisterTargetInformations(register *models.Register, db *gorm.DB) error
 
 		register.Target.Name = incharge.Name
 		register.Target.Role = incharge.Role.Name
+		register.Target.ImageURL = incharge.ProfileImageUrl
 
 		// Se é um recado de um parente
 	} else if err = db.Where("user_id = ?", register.TargetId).Find(&parent).Error; err == nil {
 
 		register.Target.Name = parent.Name
 		register.Target.Role = "Parente"
+		register.Target.ImageURL = parent.ProfileImageUrl
 
 	} else {
 
@@ -800,12 +952,23 @@ func GetRegisterTargetInformations(register *models.Register, db *gorm.DB) error
 
 		register.Target.Name = user.Name
 		register.Target.Role = "Sem cargo"
+		register.Target.ImageURL = user.ProfileImageUrl
+
 	}
 
 	db.First(&register.RegisterType, register.RegisterTypeID)
 	db.First(&register.Status, register.StatusId)
+	// db.Table("register_responses").Where("register_id = ?", register.ID).Select("sum(*)").Scan(&register.ResponsesCount)
 
 	return nil
+}
+
+func CreateUniqueIdForGroupMessageTargets(targetType string, id int64) string {
+	now := time.Now()
+	uniqueID := targetType + "_" + strconv.FormatInt(id, 10) + "_" + now.String()
+	uniqueID = strings.Replace(uniqueID, " ", "_", -1)
+	// encoded := tools.EncryptTextSHA512(uniqueID)
+	return uniqueID
 }
 
 func CheckRegisterMissingFields(register models.Register, targetType int) string {

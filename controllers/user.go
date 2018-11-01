@@ -491,7 +491,7 @@ func ChangePassword(c *gin.Context) {
 		return
 	}
 	claims := jwt.ExtractClaims(c)
-	userId := int64(claims["user_id"].(float64))
+	userId := int64(claims["id"].(float64))
 	var user models.User
 	if err := db.First(&user, userId).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
