@@ -241,6 +241,11 @@ func CreateClass(c *gin.Context) {
 		return
 	}
 
+	if err := db.First(&class.InCharge, class.InCharge.ID).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := db.Create(&class).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return

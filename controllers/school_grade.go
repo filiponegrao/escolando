@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"log"
 	"strconv"
 
@@ -14,76 +13,17 @@ import (
 
 func GetSchoolGrades(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
-	parameter, err := dbpkg.NewParameter(c, models.SchoolGrade{})
-	if err != nil {
+	var grades []models.SchoolGrade
+	if err := db.Find(&grades).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+	for i := 0; i < len(grades); i++ {
+		db.First(&grades[i].Segment, grades[i].SegmentId)
+		db.First(&grades[i].Segment.Institution, grades[i].Segment.InstitutionID)
 
-	db, err = parameter.Paginate(db)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
 	}
-
-	db = parameter.SetPreloads(db)
-	db = parameter.SortRecords(db)
-	db = parameter.FilterFields(db)
-	schoolGrades := []models.SchoolGrade{}
-	fields := helper.ParseFields(c.DefaultQuery("fields", "*"))
-	queryFields := helper.QueryFields(models.SchoolGrade{}, fields)
-
-	if err := db.Select(queryFields).Find(&schoolGrades).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	index := 0
-
-	if len(schoolGrades) > 0 {
-		index = int(schoolGrades[len(schoolGrades)-1].ID)
-	}
-
-	if err := parameter.SetHeaderLink(c, index); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if _, ok := c.GetQuery("stream"); ok {
-		enc := json.NewEncoder(c.Writer)
-		c.Status(200)
-
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			if err := enc.Encode(fieldMap); err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-		}
-	} else {
-		fieldMaps := []map[string]interface{}{}
-
-		for _, schoolGrade := range schoolGrades {
-			fieldMap, err := helper.FieldToMap(schoolGrade, fields)
-			if err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
-			}
-
-			fieldMaps = append(fieldMaps, fieldMap)
-		}
-
-		if _, ok := c.GetQuery("pretty"); ok {
-			c.IndentedJSON(200, fieldMaps)
-		} else {
-			c.JSON(200, fieldMaps)
-		}
-	}
+	c.JSON(200, grades)
 }
 
 func GetSchoolGrade(c *gin.Context) {

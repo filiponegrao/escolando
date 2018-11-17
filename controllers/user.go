@@ -225,12 +225,6 @@ func CreateUser(c *gin.Context) {
 }
 
 func CreateUserParent(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
 	db := dbpkg.DBInstance(c)
 	user := models.User{}
 
@@ -268,111 +262,15 @@ func CreateUserParent(c *gin.Context) {
 	parent.ProfileImageUrl = user.ProfileImageUrl
 	parent.UserId = user.ID
 
-	if err = tx.Create(&parent).Error; err != nil {
+	if err := tx.Create(&parent).Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 
-	if err = tx.Commit().Error; err != nil {
+	if err := tx.Commit().Error; err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
-	c.JSON(201, user)
-}
-
-func CreateUserInCharge(c *gin.Context) {
-	ver, err := version.New(c)
-	if err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	db := dbpkg.DBInstance(c)
-	user := models.User{}
-
-	roleId := c.Params.ByName("roleId")
-	if roleId == "" {
-		c.JSON(400, gin.H{"error": "Faltando id do cargo (url/user_incharge/:roleId)"})
-		return
-	}
-
-	var role models.InChargeRole
-	if err = db.First(&role, roleId).Error; err != nil {
-		message := "Cargo com o id " + roleId + " não encontrado."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	institutionId := c.Params.ByName("institutionId")
-	if institutionId == "" {
-		c.JSON(400, gin.H{"error": "Faltando id da instituição (url/user_incharge/:roleId/:institutionId)"})
-		return
-	}
-
-	var institution models.Institution
-	if err = db.First(&institution, institutionId).Error; err != nil {
-		message := "Instituicao com o id " + roleId + " não encontrada."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	if err := c.Bind(&user); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if user.ID != 0 {
-		message := "Nao é permitida a escolha de um id para um novo objeto."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	missing := CheckUserMissingFields(user)
-	if missing != "" {
-		message := "Faltando campo " + missing + " do usuario."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
-
-	user.Password = tools.EncryptTextSHA512(user.Password)
-
-	tx := db.Begin()
-
-	if err := tx.Create(&user).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	incharge := models.InCharge{}
-	incharge.Email = user.Email
-	incharge.Name = user.Name
-	incharge.Phone = user.Phone1
-	incharge.ProfileImageUrl = user.ProfileImageUrl
-	incharge.UserId = user.ID
-	incharge.Institution = institution
-	incharge.Role = role
-
-	if err = tx.Create(&incharge).Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if err = tx.Commit().Error; err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
-
-	if version.Range("1.0.0", "<=", ver) && version.Range(ver, "<", "2.0.0") {
-		// conditional branch by version.
-		// 1.0.0 <= this version < 2.0.0 !!
-	}
-
 	c.JSON(201, user)
 }
 
@@ -581,6 +479,8 @@ func UserUnauthorized(c *gin.Context, code int, message string) {
 		err = "Email ou senha incorreta"
 	} else if strings.Contains(message, "cookie token is empty") {
 		err = "Faltando HEADER de autenticação!"
+		// } else if strings.Contains(message, "") {
+
 	} else {
 		err = message
 	}

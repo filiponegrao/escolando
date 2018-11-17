@@ -162,7 +162,6 @@ func Initialize(r *gin.Engine) {
 		api.GET("/users/:id/institutions", controllers.GetUserInstitutions)
 		api.POST("/users", controllers.CreateUser)
 		api.POST("/userParent", controllers.CreateUserParent)
-		api.POST("/userInCharge/:roleId/:institutionId", controllers.CreateUserInCharge)
 		api.POST("/userParentAndStudent", controllers.CreateParentAndStudent)
 		api.PUT("/users/:id", controllers.UpdateUser)
 		api.DELETE("/users/:id", controllers.DeleteUser)
