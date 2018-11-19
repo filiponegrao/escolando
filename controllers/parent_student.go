@@ -286,14 +286,13 @@ func CreateParentAndStudent(c *gin.Context) {
 		return
 	}
 
-	institutionId := parentStudent.Student.Institution.ID
-	var institution models.Institution
-	if err := db.First(&institution, institutionId).Error; err != nil {
-		message := "Instituicao com id " + strconv.FormatInt(institutionId, 10) + " nao encontrada."
+	institutionID := parentStudent.Student.Institution.ID
+	if err := db.First(&parentStudent.Student.Institution, institutionID).Error; err != nil {
+		message := "Instituicao com id " + strconv.FormatInt(institutionID, 10) + " nao encontrada."
 		c.JSON(400, gin.H{"error": message})
 		return
 	}
-
+	parentStudent.Parent.Institution = parentStudent.Student.Institution
 	// Recupera o grau de parentesco
 	kinshipId := parentStudent.Kinship.ID
 	if err := db.First(&parentStudent.Kinship, kinshipId).Error; err != nil {
@@ -325,6 +324,7 @@ func CreateParentAndStudent(c *gin.Context) {
 			tx.Rollback()
 			return
 		}
+	} else {
 	}
 
 	parentStudent.Student.Responsible = parentStudent.Parent

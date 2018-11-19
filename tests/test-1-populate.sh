@@ -351,7 +351,639 @@ fi
 class10Id=$(echo ${resp} | cut -d ',' -f 1)
 class10Id=$(echo ${class10Id} | cut -d ':' -f 2)
 
+### PARENTES E ALUNOS ###
+
+## Cria Ana e aninha
+relation='{"student": {"name":"Aninha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Ana", "email": "ana@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://images.unsplash.com/photo-1529934901952-dbf92b318361?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=858cd99a43297eaa15764c927bf5faa8&auto=format&fit=crop&w=934&q=80", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 1}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user1Id=${user1Id}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student1Id=${studentId}
+
+## Cria Bia e biazinha
+relation='{"student": {"name":"Biazinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Bia", "email": "bia@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 1}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user2Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student2Id=${studentId}
+
+## Cria Carlos e carlito
+relation='{"student": {"name":"Carlito", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Carlos", "email": "carlos@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user3Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student3Id=${studentId}
+
+## Cria Diego e dieguito
+relation='{"student": {"name":"Dieguito", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Diego", "email": "diego@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user4Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student4Id=${studentId}
+
+## Cria Ester e esterzinha
+relation='{"student": {"name":"Esterzinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Ester", "email": "ester@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 1}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user5Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student5Id=${studentId}
+
+## Cria Fernanda e fernandinha
+relation='{"student": {"name":"Fernandinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Fernanda", "email": "fernanda@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://scontent.fsdu5-1.fna.fbcdn.net/v/t1.0-9/21462447_1388065451249309_1504736756059084017_n.jpg?_nc_cat=110&_nc_ht=scontent.fsdu5-1.fna&oh=32561583b027bf7e41608f7696c2e7c4&oe=5C6FAC00", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 1}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user6Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student6Id=${studentId}
+
+## Cria Gabriel e gabrielzinho
+relation='{"student": {"name":"Gabrielzinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Gabriel", "email": "gabriel@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user7Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student7Id=${studentId}
+
+## Cria Hugo e huguinho
+relation='{"student": {"name":"Huguinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Hugo", "email": "hugo@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user8Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student8Id=${studentId}
+
+## Cria Ian e Ianzinho
+relation='{"student": {"name":"Ianzinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Ian", "email": "ian@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user9Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student9Id=${studentId}
+
+## Cria Joao e Joaozinho
+relation='{"student": {"name":"Joaozinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Joao", "email": "joao@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user10Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student10Id=${studentId}
+
+## Cria Karina e karininha
+relation='{"student": {"name":"Karininha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Karina", "email": "karina@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user11Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student11Id=${studentId}
+
+## Cria Larissa e larissinha
+relation='{"student": {"name":"Larissinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Larissa", "email": "larissa@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user12Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student12Id=${studentId}
+
+## Cria Maria e Mariazinha
+relation='{"student": {"name":"Mariazinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Maria", "email": "maria@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user13Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student13Id=${studentId}
+
+## Cria Nathan e Nathanzinho
+relation='{"student": {"name":"Nathanzinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Nathan", "email": "nathan@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user14Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student14Id=${studentId}
+
+## Cria Oswaldo e owswalinho
+relation='{"student": {"name":"Oswaldinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Oswaldo", "email": "oswaldo@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user15Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student15Id=${studentId}
+
+## Cria Pedro e pedrinho
+relation='{"student": {"name":"Pedrinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Pedro", "email": "pedro@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user16Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student16Id=${studentId}
+
+## Cria Quézia e quézinha
+relation='{"student": {"name":"Quézinha", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Quézia", "email": "quézia@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user17Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student17Id=${studentId}
+
+## Cria Rodrigo e rodriguinho
+relation='{"student": {"name":"Rodriguinho", "institution": {"id": '${institutionId}'}}, "parent": {"name": "Rodrigo", "email": "oswaldo@escolando.com", "phone1": "(21)99956-8957", "profileImageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973461_1280.png", "institution": {"id": '${institutionId}'}}, "kinship": {"id": 2}}'
+request="curl -X POST localhost:8080/userParentAndStudent -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${relation})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
+userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
+userId=$(echo ${userId} | cut -d ',' -f 1)
+user18Id=${userId}
+studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
+studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
+studentId=$(echo ${studentId} | cut -d ',' -f 1)
+student18Id=${studentId}
+
+### Matricula de alunos nas turmas ###
+
+enrollment='{"student": {"id": '${student1Id}'}, "class": {"id": '${class1Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+enrollment='{"student": {"id": '${student2Id}'}, "class": {"id": '${class2Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
 
 
+enrollment='{"student": {"id": '${student3Id}'}, "class": {"id": '${class3Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+enrollment='{"student": {"id": '${student4Id}'}, "class": {"id": '${class4Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+enrollment='{"student": {"id": '${student5Id}'}, "class": {"id": '${class5Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student6Id}'}, "class": {"id": '${class6Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student7Id}'}, "class": {"id": '${class7Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+
+enrollment='{"student": {"id": '${student8Id}'}, "class": {"id": '${class8Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student9Id}'}, "class": {"id": '${class9Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student10Id}'}, "class": {"id": '${class10Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student11Id}'}, "class": {"id": '${class1Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student12Id}'}, "class": {"id": '${class2Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student13Id}'}, "class": {"id": '${class3Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student14Id}'}, "class": {"id": '${class4Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student15Id}'}, "class": {"id": '${class5Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student16Id}'}, "class": {"id": '${class6Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student17Id}'}, "class": {"id": '${class7Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+enrollment='{"student": {"id": '${student18Id}'}, "class": {"id": '${class8Id}'}}'
+request="curl -X POST localhost:8080/studentEnrollments -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+resp="$(eval ${request})"
+error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+if [ -n "$error" ]; then
+	clear
+	echo ${error}
+	echo ${request}
+	exit
+fi
+enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
+
+
+### Recados ###
+
+# Recado para Segmentos
+for i in ${segment1Id} .. ${segment2Id}
+do
+	text=$(bash get_random_text.sh)
+	echo ${text}
+	enrollment='{"title": "Racado para o segmento '${i}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": '${segment1Id}', "studentId": 0 }'
+	request="curl -X POST localhost:8080/registers -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+	resp="$(eval ${request})"
+	error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+	if [ -n "$error" ]; then
+		clear
+		echo ${error}
+		echo ${request}
+		exit
+	fi
+	enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
+	enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)	
+done
 
 echo "FIM DE ROTINA"
