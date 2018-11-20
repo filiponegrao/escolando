@@ -367,7 +367,7 @@ fi
 userId=$(echo ${resp} | awk -F 'parent":' '{print $2}')
 userId=$(echo ${userId} | awk -F 'userId":' '{print $2}')
 userId=$(echo ${userId} | cut -d ',' -f 1)
-user1Id=${user1Id}
+user1Id=${userId}
 studentId=$(echo ${resp} | awk -F 'student":' '{print $2}')
 studentId=$(echo ${studentId} | awk -F 'id":' '{print $2}')
 studentId=$(echo ${studentId} | cut -d ',' -f 1)
@@ -968,12 +968,11 @@ enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)
 ### Recados ###
 
 # Recado para Segmentos
-for i in ${segment1Id} .. ${segment2Id}
-do
-	text=$(bash get_random_text.sh)
-	echo ${text}
-	enrollment='{"title": "Racado para o segmento '${i}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": '${segment1Id}', "studentId": 0 }'
-	request="curl -X POST localhost:8080/registers -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${enrollment})'"
+for ((i=segment1Id; i<=segment2Id; i++)); do
+   	text=$(bash get_random_text.sh)
+	message='{"title": "Racado para o segmento '${i}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": '${i}', "studentId": 0,
+ "institutionId": '${institutionId}'}'
+	request="curl -X POST localhost:8080/registers/segment -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${message})'"
 	resp="$(eval ${request})"
 	error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
 	if [ -n "$error" ]; then
@@ -982,8 +981,58 @@ do
 		echo ${request}
 		exit
 	fi
-	enrollment1Id=$(echo ${resp} | cut -d ',' -f 1)
-	enrollment1Id=$(echo ${enrollment1Id} | cut -d ':' -f 2)	
 done
+
+# Recado para Séries
+for ((i=grade1Id; i<=grade6Id; i++)); do
+   	text=$(bash get_random_text.sh)
+	message='{"title": "Racado para a série '${i}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": '${i}', "studentId": 0, "institutionId": '${institutionId}'}'
+	request="curl -X POST localhost:8080/registers/grade -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${message})'"
+	resp="$(eval ${request})"
+	error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+	if [ -n "$error" ]; then
+		clear
+		echo ${error}
+		echo ${request}
+		exit
+	fi
+done
+
+# Recado para turmas
+for ((i=class1Id; i<=class10Id; i++)); do
+   	text=$(bash get_random_text.sh)
+	message='{"title": "Racado para Turma '${i}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": '${i}', "studentId": 0, "institutionId": '${institutionId}'}'
+	request="curl -X POST localhost:8080/registers/class -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${message})'"
+	resp="$(eval ${request})"
+	error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+	if [ -n "$error" ]; then
+		clear
+		echo ${error}
+		echo ${request}
+		exit
+	fi
+done
+
+# Recado dos pais 
+
+# Cada pai vai mandar dez mensagens
+for ((i=0; i<=10; i++)); do
+	for ((j=user1Id; j<=user10Id; j++)); do
+		text=$(bash get_random_text.sh)
+		title=$(echo ${text} | cut -d ',' -f 1 | cut -d '.' -f 1)
+		echo ${title}
+		message='{"title": "'${title}'", "text": "'${text}'", "registerType": {"id": 1}, "targetId": 1, "senderId": '${j}', "institutionId": '${institutionId}'}'
+		request="curl -X POST localhost:8080/registers -H '"${auth}"' -H 'Content-Type: application/json' -d '$(echo ${message})'"
+		resp="$(eval ${request})"
+		error=$(echo ${resp} | awk -F 'error":' '{print $2}' | cut -d '}' -f 1)
+		if [ -n "$error" ]; then
+			clear
+			echo ${error}
+			echo ${request}
+			exit
+		fi
+	done;
+done 
+
 
 echo "FIM DE ROTINA"
