@@ -294,26 +294,36 @@ func GetSentRegistersGroupChat(c *gin.Context) {
 	institutionId := c.Params.ByName("institutionId")
 
 	var chatGroupsIds []string
-	rows, err := db.Table("registers").Where("sender_id = ? AND institution_id = ?", userId, institutionId).Order("created_at desc").Select("distinct group_target_id").Rows()
+	// result := db.Raw("select distinct group_target_id from registers where sender_id = ? and institution_id = ?", userId, institutionId)
+	// if err := result.Scan(&chatGroupsIds).Order("created_at desc").Error; err != nil {
+	// 	c.JSON(400, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	// query := "sender_id = " + strconv.Itoa(userId) + " AND institution_id = " + institutionId
+	rows, err := db.Table("registers").Where("sender_id = ? AND institution_id = ?", userId, institutionId).Select("distinct group_target_id").Rows()
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	defer rows.Close()
+
+	// defer rows.Close()
 	for rows.Next() {
-		var chatGroupId string
-		rows.Scan(&chatGroupId)
-		chatGroupsIds = append(chatGroupsIds, chatGroupId)
+		var id string
+		rows.Scan(&id)
+		chatGroupsIds = append(chatGroupsIds, id)
 	}
 
 	var chatGroups []models.ChatGroup
 	for i := 0; i < len(chatGroupsIds); i++ {
 		chatGroupId := chatGroupsIds[i]
 		var registers []models.Register
-		if err := db.Where("group_target_id = ? AND institution_id = ?", chatGroupId, institutionId).Order("created_at desc").Find(&registers).Error; err != nil {
+
+		if err := db.Where("group_target_id = ? AND institution_id = ? AND sender_id = ?", chatGroupId, institutionId, userId).Order("created_at desc").Find(&registers).Error; err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
+
 		var virtualRegister models.Register
 		virtualRegister.Text = registers[0].Text
 		virtualRegister.CreatedAt = registers[0].CreatedAt

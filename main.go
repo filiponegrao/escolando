@@ -12,6 +12,7 @@ import (
 // main ...
 func main() {
 	database := db.Connect()
+	defer database.Close()
 	s := server.Setup(database)
 	port := "8080"
 
