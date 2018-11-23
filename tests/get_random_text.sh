@@ -1,4 +1,4 @@
-div=29
+div=31
 random=$(($RANDOM%$div))
 random=$(($random+1))
 
