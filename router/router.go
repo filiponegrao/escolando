@@ -106,7 +106,7 @@ func Initialize(r *gin.Engine) {
 		api.PUT("/registers/:id", controllers.UpdateRegister)
 		api.DELETE("/registers/:id", controllers.DeleteRegister)
 
-		api.GET("/registersChat/sent", controllers.GetSentRegistersGroupChat)
+		api.GET("/registersChat/sent/:institutionId", controllers.GetSentRegistersGroupChat)
 		api.DELETE("/registersChat/:id", controllers.DeleteRegisterGroupChat)
 
 		api.GET("/registerStatus", controllers.GetRegisterStatuses)

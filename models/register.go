@@ -25,6 +25,7 @@ type Register struct {
 	StatusId       int64           `json:""`
 	GroupTargetId  string          `gorm:"type:text" json:"groupTargetId" form:"groupTargetId"`
 	ResponsesCount int64           `gorm:"type:text" json:"responsesCount" form:"responsesCount"`
-	CreatedAt      *time.Time      `json:"createdAt" form:"createdAt"`
-	UpdatedAt      *time.Time      `json:"updatedAt" form:"updatedAt"`
+	InstitutionId  int64
+	CreatedAt      *time.Time `json:"createdAt" form:"createdAt"`
+	UpdatedAt      *time.Time `json:"updatedAt" form:"updatedAt"`
 }

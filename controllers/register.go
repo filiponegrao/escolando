@@ -291,29 +291,39 @@ func GetSentRegistersGroupChat(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
 	userId := int(claims["id"].(float64))
+	institutionId := c.Params.ByName("institutionId")
 
 	var chatGroupsIds []string
-	rows, err := db.Table("registers").Where("sender_id = ?", userId).Order("created_at desc").Select("distinct group_target_id").Rows()
+	// result := db.Raw("select distinct group_target_id from registers where sender_id = ? and institution_id = ?", userId, institutionId)
+	// if err := result.Scan(&chatGroupsIds).Order("created_at desc").Error; err != nil {
+	// 	c.JSON(400, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	// query := "sender_id = " + strconv.Itoa(userId) + " AND institution_id = " + institutionId
+	rows, err := db.Table("registers").Where("sender_id = ? AND institution_id = ?", userId, institutionId).Select("distinct group_target_id").Rows()
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	defer rows.Close()
+
+	// defer rows.Close()
 	for rows.Next() {
-		var chatGroupId string
-		rows.Scan(&chatGroupId)
-		chatGroupsIds = append(chatGroupsIds, chatGroupId)
+		var id string
+		rows.Scan(&id)
+		chatGroupsIds = append(chatGroupsIds, id)
 	}
 
 	var chatGroups []models.ChatGroup
 	for i := 0; i < len(chatGroupsIds); i++ {
 		chatGroupId := chatGroupsIds[i]
-		var chatGroup models.ChatGroup
 		var registers []models.Register
-		if err := db.Where("group_target_id = ?", chatGroupId).Order("created_at desc").Find(&registers).Error; err != nil {
+
+		if err := db.Where("group_target_id = ? AND institution_id = ? AND sender_id = ?", chatGroupId, institutionId, userId).Order("created_at desc").Find(&registers).Error; err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
+
 		var virtualRegister models.Register
 		virtualRegister.Text = registers[0].Text
 		virtualRegister.CreatedAt = registers[0].CreatedAt
@@ -321,32 +331,50 @@ func GetSentRegistersGroupChat(c *gin.Context) {
 		virtualRegister.Title = registers[0].Title
 		virtualRegister.GroupTargetId = chatGroupId
 
-		targetType := strings.Split(chatGroupId, "_")[0]
-		targetId := strings.Split(chatGroupId, "_")[1]
-		targetName := ""
-
-		if targetType == "SEGMENT" {
-			db.Table("segments").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
-		} else if targetType == "SCHOOLGRADE" {
-			db.Table("school_grades").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
-		} else if targetType == "CLASS" {
-			db.Table("classes").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
-		} else if targetType == "STUDENT" {
-			db.Table("students").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
-			targetName = "Parentes de " + targetName
-		}
-
-		chatGroup.Register = virtualRegister
-		chatGroup.TargetName = targetName
-
-		for _, register := range registers {
-			if err := GetRegisterTargetInformations(&register, db); err != nil {
-				c.JSON(400, gin.H{"error": err.Error()})
-				return
+		// Mensagem individual
+		if chatGroupId == "" {
+			for _, register := range registers {
+				var chatGroup models.ChatGroup
+				if err := GetRegisterTargetInformations(&register, db); err != nil {
+					c.JSON(400, gin.H{"error": err.Error()})
+					return
+				}
+				chatGroup.TargetName = register.Target.Name
+				chatGroup.Register = register
+				chatGroup.Targets = append(chatGroup.Targets, register.Target)
+				chatGroups = append(chatGroups, chatGroup)
 			}
-			chatGroup.Targets = append(chatGroup.Targets, register.Target)
+		} else {
+			// Mensagem para grupo
+			var chatGroup models.ChatGroup
+
+			targetType := strings.Split(chatGroupId, "_")[0]
+			targetId := strings.Split(chatGroupId, "_")[1]
+			targetName := ""
+
+			if targetType == "SEGMENT" {
+				db.Table("segments").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+			} else if targetType == "SCHOOLGRADE" {
+				db.Table("school_grades").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+			} else if targetType == "CLASS" {
+				db.Table("classes").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+			} else if targetType == "STUDENT" {
+				db.Table("students").Where("id == ?", targetId).Select("distinct(name)").Row().Scan(&targetName)
+				targetName = "Parentes de " + targetName
+			}
+
+			chatGroup.Register = virtualRegister
+			chatGroup.TargetName = targetName
+
+			for _, register := range registers {
+				if err := GetRegisterTargetInformations(&register, db); err != nil {
+					c.JSON(400, gin.H{"error": err.Error()})
+					return
+				}
+				chatGroup.Targets = append(chatGroup.Targets, register.Target)
+			}
+			chatGroups = append(chatGroups, chatGroup)
 		}
-		chatGroups = append(chatGroups, chatGroup)
 	}
 	c.JSON(200, chatGroups)
 }
@@ -386,19 +414,27 @@ func GetReceivedRegisters(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 	claims := jwt.ExtractClaims(c)
 	userId := int(claims["id"].(float64))
-	studentId := c.Params.ByName("studentId")
+
+	params := c.Request.URL.Query()
+	studentId := params.Get("sutdentId")
+	institutionId := params.Get("institutionId")
+
+	if institutionId == "" {
+		c.JSON(400, gin.H{"error": "Faltando id da instituicao"})
+		return
+	}
 	var registers []models.Register
 
 	// Recados recebidos a um aluno especifico
 	if studentId != "" {
-		err := db.Where("target_id = ? AND student_id = ?", userId, studentId).Find(&registers).Error
+		err := db.Where("target_id = ? AND student_id = ? AND institution_id = ?", userId, studentId, institutionId).Find(&registers).Error
 		if err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 	} else {
 		// Recados recebidos, de todos os alunos.
-		err := db.Where("target_id = ?", userId).Find(&registers).Error
+		err := db.Where("target_id = ? AND institution_id = ?", userId, institutionId).Find(&registers).Error
 		if err != nil {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
@@ -515,7 +551,9 @@ func CreateSingleRegister(c *gin.Context) {
 		return
 	}
 
-	register.SenderId = int64(userId)
+	if register.SenderId == 0 {
+		register.SenderId = int64(userId)
+	}
 
 	missing := CheckRegisterMissingFields(register, 0)
 	if missing != "" {
@@ -538,13 +576,13 @@ func CreateSingleRegister(c *gin.Context) {
 		return
 	}
 
-	var student models.Student
-	studentId := register.StudentId
-	if err := db.First(&student, studentId).Error; err != nil {
-		message := "Estudante com id " + strconv.FormatInt(studentId, 10) + " nao encontrado."
-		c.JSON(400, gin.H{"error": message})
-		return
-	}
+	// var student models.Student
+	// studentId := register.StudentId
+	// if err := db.First(&student, studentId).Error; err != nil {
+	// 	message := "Estudante com id " + strconv.FormatInt(studentId, 10) + " nao encontrado."
+	// 	c.JSON(400, gin.H{"error": message})
+	// 	return
+	// }
 
 	// Recupera o id do status de enviado
 	if err := db.Where("name = ?", REGISTER_SENT).First(&register.Status).Error; err != nil {
@@ -798,6 +836,7 @@ func SaveRegister(db *gorm.DB, register models.Register, sender int64) error {
 	newRegister.TargetId = register.TargetId
 
 	newRegister.GroupTargetId = register.GroupTargetId
+	newRegister.InstitutionId = register.InstitutionId
 
 	if err := db.Create(&newRegister).Error; err != nil {
 		return err
@@ -1006,13 +1045,8 @@ func CheckRegisterMissingFields(register models.Register, targetType int) string
 	if register.TargetId == 0 {
 		return "id do destinatario ('target_id': <int>)"
 	}
-
-	// so verifica o aluno se for um recado especifico de um aluno
-	if targetType == 0 || targetType == 3 {
-		if register.StudentId == 0 {
-			return "id do estudante ('student_id': <int>)"
-		}
+	if register.InstitutionId == 0 {
+		return "id da instituicao (institutionId: number)"
 	}
-
 	return ""
 }

@@ -3,11 +3,13 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"time"
 
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/helper"
 	"github.com/filiponegrao/escolando/models"
 	"github.com/filiponegrao/escolando/version"
+	"github.com/jinzhu/gorm"
 
 	"github.com/gin-gonic/gin"
 )
@@ -253,4 +255,37 @@ func CheckRegisterTypeMissingFields(t models.RegisterType) string {
 	}
 
 	return ""
+}
+
+func CheckDefaultRegisterTypes(db gorm.DB) error {
+
+	types := []string{"DEFAULT"}
+	// Para cada status default deinifindo na aplicacao:
+	for _, typeString := range types {
+		var t models.RegisterType
+		// Verifica se ja existe um registro deste status no banco:
+		if err := db.Where("name = ?", typeString).First(&t).Error; err != nil {
+			// Se nao houver, cria:
+			if err2 := CreateInternalRegisterType(typeString, db); err2 != nil {
+				return err2
+			}
+		}
+	}
+	return nil
+}
+
+func CreateInternalRegisterType(name string, db gorm.DB) error {
+
+	now := time.Now()
+
+	registerType := models.RegisterType{}
+	registerType.Name = name
+	registerType.CreatedAt = &now
+	registerType.UpdatedAt = &now
+
+	if err := db.Create(&registerType).Error; err != nil {
+		return err
+	}
+
+	return nil
 }
