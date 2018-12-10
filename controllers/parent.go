@@ -3,6 +3,7 @@ package controllers
 import (
 	"strconv"
 
+	jwt "github.com/appleboy/gin-jwt"
 	dbpkg "github.com/filiponegrao/escolando/db"
 	"github.com/filiponegrao/escolando/models"
 
@@ -33,10 +34,11 @@ func GetParent(c *gin.Context) {
 
 func GetUserParent(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
-	id := c.Params.ByName("id")
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
 	var parent models.Parent
-	if err := db.Where("user_id = ?", id).First(&parent).Error; err != nil {
-		c.JSON(400, gin.H{"error": "Parente com o id de usuario " + id + " não encontrado."})
+	if err := db.Where("user_id = ?", userId).First(&parent).Error; err != nil {
+		c.JSON(400, gin.H{"error": "Parente com o id de usuario " + strconv.Itoa(userId) + " não encontrado."})
 		return
 	}
 	c.JSON(200, parent)

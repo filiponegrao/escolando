@@ -117,7 +117,7 @@ func GetUserRegisters(c *gin.Context) {
 	db := dbpkg.DBInstance(c)
 
 	claims := jwt.ExtractClaims(c)
-	userId := int(claims["user_id"].(float64))
+	userId := int(claims["id"].(float64))
 
 	studentId := c.Params.ByName("student")
 
@@ -429,9 +429,27 @@ func GetSomeRegisters(c *gin.Context) {
 		GetReceivedRegisters(c)
 	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/receivedChat") {
 
+	} else if strings.HasPrefix(c.Request.RequestURI, "/registers/") {
+		GetResponsibleRegister(c)
 	} else {
 		GetRegister(c)
 	}
+}
+
+func GetResponsibleRegister(c *gin.Context) {
+	db := dbpkg.DBInstance(c)
+
+	studentId := c.Params.ByName("id")
+	claims := jwt.ExtractClaims(c)
+	userId := int(claims["id"].(float64))
+
+	var registers []models.Register
+	if err := db.Where("target_id = ? and student_id = ?", userId, studentId).Find(&registers).Error; err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(200, registers)
 }
 
 func GetRegister(c *gin.Context) {

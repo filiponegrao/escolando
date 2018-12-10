@@ -85,7 +85,7 @@ func Initialize(r *gin.Engine) {
 
 		api.GET("/parents", controllers.GetParents)
 		api.GET("/parents/:id", controllers.GetParent)
-		api.GET("/parentUser/:id", controllers.GetUserParent)
+		api.GET("/parentUser", controllers.GetUserParent)
 		api.GET("/parentsOfInstitution/:id", controllers.GetInstitutionParents)
 
 		api.POST("/parents", controllers.CreateParent)
